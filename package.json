@@ -1,0 +1,61 @@
+{
+  "name": "vascan",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "watch": "NODE_ENV=development ./node_modules/.bin/webpack-dev-server --progress --profile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samoxbal/ApplicationServer.git"
+  },
+  "author": "Dmitry Samokhvalov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samoxbal/ApplicationServer/issues"
+  },
+  "homepage": "https://github.com/samoxbal/ApplicationServer#readme",
+  "devDependencies": {
+    "autoprefixer": "^7.1.1",
+    "babel-cli": "^6.24.0",
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "css-loader": "^0.27.3",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.10.1",
+    "postcss": "^6.0.1",
+    "postcss-loader": "^2.0.5",
+    "postcss-nested": "^2.0.2",
+    "react-hot-loader": "^1.3.1",
+    "style-loader": "^0.16.1",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.3.2",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "dependencies": {
+    "axios": "^0.15.3",
+    "classnames": "^2.2.5",
+    "d3": "^4.9.1",
+    "history": "^4.6.1",
+    "is": "^3.2.1",
+    "key-mirror": "^1.0.1",
+    "moment": "^2.18.1",
+    "normalizr": "^3.2.2",
+    "react": "^15.4.2",
+    "react-burger-menu": "^2.0.2",
+    "react-datetime": "^2.8.8",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.3",
+    "react-router-dom": "^4.0.0",
+    "react-router-redux": "^5.0.0-alpha.6",
+    "redux": "^3.6.0",
+    "redux-saga": "^0.14.3",
+    "reselect": "^3.0.0",
+    "semantic-ui-css": "^2.2.10",
+    "semantic-ui-react": "^0.68.0"
+  }
+}
