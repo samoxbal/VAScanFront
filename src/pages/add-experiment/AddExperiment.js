@@ -1,12 +1,12 @@
 import {Component, PropTypes} from 'react';
-import PageLayout from './vascan-ui/PageLayout';
+import PageLayout from '../../components/page-layout/PageLayout';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {createExperiment, resetAddExperimentForm} from '../actions';
-import AddExperimentForm from './AddExperimentForm';
-import VACard from './vascan-ui/VACard';
-import createFormAction from '../utils/createFormAction';
-import ACTION_TYPES from '../constants/actionTypes';
+import {createExperiment, resetAddExperimentForm} from '../../actions/index';
+import AddExperimentForm from '../../components/AddExperimentForm';
+import VACard from '../../components/vascan-ui/VACard';
+import createFormAction from '../../utils/createFormAction';
+import ACTION_TYPES from '../../constants/actionTypes';
 
 const mapStateToProps = state => ({
     errors: state.errors,

@@ -1,8 +1,8 @@
 import {Component, PropTypes} from 'react';
 import axios from 'axios';
 import {Form} from 'semantic-ui-react';
-import {VAInput, VAButton} from './vascan-ui/VAForm';
-import VACard from './vascan-ui/VACard';
+import {VAInput, VAButton} from '../../components/vascan-ui/VAForm';
+import VACard from '../../components/vascan-ui/VACard';
 
 class Login extends Component {
 

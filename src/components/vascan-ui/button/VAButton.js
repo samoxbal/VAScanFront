@@ -1,4 +1,5 @@
 import { Button } from 'semantic-ui-react';
+import './VAButton.css';
 
 const VAButton = ({children, basic, ...rest}) => (
     <Button className={`VAButton${basic ? '_basic' : '_simple'}`} {...rest}>

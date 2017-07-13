@@ -1,5 +1,5 @@
 {
-  "name": "vascan",
+  "name": "VAScanFront",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -7,14 +7,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/samoxbal/ApplicationServer.git"
+    "url": "git+https://github.com/samoxbal/VAScanFront.git"
   },
   "author": "Dmitry Samokhvalov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/samoxbal/ApplicationServer/issues"
+    "url": "https://github.com/samoxbal/VAScanFront/issues"
   },
-  "homepage": "https://github.com/samoxbal/ApplicationServer#readme",
+  "homepage": "https://github.com/samoxbal/VAScanFront#readme",
   "devDependencies": {
     "autoprefixer": "^7.1.1",
     "babel-cli": "^6.24.0",

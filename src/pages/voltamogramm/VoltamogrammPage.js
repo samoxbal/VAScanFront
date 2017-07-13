@@ -2,18 +2,18 @@ import {Component} from 'react';
 import {connect} from 'react-redux';
 import is from 'is';
 import {bindActionCreators} from 'redux';
-import PageLayout from './vascan-ui/PageLayout';
-import VACard from './vascan-ui/VACard';
-import VAButton from './vascan-ui/VAButton';
-import TreeFolder from './TreeFolder';
-import Scan from './Scan';
-import AddVoltamogrammForm from './AddVoltamogrammForm';
+import PageLayout from '../../components/page-layout/PageLayout';
+import VACard from '../../components/vascan-ui/VACard';
+import VAButton from '../../components/vascan-ui/button/VAButton';
+import TreeFolder from '../../components/TreeFolder';
+import Scan from '../../components/Scan';
+import AddVoltamogrammForm from '../../components/AddVoltamogrammForm';
 import {
     fetchSingleVoltamogramm,
     fetchMeasures,
     selectScan,
     activeEditVoltamogramm
-} from '../actions';
+} from '../../actions/index';
 
 const mapStateToProps = state => ({
     voltamogramm: state.voltamogramm,

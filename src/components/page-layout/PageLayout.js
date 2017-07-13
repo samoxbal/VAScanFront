@@ -1,7 +1,9 @@
 import { Component, PropTypes } from 'react';
-import VAButton from '../vascan-ui/VAButton';
+import VAButton from '../vascan-ui/button/VAButton';
 import { Icon } from 'semantic-ui-react';
 import BurgerMenu from 'react-burger-menu';
+
+import './PageLayout.css';
 
 export default class PageLayout extends Component {
 

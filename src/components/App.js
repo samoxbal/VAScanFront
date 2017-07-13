@@ -1,10 +1,10 @@
 import {Route, Redirect} from 'react-router-dom';
 import {ConnectedRouter} from 'react-router-redux';
-import AddExperiment from './AddExperiment';
-import ExperimentsPage from './ExperimentsPage';
-import VoltamogrammPage from './VoltamogrammPage';
-import MeasurePage from './MeasurePage';
-import Login from './Login';
+import AddExperiment from '../pages/add-experiment/AddExperiment';
+import ExperimentsPage from '../pages/experiments/ExperimentsPage';
+import VoltamogrammPage from '../pages/voltamogramm/VoltamogrammPage';
+import MeasurePage from '../pages/measure/MeasurePage';
+import Login from '../pages/login/Login';
 import {Auth} from './Auth';
 import {history} from '../store/configureStore';
 
