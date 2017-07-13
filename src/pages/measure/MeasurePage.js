@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as d3 from 'd3';
 import PageLayout from '../../components/page-layout/PageLayout';
-import VACard from '../../components/vascan-ui/VACard';
+import VACard from '../../components/vascan-ui/card/VACard';
 import {fetchSingleMeasure} from '../../actions/index';
 
 const mapStateToProps = state => ({

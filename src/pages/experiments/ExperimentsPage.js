@@ -2,7 +2,7 @@ import {Component} from 'react';
 import PageLayout from '../../components/page-layout/PageLayout';
 import ExperimentTree from '../../components/ExperimentTree';
 import Experiment from '../../components/Experiment';
-import VACard from '../../components/vascan-ui/VACard';
+import VACard from '../../components/vascan-ui/card/VACard';
 
 export default class ExperimentsPage extends Component {
     render() {

@@ -1,8 +1,9 @@
 import {Component, PropTypes} from 'react';
 import axios from 'axios';
 import {Form} from 'semantic-ui-react';
-import {VAInput, VAButton} from '../../components/vascan-ui/VAForm';
-import VACard from '../../components/vascan-ui/VACard';
+import {VAInput, VAButton} from '../../components/vascan-ui/form/VAForm';
+import VACard from '../../components/vascan-ui/card/VACard';
+import './Login.css';
 
 class Login extends Component {
 
@@ -42,8 +43,8 @@ class Login extends Component {
     }
 
     validateForm() {
-        var valid = true;
-        var form = this.state.form;
+        let valid = true;
+        const form = this.state.form;
         for (let field in form) {
             if (form.hasOwnProperty(field)) {
                 if (form[field].valid == false) {

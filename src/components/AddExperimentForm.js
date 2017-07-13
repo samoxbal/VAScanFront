@@ -1,6 +1,6 @@
 import {Component, PropTypes} from 'react';
 import {Form} from 'semantic-ui-react';
-import {VAInput, VATextArea, VAButton} from './vascan-ui/VAForm';
+import {VAInput, VATextArea, VAButton} from './vascan-ui/form/VAForm';
 import Datetime from 'react-datetime';
 import is from 'is';
 import moment from 'moment';

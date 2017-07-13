@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import './FileUpload.css';
 
 export default class FileUpload extends Component {
 

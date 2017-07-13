@@ -1,4 +1,5 @@
 import {Form} from 'semantic-ui-react';
+import './VAForm.css';
 
 export const VAInput = props => (
     <Form.Input className="VAInput" {...props} />

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {createExperiment, resetAddExperimentForm} from '../../actions/index';
 import AddExperimentForm from '../../components/AddExperimentForm';
-import VACard from '../../components/vascan-ui/VACard';
+import VACard from '../../components/vascan-ui/card/VACard';
 import createFormAction from '../../utils/createFormAction';
 import ACTION_TYPES from '../../constants/actionTypes';
 

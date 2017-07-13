@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import {Form} from 'semantic-ui-react';
-import {VAInput} from './vascan-ui/VAForm';
+import {VAInput} from './vascan-ui/form/VAForm';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import createFormAction from '../utils/createFormAction';

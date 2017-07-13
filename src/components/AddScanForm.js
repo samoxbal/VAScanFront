@@ -1,13 +1,13 @@
 import {Component} from 'react';
 import Datetime from 'react-datetime';
-import FileUpload from './FileUpload';
+import FileUpload from './file-upload/FileUpload';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment';
 import Regime from './Regime';
 import {Form, Header} from 'semantic-ui-react';
-import VASegment from './vascan-ui/VASegment';
-import {VAInput, VASelect, VACheckbox} from './vascan-ui/VAForm';
+import VASegment from './vascan-ui/segment/VASegment';
+import {VAInput, VASelect, VACheckbox} from './vascan-ui/form/VAForm';
 import createFormAction from '../utils/createFormAction';
 import ACTION_TYPES from '../constants/actionTypes';
 import {getSelectedScan, isSelectedScan} from '../selectors/scan';
