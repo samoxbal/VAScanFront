@@ -7,6 +7,7 @@ import AddVoltamogramm from './AddVoltamogramm';
 import {getSelectedExperiment} from '../selectors/experiment';
 import {openAddVoltamogramm, editExperiment, resetAddExperimentForm} from '../actions/index';
 import VAButton from './vascan-ui/button/VAButton';
+import ListLinks from './list-links/ListLinks';
 import AddExperimentForm from './AddExperimentForm';
 import createFormAction from '../utils/createFormAction';
 import ACTION_TYPES from '../constants/actionTypes';
@@ -86,18 +87,10 @@ class Experiment extends Component {
 
     renderVoltamogramms(voltamogramms) {
         return (
-            <List divided relaxed>
-                {voltamogramms.map(item => (
-                    <List.Item key={item._id} className="ListItem">
-                        <List.Icon name="file" />
-                        <List.Content>
-                            <List.Header>
-                                <Link to={`/voltamogramm/${item._id}`}>{item._id}</Link>
-                            </List.Header>
-                        </List.Content>
-                    </List.Item>
-                ))}
-            </List>
+            <ListLinks
+                items={ voltamogramms }
+                path='voltamogramm'
+            />
         )
     }
 

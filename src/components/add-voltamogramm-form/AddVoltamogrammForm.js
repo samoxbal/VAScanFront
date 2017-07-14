@@ -4,12 +4,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment';
 import {Form, Header} from 'semantic-ui-react';
-import VAButton from './vascan-ui/button/VAButton';
-import {VAInput, VATextArea, VASelect, VACheckbox} from './vascan-ui/form/VAForm';
-import VASegment from './vascan-ui/segment/VASegment';
-import createFormAction from '../utils/createFormAction';
-import {activeEditVoltamogramm} from '../actions';
-import ACTION_TYPES from '../constants/actionTypes';
+import VAButton from '../vascan-ui/button/VAButton';
+import {VAInput, VATextArea, VASelect, VACheckbox} from '../vascan-ui/form/VAForm';
+import VASegment from '../vascan-ui/segment/VASegment';
+import createFormAction from '../../utils/createFormAction';
+import {activeEditVoltamogramm} from '../../actions/index';
+import ACTION_TYPES from '../../constants/actionTypes';
+
+import './AddVoltamogrammForm.css';
 
 const mapStateToProps = state => ({
     errors: state.errors,

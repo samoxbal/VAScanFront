@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import {createScan, openAddVoltamogramm} from '../actions';
 import {Modal} from 'semantic-ui-react';
 import VAButton from './vascan-ui/button/VAButton';
-import AddVoltamogrammForm from './AddVoltamogrammForm';
+import AddVoltamogrammForm from './add-voltamogramm-form/AddVoltamogrammForm';
 import AddScanForm from './AddScanForm';
 
 const mapStateToProps = state => ({

@@ -7,13 +7,15 @@ import VACard from '../../components/vascan-ui/card/VACard';
 import VAButton from '../../components/vascan-ui/button/VAButton';
 import TreeFolder from '../../components/TreeFolder';
 import Scan from '../../components/Scan';
-import AddVoltamogrammForm from '../../components/AddVoltamogrammForm';
+import AddVoltamogrammForm from '../../components/add-voltamogramm-form/AddVoltamogrammForm';
 import {
     fetchSingleVoltamogramm,
     fetchMeasures,
     selectScan,
     activeEditVoltamogramm
 } from '../../actions/index';
+
+import './VoltamogrammPage.css';
 
 const mapStateToProps = state => ({
     voltamogramm: state.voltamogramm,

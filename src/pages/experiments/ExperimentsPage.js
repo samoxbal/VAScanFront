@@ -4,6 +4,8 @@ import ExperimentTree from '../../components/ExperimentTree';
 import Experiment from '../../components/Experiment';
 import VACard from '../../components/vascan-ui/card/VACard';
 
+import './ExperimentsPage.css';
+
 export default class ExperimentsPage extends Component {
     render() {
         return (

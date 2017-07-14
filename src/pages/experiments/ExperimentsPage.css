@@ -1,0 +1,22 @@
+.ExperimentsPage {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
+    flex-wrap: wrap;
+
+    &__Tree {
+        width: 30% !important;
+        min-height: 460px !important;
+
+        .header, .icon {
+            color: #5bc0de !important;
+            font-size: 15px;
+        }
+    }
+
+    &__Item {
+        width: 60% !important;
+        min-height: 460px !important;
+        margin: 0 !important;
+    }
+}

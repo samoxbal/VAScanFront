@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import {List} from 'semantic-ui-react';
 import {getSelectedScan} from '../selectors/scan';
 import AddScanForm from './AddScanForm';
+import ListLinks from './list-links/ListLinks';
 
 const mapStateToProps = state => ({
     measures: state.measures,
@@ -19,18 +20,10 @@ class Scan extends Component {
 
     renderMeasures(measures) {
         return (
-            <List divided relaxed>
-                {measures.map(item => (
-                    <List.Item key={item._id} className="ListItem">
-                        <List.Icon name="file" />
-                        <List.Content>
-                            <List.Header>
-                                <Link to={`/measure/${item._id}`}>{item._id}</Link>
-                            </List.Header>
-                        </List.Content>
-                    </List.Item>
-                ))}
-            </List>
+            <ListLinks
+                items={ measures }
+                path='measure'
+            />
         )
     }
 

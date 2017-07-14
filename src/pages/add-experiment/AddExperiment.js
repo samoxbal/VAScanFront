@@ -8,6 +8,8 @@ import VACard from '../../components/vascan-ui/card/VACard';
 import createFormAction from '../../utils/createFormAction';
 import ACTION_TYPES from '../../constants/actionTypes';
 
+import './AddExperiment.css';
+
 const mapStateToProps = state => ({
     errors: state.errors,
     form: state.addExperimentForm
