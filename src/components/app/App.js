@@ -1,5 +1,6 @@
 import {Route, Redirect} from 'react-router-dom';
 import {ConnectedRouter} from 'react-router-redux';
+import {Switch} from 'react-router-dom';
 import AddExperiment from '../../pages/add-experiment/AddExperiment';
 import ExperimentsPage from '../../pages/experiments/ExperimentsPage';
 import VoltamogrammPage from '../../pages/voltamogramm/VoltamogrammPage';
@@ -20,13 +21,13 @@ const renderLogin = props => {
 
 const App = () => (
     <ConnectedRouter history={history}>
-        <div>
+        <Switch>
             <Route exact path="/" render={renderLogin} />
             <Route path="/add" component={Auth(AddExperiment)} />
             <Route path="/all" component={Auth(ExperimentsPage)} />
             <Route path="/voltamogramm/:id" component={Auth(VoltamogrammPage)} />
             <Route path="/measure/:id" component={Auth(MeasurePage)} />
-        </div>
+        </Switch>
     </ConnectedRouter>
 );
 
