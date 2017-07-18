@@ -1,12 +1,14 @@
-import {Component, PropTypes} from 'react';
+import { Component, PropTypes } from 'react';
+import { graphql } from 'react-apollo';
 import PageLayout from '../../components/page-layout/PageLayout';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {createExperiment, resetAddExperimentForm} from '../../actions/index';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { resetAddExperimentForm } from '../../actions/index';
 import AddExperimentForm from '../../components/AddExperimentForm';
 import VACard from '../../components/vascan-ui/card/VACard';
 import createFormAction from '../../utils/createFormAction';
 import ACTION_TYPES from '../../constants/actionTypes';
+import { createExperiment } from '../../graphql/mutations';
 
 import './AddExperiment.css';
 
@@ -16,7 +18,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    createExperiment,
     resetAddExperimentForm,
     changeName: createFormAction(ACTION_TYPES.CHANGE_EXPERIMENT_NAME),
     changeDescription: createFormAction(ACTION_TYPES.CHANGE_EXPERIMENT_DESCRIPTION),
@@ -26,21 +27,37 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 
 class AddExperiment extends Component {
-    constructor(props) {
-        super(props);
-        this.submitExperiment = this.submitExperiment.bind(this);
-    }
 
     static propTypes = {
-        createExperiment: PropTypes.func
+        errors: PropTypes.object,
+        form: PropTypes.object,
+        mutate: PropTypes.func,
+        resetAddExperimentForm: PropTypes.func,
+        changeName: PropTypes.func,
+        changeDescription: PropTypes.func,
+        changeStartDate: PropTypes.func,
+        changeEndDate: PropTypes.func
     };
 
-    static contextTypes = {
-        router: PropTypes.object.isRequired
-    };
+    submitExperiment = () => {
+        const {
+            mutate,
+            form: {
+                name,
+                description,
+                startDate,
+                endDate
+            }
+        } = this.props;
 
-    submitExperiment() {
-        this.props.createExperiment();
+        mutate({
+            variables: {
+                name,
+                description,
+                startDate,
+                endDate
+            }
+        });
     }
 
     render() {
@@ -59,15 +76,15 @@ class AddExperiment extends Component {
                 <div className="AddExperment">
                     <VACard style={{ width: '70%' }}>
                         <AddExperimentForm
-                            isEdit={false}
-                            onSubmit={this.submitExperiment}
-                            errors={errors}
-                            changeName={changeName}
-                            changeDescription={changeDescription}
-                            changeStartDate={changeStartDate}
-                            changeEndDate={changeEndDate}
-                            form={form}
-                            resetForm={resetAddExperimentForm}
+                            isEdit={ false }
+                            onSubmit={ this.submitExperiment }
+                            errors={ errors }
+                            changeName={ changeName }
+                            changeDescription={ changeDescription }
+                            changeStartDate={ changeStartDate }
+                            changeEndDate={ changeEndDate }
+                            form={ form }
+                            resetForm={ resetAddExperimentForm }
                         />
                     </VACard>
                 </div>
@@ -76,4 +93,4 @@ class AddExperiment extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddExperiment);
+export default connect(mapStateToProps, mapDispatchToProps)(graphql(createExperiment)(AddExperiment));

@@ -1,4 +1,4 @@
-import {createStore, compose, applyMiddleware} from 'redux';
+import {createStore, compose, applyMiddleware, combineReducers} from 'redux';
 import createHistory from 'history/createBrowserHistory';
 import {routerMiddleware} from 'react-router-redux';
 import rootReducer from '../reducers';
@@ -21,14 +21,21 @@ const composeEnhancers = !window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
     compose :
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
-const store = createStore(
-    rootReducer,
+const configureStore = client => createStore(
+    combineReducers({
+        ...rootReducer,
+        apollo: client.reducer()
+    }),
     initialState,
     composeEnhancers(
-        applyMiddleware(routerMiddleware(history), sagaMiddleware)
+        applyMiddleware(
+            routerMiddleware(history),
+            sagaMiddleware,
+            client.middleware()
+        )
     )
 );
 
 sagaMiddleware.run(root);
 
-export default store;
+export default configureStore;

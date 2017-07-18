@@ -70,7 +70,7 @@ const addScanForm = combineReducers({
     })
 });
 
-const rootReducer = combineReducers({
+const rootReducer = {
     router: routerReducer,
     experiments,
     selectedExperimentId,
@@ -85,6 +85,6 @@ const rootReducer = combineReducers({
     measures,
     selectedScanId,
     activeEditVoltamogramm
-});
+};
 
 export default rootReducer;

@@ -1,6 +1,6 @@
-import {Component, PropTypes} from 'react';
-import {Form} from 'semantic-ui-react';
-import {VAInput, VATextArea, VAButton} from './vascan-ui/form/VAForm';
+import { Component, PropTypes } from 'react';
+import { Form } from 'semantic-ui-react';
+import { VAInput, VATextArea, VAButton } from './vascan-ui/form/VAForm';
 import Datetime from 'react-datetime';
 import is from 'is';
 import moment from 'moment';
@@ -25,7 +25,7 @@ export default class AddExperimentForm extends Component {
     }
 
     onCancelClick = () => {
-        const {onCancel} = this.props;
+        const { onCancel } = this.props;
         if (is.fn(onCancel)) {
             onCancel();
         }
@@ -44,13 +44,13 @@ export default class AddExperimentForm extends Component {
         };
         return (
             <VAInput
-                control={Datetime}
-                inputProps={PickerBeginStyle}
-                closeOnSelect={true}
-                timeFormat={false}
-                onChange={this.onChangeStartDate}
-                error={!!errors.start_date}
-                value={experiment && !form.start_date ? experiment.start_date : form.start_date}
+                control={ Datetime }
+                inputProps={ PickerBeginStyle }
+                closeOnSelect={ true }
+                timeFormat={ false }
+                onChange={ this.onChangeStartDate }
+                error={ !!errors.start_date }
+                value={ experiment && !form.start_date ? experiment.start_date : form.start_date }
             />
         );
     }
@@ -63,13 +63,13 @@ export default class AddExperimentForm extends Component {
         };
         return (
             <VAInput
-                control={Datetime}
-                inputProps={PickerEndStyle}
-                closeOnSelect={true}
-                timeFormat={false}
-                onChange={this.onChangeEndDate}
-                error={!!errors.end_date}
-                value={experiment && !form.end_date ? experiment.end_date : form.end_date}
+                control={ Datetime }
+                inputProps={ PickerEndStyle }
+                closeOnSelect={ true }
+                timeFormat={ false }
+                onChange={ this.onChangeEndDate }
+                error={ !!errors.end_date }
+                value={ experiment && !form.end_date ? experiment.end_date : form.end_date }
             />
         );
     }
@@ -80,38 +80,38 @@ export default class AddExperimentForm extends Component {
     }
 
     render() {
-        const {errors, experiment, active, form} = this.props;
+        const { errors, experiment, active, form } = this.props;
 
         return (
             <Form onSubmit={this.submitExperiment}>
                 <Form.Group inline>
-                    {this.renderPickerBegin(errors, experiment, active, form)}
-                    {this.renderPickerEnd(errors, experiment, active, form)}
+                    { this.renderPickerBegin(errors, experiment, active, form) }
+                    { this.renderPickerEnd(errors, experiment, active, form) }
                 </Form.Group>
                 <VAInput
                     type="text"
-                    error={!!errors.name}
+                    error={ !!errors.name }
                     placeholder="Название эксперимента"
-                    value={experiment && !form.name ? experiment.name : form.name}
-                    disabled={!active}
-                    onChange={this.onChangeName}
+                    value={ experiment && !form.name ? experiment.name : form.name }
+                    disabled={ !active }
+                    onChange={ this.onChangeName }
                 />
                 <VATextArea
-                    error={!!errors.description}
+                    error={ !!errors.description }
                     placeholder="Описание эксперимента"
                     rows="4"
-                    value={experiment && !form.description ? experiment.description : form.description}
-                    disabled={!active}
-                    onChange={this.onChangeDescription}
+                    value={ experiment && !form.description ? experiment.description : form.description }
+                    disabled={ !active }
+                    onChange={ this.onChangeDescription }
                 />
-                {active && <Form.Group inline>
+                { active && <Form.Group inline>
                     <VAButton basic>
-                        {experiment ? 'Редактировать' : 'Создать'}
+                        { experiment ? 'Редактировать' : 'Создать' }
                     </VAButton>
-                    <VAButton type="button" onClick={this.onCancelClick}>
+                    <VAButton type="button" onClick={ this.onCancelClick }>
                         Отмена
                     </VAButton>
-                </Form.Group>}
+                </Form.Group> }
             </Form>
         )
     }
