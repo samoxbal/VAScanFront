@@ -2,9 +2,9 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import TreeFolder from './TreeFolder';
-import { selectExperiment, fetchVoltamogramms } from '../actions';
+import { selectExperiment } from '../actions';
 import { experiments } from '../graphql/queries';
 
 const mapStateToProps = state => ({
@@ -12,8 +12,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    selectExperiment,
-    fetchVoltamogramms
+    selectExperiment
 }, dispatch);
 
 class ExperimentTree extends Component {
@@ -22,7 +21,9 @@ class ExperimentTree extends Component {
         data: PropTypes.shape({
             experiments: PropTypes.object
         }),
-        selectExperiment: PropTypes.func
+        selectExperiment: PropTypes.func,
+        fetchExperiments: PropTypes.func,
+        fetchVoltamogramms: PropTypes.func
     }
 
     onClickExperiment = _id => {
@@ -40,4 +41,8 @@ class ExperimentTree extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExperimentTree);
+const graphqlExperimentTree = compose(
+    graphql(experiments, { name: "fetchExperiments" })
+)(ExperimentTree);
+
+export default connect(mapStateToProps, mapDispatchToProps)(graphqlExperimentTree);

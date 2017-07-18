@@ -97,18 +97,6 @@ function* createScan() {
     }
 }
 
-function* fetchVoltamogramms() {
-    while(true) {
-        const action = yield take(ACTION_TYPES.FETCH_VOLTAMOGRAMMS);
-        const { payload } = action;
-        const data = yield call(api.fetch_voltamogramms, payload);
-        yield put({
-            type: ACTION_TYPES.FETCH_VOLTAMOGRAMMS_SUCCESS,
-            payload: data['data']['data'].map(mapOid)
-        });
-    }
-}
-
 function* fetchSingleVoltamogramm() {
     while(true) {
         const action = yield take(ACTION_TYPES.FETCH_SINGLE_VOLTAMOGRAMM);
@@ -153,7 +141,6 @@ function* fetchMeasures() {
 export default function* root() {
     yield fork(createExperiment);
     yield fork(createScan);
-    yield fork(fetchVoltamogramms);
     yield fork(fetchSingleVoltamogramm);
     yield fork(editExperiment);
     yield fork(fetchSingleMeasure);

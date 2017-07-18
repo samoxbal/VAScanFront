@@ -34,15 +34,6 @@ export function openAddVoltamogramm(state) {
     }
 }
 
-export function fetchVoltamogramms(id) {
-    return {
-        type: ACTION_TYPES.FETCH_VOLTAMOGRAMMS,
-        payload: {
-            experiment: id
-        }
-    }
-}
-
 export function fetchSingleVoltamogramm(id) {
     return {
         type: ACTION_TYPES.FETCH_SINGLE_VOLTAMOGRAMM,
