@@ -1,17 +1,36 @@
-import {take, put, fork, call, select} from 'redux-saga/effects';
+import { take, put, fork, call, select } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import is from 'is';
 import validator from '../utils/validator';
-import {api} from '../utils/api';
-import {mapOid} from '../utils/utils';
+import { api } from '../utils/api';
+import { mapOid } from '../utils/utils';
 import ACTION_TYPES from '../constants/actionTypes';
 import {
     experimentRequiredFields,
     voltamogrammRequiredFields,
-    scanRequiredFields
+    scanRequiredFields,
+    loginRequiredFields
 } from '../constants/requiredFields';
-import {addExperimentForm} from '../selectors/experiment';
-import {addVoltamogrammForm, addScanForm} from '../selectors/scan';
+import { addExperimentForm } from '../selectors/experiment';
+import { addVoltamogrammForm, addScanForm } from '../selectors/scan';
+
+function* createToken() {
+    while(true) {
+        const loginSelector = state => state.loginForm;
+        yield take(ACTION_TYPES.LOGIN);
+        const form = yield select(loginSelector);
+        const [invalidFields, loginObj] = validator(form, loginRequiredFields);
+        if(is.empty(invalidFields)) {
+            yield call(api.login, loginObj);
+            yield put(push('/all'));
+        } else {
+            yield put({
+                type: ACTION_TYPES.SET_ERROR,
+                payload: invalidFields
+            })
+        }
+    }
+}
 
 function* fetchExperiments() {
     while(true) {
@@ -151,4 +170,5 @@ export default function* root() {
     yield fork(editExperiment);
     yield fork(fetchSingleMeasure);
     yield fork(fetchMeasures);
+    yield fork(createToken);
 }

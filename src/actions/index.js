@@ -95,3 +95,9 @@ export function activeEditVoltamogramm(state) {
         payload: state
     }
 }
+
+export function login() {
+    return {
+        type: ACTION_TYPES.LOGIN
+    }
+}

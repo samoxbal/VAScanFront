@@ -128,5 +128,16 @@ export const api = {
             }
         };
         return axios(options);
+    },
+    login: data => {
+        const options = {
+            method: 'post',
+            url: '/token',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data
+        };
+        return axios(options);
     }
 };

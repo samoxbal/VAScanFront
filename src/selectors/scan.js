@@ -8,7 +8,7 @@ const getSelectedScanId = state => state.selectedScanId;
 const getSelectedScan = createSelector(
     [voltamogramm, getSelectedScanId],
     (voltamogramm, scanId) => {
-        return scanId ? voltamogramm.scans.find(scan => scan._id == scanId) : null;
+        return scanId ? voltamogramm.scans.find(scan => scan._id === scanId) : null;
     }
 );
 

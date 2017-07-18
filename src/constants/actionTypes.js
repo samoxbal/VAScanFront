@@ -58,7 +58,10 @@ const ACTION_TYPES = keyMirror({
     FETCH_MEASURES: null,
     FETCH_MEASURES_SUCCESS: null,
     SELECT_SCAN: null,
-    ACTIVE_EDIT_VOLTAMOGRAMM: null
+    ACTIVE_EDIT_VOLTAMOGRAMM: null,
+    CHANGE_EMAIL: null,
+    CHANGE_PASSWORD: null,
+    LOGIN: null
 });
 
 export default ACTION_TYPES;

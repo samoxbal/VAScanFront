@@ -18,3 +18,8 @@ export const scanRequiredFields = [
     'pressure',
     'regime'
 ];
+
+export const loginRequiredFields = [
+    'email',
+    'password'
+];

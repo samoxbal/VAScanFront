@@ -1,95 +1,62 @@
-import {Component, PropTypes} from 'react';
-import axios from 'axios';
-import {Form} from 'semantic-ui-react';
-import {VAInput, VAButton} from '../../components/vascan-ui/form/VAForm';
+import { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Form } from 'semantic-ui-react';
+import { VAInput, VAButton } from '../../components/vascan-ui/form/VAForm';
 import VACard from '../../components/vascan-ui/card/VACard';
+import ACTION_TYPES from '../../constants/actionTypes';
+import createFormAction from '../../utils/createFormAction';
+import { login } from '../../actions';
+
 import './Login.css';
+
+const mapStateToProps = state => ({
+    errors: state.errors,
+    form: state.loginForm
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    login,
+    changeEmail: createFormAction(ACTION_TYPES.CHANGE_EMAIL),
+    changePassword: createFormAction(ACTION_TYPES.CHANGE_PASSWORD)
+}, dispatch);
 
 class Login extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            loginData: {}
-        };
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
-        this.login = this.login.bind(this);
-    }
+    static propTypes = {
+        errors: PropTypes.object,
+        form: PropTypes.object,
+        changeEmail: PropTypes.func,
+        changePassword: PropTypes.func,
+        login: PropTypes.func
+    };
 
-    componentDidMount() {
-        this.state.form = {
-            email: {
-                el: this._email,
-                valid: false
-            },
-            password: {
-                el: this._password,
-                valid: false
-            }
-        }
-    }
-
-    onChangeEmail(e, data) {
-        const { value } = data;
-        this.state.form.email.value = value;
-        this.state.form.email.valid = value.length > 0
-    }
-
-    onChangePassword(e, data) {
-        const { value } = data;
-        this.state.form.password.value = value;
-        this.state.form.password.valid = value.length > 0
-    }
-
-    validateForm() {
-        let valid = true;
-        const form = this.state.form;
-        for (let field in form) {
-            if (form.hasOwnProperty(field)) {
-                if (form[field].valid == false) {
-                    form[field].el.classList.add('parsley-error');
-                    valid = false;
-                } else {
-                    this.state.loginData[field] = form[field].value;
-                }
-            }
-        }
-        return valid;
-    }
-
-    login(e) {
-        e.preventDefault();
-        if (this.validateForm()) {
-            axios({
-                url: "/api",
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: {
-                    command: "createToken",
-                    body: this.state.loginData
-                }
-            }).then(response => {
-                const { data } = response;
-                if (data.status == "ok") {
-                    localStorage.setItem("token", data.data);
-                    localStorage.setItem("email", this.state.loginData.email);
-                    this.context.router.history.push("/all");
-                }
-            })
-        }
-    }
+    onChangeEmail = (e, data) => this.props.changeEmail(data.value)
+    onChangePassword = (e, data) => this.props.changePassword(data.value)
 
     render() {
+        const { email, password, errors } = this.props.form;
+
         return (
             <div className="Login">
                 <VACard>
-                    <Form onSubmit={this.login}>
-                        <VAInput placeholder="Имя пользователя" onChange={this.onChangeEmail} ref={(ref) => this._email = ref} />
-                        <VAInput type="password" placeholder="Пароль" onChange={this.onChangePassword} ref={(ref) => this._password = ref} />
-                        <VAButton type="submit" basic>Войти</VAButton>
+                    <Form onSubmit={ () => this.props.login() }>
+                        <VAInput
+                            placeholder="Имя пользователя"
+                            onChange={ this.onChangeEmail }
+                            value={ email }
+                            error={ !!errors.email }
+                        />
+                        <VAInput
+                            type="password"
+                            placeholder="Пароль"
+                            onChange={ this.onChangePassword }
+                            value={ password }
+                            error={ !!errors.password }
+                        />
+                        <VAButton type="submit" basic>
+                            Войти
+                        </VAButton>
                     </Form>
                 </VACard>
             </div>
@@ -97,8 +64,4 @@ class Login extends Component {
     }
 }
 
-Login.contextTypes = {
-    router: PropTypes.object
-};
-
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
