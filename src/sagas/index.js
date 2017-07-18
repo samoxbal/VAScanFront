@@ -32,17 +32,6 @@ function* createToken() {
     }
 }
 
-function* fetchExperiments() {
-    while(true) {
-        yield take(ACTION_TYPES.FETCH_EXPERIMENTS);
-        const data = yield call(api.fetch_experiments);
-        yield put({
-            type: ACTION_TYPES.FETCH_EXPERIMENTS_SUCCESS,
-            payload: data['data']['data'].map(mapOid)
-        });
-    }
-}
-
 function* createExperiment() {
     while(true) {
         yield take(ACTION_TYPES.ADD_EXPERIMENT);
@@ -162,7 +151,6 @@ function* fetchMeasures() {
 }
 
 export default function* root() {
-    yield fork(fetchExperiments);
     yield fork(createExperiment);
     yield fork(createScan);
     yield fork(fetchVoltamogramms);

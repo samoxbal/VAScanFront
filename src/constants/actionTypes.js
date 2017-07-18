@@ -2,8 +2,6 @@ import keyMirror from 'key-mirror';
 
 const ACTION_TYPES = keyMirror({
     ADD_EXPERIMENT: null,
-    FETCH_EXPERIMENTS: null,
-    FETCH_EXPERIMENTS_SUCCESS: null,
     ADD_EXPERIMENT_SUCCESS: null,
     SELECT_EXPERIMENT: null,
     SET_ERROR: null,

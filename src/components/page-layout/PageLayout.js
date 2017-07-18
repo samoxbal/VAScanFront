@@ -50,15 +50,15 @@ export default class PageLayout extends Component {
                 <Menu
                     pageWrapId="page-wrap"
                     outerContainerId="outer-container"
-                    isOpen={this.state.visible}
+                    isOpen={ this.state.visible }
                 >
-                    {this.menuItems}
+                    { this.menuItems }
                 </Menu>
                 <main id="page-wrap">
                     <VAButton
                         icon
                         basic
-                        onClick={this.toggleVisibility}
+                        onClick={ this.toggleVisibility }
                         style={{ margin: '20px 0 -10px 30px' }}
                     >
                         <Icon name='sidebar' />

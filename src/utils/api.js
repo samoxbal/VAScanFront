@@ -31,20 +31,6 @@ export const api = {
         };
         return axios(options);
     },
-    fetch_experiments: () => {
-        const options = {
-            method: 'post',
-            url: '/api',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem("token")
-            },
-            data: {
-                command: "fetchExperiments"
-            }
-        };
-        return axios(options);
-    },
     add_scan: data => {
         const { file, ...restData } = data;
         const options = {

@@ -1,11 +1,5 @@
 import ACTION_TYPES from '../constants/actionTypes';
 
-export function FetchExperiments() {
-    return {
-        type: ACTION_TYPES.FETCH_EXPERIMENTS
-    }
-}
-
 export function selectExperiment(_id) {
     return {
         type: ACTION_TYPES.SELECT_EXPERIMENT,

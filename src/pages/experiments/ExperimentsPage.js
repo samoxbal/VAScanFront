@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import { Component } from 'react';
 import PageLayout from '../../components/page-layout/PageLayout';
 import ExperimentTree from '../../components/ExperimentTree';
 import Experiment from '../../components/Experiment';

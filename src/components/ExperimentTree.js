@@ -1,23 +1,28 @@
-import {Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { graphql } from 'react-apollo';
 import TreeFolder from './TreeFolder';
-import {FetchExperiments, selectExperiment, fetchVoltamogramms} from '../actions';
+import { selectExperiment, fetchVoltamogramms } from '../actions';
+import { experiments } from '../graphql/queries';
 
 const mapStateToProps = state => ({
-    experiments: state.experiments,
     selectedExperimentId: state.selectedExperimentId
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    FetchExperiments,
     selectExperiment,
     fetchVoltamogramms
 }, dispatch);
 
 class ExperimentTree extends Component {
-    componentDidMount() {
-        this.props.FetchExperiments();
+
+    static propTypes = {
+        data: PropTypes.shape({
+            experiments: PropTypes.object
+        }),
+        selectExperiment: PropTypes.func
     }
 
     onClickExperiment = _id => {
