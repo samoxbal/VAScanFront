@@ -13,7 +13,7 @@ import './App.css';
 
 const renderLogin = props => {
     if(!localStorage.getItem("token")) {
-        return <Login {...props} />;
+        return <Login { ...props } />;
     } else {
         return <Redirect to="/all" />;
     }

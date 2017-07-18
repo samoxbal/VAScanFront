@@ -29,7 +29,8 @@ module.exports = {
         rules: [
             {
                 test: /\.jsx?$/,
-                use: isProduction ? ['babel-loader'] : ['react-hot-loader', 'babel-loader']
+                use: isProduction ? ['babel-loader'] : ['react-hot-loader', 'babel-loader'],
+                include: path.join(__dirname, 'src')
             },
             {   test: /\.css$/,
                 use: ExtractTextPlugin.extract({
@@ -41,7 +42,8 @@ module.exports = {
                         },
                         { loader: 'postcss-loader' }
                     ]
-                })
+                }),
+                include: path.join(__dirname, 'src')
             }
         ]
     },

@@ -36,7 +36,7 @@ class Login extends Component {
     onChangePassword = (e, data) => this.props.changePassword(data.value)
 
     render() {
-        const { email, password, errors } = this.props.form;
+        const { form: { email, password }, errors } = this.props;
 
         return (
             <div className="Login">
