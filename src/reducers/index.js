@@ -3,7 +3,7 @@ import { routerReducer } from 'react-router-redux';
 import ACTION_TYPES from '../constants/actionTypes';
 import { createSimpleReducer, createFormReducer } from '../utils/createReducers';
 
-const experiments = createSimpleReducer([], ACTION_TYPES.FETCH_EXPERIMENTS_SUCCESS);
+const experiments = createSimpleReducer([], ACTION_TYPES.FETCH_EXPERIMENTS);
 const selectedExperimentId = createSimpleReducer("", ACTION_TYPES.SELECT_EXPERIMENT);
 const errors = createSimpleReducer({}, ACTION_TYPES.SET_ERROR);
 const openAddVoltamogramm = createSimpleReducer(false, ACTION_TYPES.OPEN_ADD_VOLTAMOGRAMM);

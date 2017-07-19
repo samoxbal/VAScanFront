@@ -22,7 +22,7 @@ function* createToken() {
         const [invalidFields, loginObj] = validator(form, loginRequiredFields);
         if(is.empty(invalidFields)) {
             const token = yield call(api.login, loginObj);
-            localStorage.setItem('token', token.data);
+            localStorage.setItem('token', token.data.data);
             yield put(push('/all'));
         } else {
             yield put({

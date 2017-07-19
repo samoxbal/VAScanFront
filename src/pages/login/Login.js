@@ -2,9 +2,9 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Form } from 'semantic-ui-react';
-import { VAInput, VAButton } from '../../components/vascan-ui/form/VAForm';
-import VACard from '../../components/vascan-ui/card/VACard';
+import { Card, CardActions } from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 import ACTION_TYPES from '../../constants/actionTypes';
 import createFormAction from '../../utils/createFormAction';
 import { login } from '../../actions';
@@ -32,34 +32,36 @@ class Login extends Component {
         login: PropTypes.func
     };
 
-    onChangeEmail = (e, data) => this.props.changeEmail(data.value)
-    onChangePassword = (e, data) => this.props.changePassword(data.value)
+    onChangeEmail = (e, data) => this.props.changeEmail(data)
+    onChangePassword = (e, data) => this.props.changePassword(data)
 
     render() {
         const { form: { email, password }, errors } = this.props;
 
         return (
             <div className="Login">
-                <VACard>
-                    <Form onSubmit={ () => this.props.login() }>
-                        <VAInput
-                            placeholder="Имя пользователя"
-                            onChange={ this.onChangeEmail }
-                            value={ email }
-                            error={ !!errors.email }
+                <Card>
+                    <TextField
+                        hintText="Email"
+                        onChange={ this.onChangeEmail }
+                        value={ email }
+                        errorText={ !!errors.email ? "Введите емайл" : "" }
+                    />
+                    <TextField
+                        type="password"
+                        hintText="Пароль"
+                        onChange={ this.onChangePassword }
+                        value={ password }
+                        errorText={ !!errors.password ? "Введите пароль" : "" }
+                    />
+                    <CardActions>
+                        <RaisedButton
+                            primary={ true }
+                            onTouchTap={ () => this.props.login() }
+                            label="Войти"
                         />
-                        <VAInput
-                            type="password"
-                            placeholder="Пароль"
-                            onChange={ this.onChangePassword }
-                            value={ password }
-                            error={ !!errors.password }
-                        />
-                        <VAButton type="submit" basic>
-                            Войти
-                        </VAButton>
-                    </Form>
-                </VACard>
+                    </CardActions>
+                </Card>
             </div>
         )
     }

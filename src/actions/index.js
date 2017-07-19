@@ -86,3 +86,10 @@ export function login() {
         type: ACTION_TYPES.LOGIN
     }
 }
+
+export function fetchExperiments(experiments) {
+    return {
+        type: ACTION_TYPES.FETCH_EXPERIMENTS,
+        payload: experiments
+    }
+}
