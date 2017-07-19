@@ -1,25 +1,29 @@
-import {Component} from 'react';
-import {List} from 'semantic-ui-react';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
+import { List, ListItem } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import FileFolder from 'material-ui/svg-icons/file/folder';
 
 export default class TreeFolder extends Component {
+
+    static propTypes = {
+        data: PropTypes.array,
+        onClickItem: PropTypes.func
+    }
+
     render() {
-        const {data, onClickItem} = this.props;
+        const { data, onClickItem } = this.props;
         return (
             <List>
                 {data.map((item, index) =>
-                    <List.Item
-                        as="a"
-                        key={index}
-                        onClick={() => onClickItem(item._id)}
-                    >
-                        <List.Icon name="folder" />
-                        <List.Content>
-                            <List.Header>
-                                {item.name || item._id}
-                            </List.Header>
-                        </List.Content>
-                    </List.Item>
-                )}
+                    <ListItem
+                        key={ index }
+                        leftAvatar={
+                            <Avatar icon={ <FileFolder /> } />
+                        }
+                        onTouchTap={() => onClickItem(item.id)}
+                        primaryText={ item.name || item.id }
+                    />)}
             </List>
         )
     }

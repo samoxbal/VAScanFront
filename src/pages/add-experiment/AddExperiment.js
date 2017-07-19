@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { resetAddExperimentForm } from '../../actions/index';
 import AddExperimentForm from '../../components/AddExperimentForm';
-import VACard from '../../components/vascan-ui/card/VACard';
+import { Card } from 'material-ui/Card';
 import createFormAction from '../../utils/createFormAction';
 import ACTION_TYPES from '../../constants/actionTypes';
 import { createExperiment } from '../../graphql/mutations';
@@ -75,7 +75,7 @@ class AddExperiment extends Component {
         return (
             <PageLayout>
                 <div className="AddExperment">
-                    <VACard style={{ width: '70%' }}>
+                    <Card style={{ width: '70%' }}>
                         <AddExperimentForm
                             isEdit={ false }
                             onSubmit={ this.submitExperiment }
@@ -87,7 +87,7 @@ class AddExperiment extends Component {
                             form={ form }
                             resetForm={ resetAddExperimentForm }
                         />
-                    </VACard>
+                    </Card>
                 </div>
             </PageLayout>
         )

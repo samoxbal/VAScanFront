@@ -1,6 +1,7 @@
 import { Component, PropTypes } from 'react';
+import TextField from 'material-ui/TextField';
 import { Form } from 'semantic-ui-react';
-import { VAInput, VATextArea, VAButton } from './vascan-ui/form/VAForm';
+import { VAInput, VAButton } from './vascan-ui/form/VAForm';
 import Datetime from 'react-datetime';
 import is from 'is';
 import moment from 'moment';
@@ -31,8 +32,8 @@ export default class AddExperimentForm extends Component {
         }
     }
 
-    onChangeName = (e, data) => this.props.changeName(data.value)
-    onChangeDescription = (e, data) => this.props.changeDescription(data.value)
+    onChangeName = (e, data) => this.props.changeName(data)
+    onChangeDescription = (e, data) => this.props.changeDescription(data)
     onChangeStartDate = date => this.props.changeStartDate(moment(date).format("YYYY-MM-DD"))
     onChangeEndDate = date => this.props.changeEndDate(moment(date).format("YYYY-MM-DD"))
 
@@ -83,27 +84,23 @@ export default class AddExperimentForm extends Component {
         const { errors, experiment, active, form } = this.props;
 
         return (
-            <Form onSubmit={this.submitExperiment}>
-                <Form.Group inline>
-                    { this.renderPickerBegin(errors, experiment, active, form) }
-                    { this.renderPickerEnd(errors, experiment, active, form) }
-                </Form.Group>
-                <VAInput
+            <div>
+                <TextField
                     type="text"
-                    error={ !!errors.name }
-                    placeholder="Название эксперимента"
+                    errorText={ !!errors.name ? "Введите название" : "" }
+                    hintText="Название эксперимента"
                     value={ experiment && !form.name ? experiment.name : form.name }
                     disabled={ !active }
                     onChange={ this.onChangeName }
-                />
-                <VATextArea
-                    error={ !!errors.description }
-                    placeholder="Описание эксперимента"
-                    rows="4"
+                /><br />
+                <TextField
+                    errorText={ !!errors.description ? "Введите описание" : "" }
+                    hintText="Описание эксперимента"
+                    rows={ 4 }
                     value={ experiment && !form.description ? experiment.description : form.description }
                     disabled={ !active }
                     onChange={ this.onChangeDescription }
-                />
+                /><br />
                 { active && <Form.Group inline>
                     <VAButton basic>
                         { experiment ? 'Редактировать' : 'Создать' }
@@ -112,7 +109,7 @@ export default class AddExperimentForm extends Component {
                         Отмена
                     </VAButton>
                 </Form.Group> }
-            </Form>
+            </div>
         )
     }
 }

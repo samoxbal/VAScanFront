@@ -2,7 +2,7 @@ import { Component } from 'react';
 import PageLayout from '../../components/page-layout/PageLayout';
 import ExperimentTree from '../../components/ExperimentTree';
 import Experiment from '../../components/Experiment';
-import VACard from '../../components/vascan-ui/card/VACard';
+import { Card } from 'material-ui/Card';
 
 import './ExperimentsPage.css';
 
@@ -11,12 +11,12 @@ export default class ExperimentsPage extends Component {
         return (
             <PageLayout>
                 <div className="ExperimentsPage">
-                    <VACard className="ExperimentsPage__Tree">
+                    <Card className="ExperimentsPage__Tree">
                         <ExperimentTree/>
-                    </VACard>
-                    <VACard className="ExperimentsPage__Item">
+                    </Card>
+                    <Card className="ExperimentsPage__Item">
                         <Experiment/>
-                    </VACard>
+                    </Card>
                 </div>
             </PageLayout>
         )
