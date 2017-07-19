@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import Datetime from 'react-datetime';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -8,6 +9,7 @@ import VAButton from '../vascan-ui/button/VAButton';
 import { VAInput, VATextArea, VASelect, VACheckbox } from '../vascan-ui/form/VAForm';
 import VASegment from '../vascan-ui/segment/VASegment';
 import createFormAction from '../../utils/createFormAction';
+import { fieldLense } from '../../utils/utils';
 import { activeEditVoltamogramm } from '../../actions/index';
 import ACTION_TYPES from '../../constants/actionTypes';
 
@@ -31,6 +33,20 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 class AddVoltamogrammForm extends Component {
+
+    static propTypes = {
+        errors: PropTypes.object,
+        form: PropTypes.object,
+        voltamogramm: PropTypes.object,
+        active: PropTypes.bool,
+        activeEditVoltamogramm: PropTypes.func,
+        changeCyclic: PropTypes.func,
+        changeVaCycleDatetime: PropTypes.func,
+        changeDescription: PropTypes.func,
+        changeSolution: PropTypes.func,
+        changeNumberOfElectrodes: PropTypes.func,
+        changeEquipmentId: PropTypes.func
+    }
 
     PickerStyleVoltamogramm = {
         className: "form-control has-feedback-left",
@@ -59,65 +75,65 @@ class AddVoltamogrammForm extends Component {
                 <Form>
                     <Form.Group widths="equal">
                         <VAInput
-                            control={Datetime}
-                            inputProps={this.PickerStyleVoltamogramm}
-                            closeOnSelect={true}
-                            timeFormat={false}
-                            disabled={!active}
-                            error={!!errors.va_cycle_datetime}
-                            value={voltamogramm && !form.va_cycle_datetime ? voltamogramm.va_cycle_datetime : form.va_cycle_datetime}
-                            onChange={date => this.props.changeVaCycleDatetime(moment(date).format("YYYY-MM-DD"))}
+                            control={ Datetime }
+                            inputProps={ this.PickerStyleVoltamogramm }
+                            closeOnSelect={ true }
+                            timeFormat={ false }
+                            disabled={ !active }
+                            error={ !!errors.va_cycle_datetime }
+                            value={ fieldLense(voltamogramm, form, 'va_cycle_datetime') }
+                            onChange={ date => this.props.changeVaCycleDatetime(moment(date).format("YYYY-MM-DD")) }
                         />
                         <VACheckbox
                             label="Цикличная вольтамперограмма"
                             toggle
-                            disabled={!active}
-                            checked={voltamogramm && !form.cyclic ? voltamogramm.cyclic : form.cyclic}
-                            onChange={(e, data) => this.props.changeCyclic(!form.cyclic)}
+                            disabled={ !active }
+                            checked={ fieldLense(voltamogramm, form, 'cyclic') }
+                            onChange={ (e, data) => this.props.changeCyclic(!form.cyclic) }
                         />
                     </Form.Group>
                     <VATextArea
                         placeholder="Описание"
                         rows="4"
-                        disabled={!active}
-                        value={voltamogramm && !voltamogramm.description ? voltamogramm.description : form.description}
-                        onChange={(e, data) => this.props.changeDescription(data.value)}
+                        disabled={ !active }
+                        value={ fieldLense(voltamogramm, form, 'description') }
+                        onChange={ (e, data) => this.props.changeDescription(data.value) }
                     />
                     <Form.Group widths="equal">
                         <VAInput
                             type="text"
                             placeholder="Раствор"
-                            disabled={!active}
-                            value={voltamogramm && !form.solution ? voltamogramm.solution : form.solution}
-                            onChange={(e, data) => this.props.changeSolution(data.value)}
+                            disabled={ !active }
+                            value={ fieldLense(voltamogramm, form, 'solution') }
+                            onChange={ (e, data) => this.props.changeSolution(data.value) }
                         />
                         <VAInput
                             type="text"
                             placeholder="Серийный номер электрода"
-                            disabled={!active}
-                            value={voltamogramm && !form.equipment_id ? voltamogramm.equipment_id : form.equipment_id}
-                            onChange={(e, data) => this.props.changeEquipmentId(data.value)}
+                            disabled={ !active }
+                            value={ fieldLense(voltamogramm, form, 'equipment_id') }
+                            onChange={ (e, data) => this.props.changeEquipmentId(data.value) }
                         />
                         <VASelect
                             placeholder="Количество электродов"
-                            options={this.numberElectrodsOptions}
-                            error={!!errors.number_of_electrodes}
-                            disabled={!active}
-                            value={voltamogramm && !form.number_of_electrodes ? voltamogramm.number_of_electrodes : form.number_of_electrodes}
-                            onChange={(e, data) => this.props.changeNumberOfElectrodes(data.value)}
+                            options={ this.numberElectrodsOptions }
+                            error={ !!errors.number_of_electrodes }
+                            disabled={ !active }
+                            value={ fieldLense(voltamogramm, form, 'number_of_electrodes') }
+                            onChange={ (e, data) => this.props.changeNumberOfElectrodes(data.value) }
                         />
                     </Form.Group>
-                    {active && <Form.Group inline>
+                    { active && <Form.Group inline>
                         <VAButton basic>
                             Редактировать
                         </VAButton>
                         <VAButton
                             type="button"
-                            onClick={() => activeEditVoltamogramm(false)}
+                            onClick={ () => activeEditVoltamogramm(false) }
                         >
                             Отмена
                         </VAButton>
-                    </Form.Group>}
+                    </Form.Group> }
                 </Form>
             </VASegment>
         )
