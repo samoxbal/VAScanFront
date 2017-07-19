@@ -1,4 +1,5 @@
-import { Component, PropTypes } from 'react';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 import VAButton from '../vascan-ui/button/VAButton';
 import { Icon } from 'semantic-ui-react';
 import BurgerMenu from 'react-burger-menu';
@@ -9,7 +10,6 @@ export default class PageLayout extends Component {
 
     constructor(props) {
         super(props);
-        this.logout = this.logout.bind(this);
         this.state = {
             visible: false
         }
@@ -33,7 +33,7 @@ export default class PageLayout extends Component {
         router: PropTypes.object.isRequired
     };
 
-    logout() {
+    logout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("email");
         this.context.router.history.push("/");

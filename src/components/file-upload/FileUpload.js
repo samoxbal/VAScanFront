@@ -1,29 +1,26 @@
-import {Component} from 'react';
+import { Component } from 'react';
 import './FileUpload.css';
 
 export default class FileUpload extends Component {
 
     constructor(props) {
         super(props);
-        this.onDragOver = this.onDragOver.bind(this);
-        this.onDragLeave = this.onDragLeave.bind(this);
-        this.onDrop = this.onDrop.bind(this);
         this._file = null;
     }
 
-    onDragOver(e) {
+    onDragOver = e => {
         e.preventDefault();
         this._dropzone.classList.add('AddScan__inputFileUpload_over');
         this._label.classList.add('AddScan__labelFileUpload_over');
     }
 
-    onDragLeave(e) {
+    onDragLeave = e =>  {
         e.preventDefault();
         this._dropzone.classList.remove('AddScan__inputFileUpload_over');
         this._label.classList.remove('AddScan__labelFileUpload_over');
     }
 
-    onDrop(e) {
+    onDrop = e =>  {
         e.preventDefault();
         this._dropzone.classList.remove('AddScan__inputFileUpload_over');
         this._label.classList.remove('AddScan__labelFileUpload_over');
@@ -40,13 +37,13 @@ export default class FileUpload extends Component {
         return (
             <div
                 className="AddScan__inputFileUpload"
-                ref={ref => this._dropzone = ref}
-                onDragOver={this.onDragOver}
-                onDragLeave={this.onDragLeave}
-                onDrop={this.onDrop}
-                {...this.props}
+                ref={ ref => this._dropzone = ref }
+                onDragOver={ this.onDragOver }
+                onDragLeave={ this.onDragLeave }
+                onDrop={ this.onDrop }
+                { ...this.props }
             >
-                <h3 className="AddScan__labelFileUpload" ref={ref => this._label = ref}>
+                <h3 className="AddScan__labelFileUpload" ref={ ref => this._label = ref }>
                     Перетащите файл сюда и отпустите
                 </h3>
             </div>

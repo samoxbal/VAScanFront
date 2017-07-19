@@ -1,14 +1,14 @@
-import {Component} from 'react';
+import { Component } from 'react';
 import Datetime from 'react-datetime';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import {Form, Header} from 'semantic-ui-react';
+import { Form, Header } from 'semantic-ui-react';
 import VAButton from '../vascan-ui/button/VAButton';
-import {VAInput, VATextArea, VASelect, VACheckbox} from '../vascan-ui/form/VAForm';
+import { VAInput, VATextArea, VASelect, VACheckbox } from '../vascan-ui/form/VAForm';
 import VASegment from '../vascan-ui/segment/VASegment';
 import createFormAction from '../../utils/createFormAction';
-import {activeEditVoltamogramm} from '../../actions/index';
+import { activeEditVoltamogramm } from '../../actions/index';
 import ACTION_TYPES from '../../constants/actionTypes';
 
 import './AddVoltamogrammForm.css';
