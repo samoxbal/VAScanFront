@@ -11,3 +11,11 @@ export const experiments = gql`
         }
     }
 `;
+
+export const voltamogramms = gql`
+    query voltamogramms($experiment: String) {
+        voltamogramms(experiment: $experiment) {
+            id
+        }
+    }
+`;

@@ -55,21 +55,6 @@ export const api = {
                 });
             });
     },
-    fetch_voltamogramms: data => {
-        const options = {
-            method: 'post',
-            url: '/api',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem("token")
-            },
-            data: {
-                command: "fetchVoltamogramms",
-                body: data
-            }
-        };
-        return axios(options);
-    },
     fetch_single_voltamogramm: data => {
         const options = {
             method: 'post',
