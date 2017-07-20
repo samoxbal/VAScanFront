@@ -7,7 +7,7 @@ import AddVoltamogramm from './AddVoltamogramm';
 import {getSelectedExperiment} from '../selectors/experiment';
 import {openAddVoltamogramm, editExperiment, resetAddExperimentForm} from '../actions/index';
 import VAButton from './vascan-ui/button/VAButton';
-import ListLinks from './list-links/ListLinks';
+import ListLinks from './ListLinks';
 import AddExperimentForm from './AddExperimentForm';
 import createFormAction from '../utils/createFormAction';
 import ACTION_TYPES from '../constants/actionTypes';

@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import {List} from 'semantic-ui-react';
 import {getSelectedScan} from '../selectors/scan';
 import AddScanForm from './AddScanForm';
-import ListLinks from './list-links/ListLinks';
+import ListLinks from './ListLinks';
 
 const mapStateToProps = state => ({
     measures: state.measures,

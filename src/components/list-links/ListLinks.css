@@ -1,9 +1,0 @@
-.ListLinks {
-    &__Item {
-        color: #5bc0de !important;
-        border-bottom: 0 !important;
-        & a {
-            color: #5bc0de !important;
-        }
-    }
-}
