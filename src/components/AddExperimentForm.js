@@ -1,6 +1,7 @@
 import { Component, PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import DatePicker from 'material-ui/DatePicker';
 import is from 'is';
 import moment from 'moment';
 
@@ -59,7 +60,9 @@ export default class AddExperimentForm extends Component {
         const { errors, experiment, active, form } = this.props;
 
         return (
-            <div>
+            <div style={{ padding: 30 }}>
+                <DatePicker hintText="Дата начала" />
+                <DatePicker hintText="Дата окончания" />
                 <TextField
                     type="text"
                     errorText={ !!errors.name ? "Введите название" : "" }
@@ -67,7 +70,7 @@ export default class AddExperimentForm extends Component {
                     value={ experiment && !form.name ? experiment.name : form.name }
                     disabled={ !active }
                     onChange={ this.onChangeName }
-                />
+                /><br/>
                 <TextField
                     errorText={ !!errors.description ? "Введите описание" : "" }
                     hintText="Описание эксперимента"
@@ -75,7 +78,7 @@ export default class AddExperimentForm extends Component {
                     value={ experiment && !form.description ? experiment.description : form.description }
                     disabled={ !active }
                     onChange={ this.onChangeDescription }
-                />
+                /><br/>
                 { active && this.renderButtons() }
             </div>
         )
