@@ -1,16 +1,17 @@
-import {Component} from 'react';
-import Datetime from 'react-datetime';
-import FileUpload from './file-upload/FileUpload';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import moment from 'moment';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
+import DatePicker from 'material-ui/DatePicker';
+import Toggle from 'material-ui/Toggle';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import FileUpload from './FileUpload';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Regime from './Regime';
-import {Form, Header} from 'semantic-ui-react';
-import VASegment from './vascan-ui/segment/VASegment';
-import {VAInput, VASelect, VACheckbox} from './vascan-ui/form/VAForm';
 import createFormAction from '../utils/createFormAction';
 import ACTION_TYPES from '../constants/actionTypes';
-import {getSelectedScan, isSelectedScan} from '../selectors/scan';
+import { getSelectedScan, isSelectedScan } from '../selectors/scan';
 
 const mapStateToProps = state => ({
     errors: state.errors,
@@ -38,9 +39,24 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 class AddScanForm extends Component {
 
-    PickerStyleScan = {
-        className: "form-control has-feedback-left",
-        placeholder: "Дата начала"
+    static propTypes = {
+        errors: PropTypes.object,
+        addScan: PropTypes.object,
+        scan: PropTypes.object,
+        isScanExist: PropTypes.bool,
+        changeScanDatetime: PropTypes.func,
+        changeStartPotential: PropTypes.func,
+        changeEndPotential: PropTypes.func,
+        changeReverseDirection: PropTypes.func,
+        changeStirring: PropTypes.func,
+        changeStirringSpeed: PropTypes.func,
+        changeRotation: PropTypes.func,
+        changeRotationSpeed: PropTypes.func,
+        changeChannelId: PropTypes.func,
+        changeChannelLabel: PropTypes.func,
+        changeTemperature: PropTypes.func,
+        changePressure: PropTypes.func,
+        changeRegime: PropTypes.func
     }
 
     regimeOptions = [
@@ -60,113 +76,110 @@ class AddScanForm extends Component {
             addScan,
             errors,
             scan,
-            isScanExist
+            isScanExist,
+            changeScanDatetime,
+            changeStartPotential,
+            changeEndPotential,
+            changeReverseDirection,
+            changeStirring,
+            changeStirringSpeed,
+            changeRotation,
+            changeRotationSpeed,
+            changeChannelId,
+            changeChannelLabel,
+            changeTemperature,
+            changePressure,
+            changeRegime
         } = this.props;
 
         return (
-            <Form>
-                <VASegment>
-                    <Header as="h2">Параметры измерения</Header>
-                    <Form.Group widths="equal">
-                        <VAInput
-                            control={Datetime}
-                            inputProps={this.PickerStyleScan}
-                            closeOnSelect={true}
-                            timeFormat={false}
-                            error={!!errors.scan_datetime}
-                            value={addScan.scan_datetime}
-                            onChange={date => this.props.changeScanDatetime(moment(date).format("YYYY-MM-DD"))}
+            <div>
+                <h3>Параметры измерения</h3>
+                <DatePicker
+                    autoOk={ true }
+                    onChange={ date => changeScanDatetime(date) }
+                />
+                <TextField
+                    floatingLabelText="Начальный потенциал"
+                    // value={ fieldLense(voltamogramm, form, 'description') }
+                    onChange={ (e, data) => changeStartPotential(data) }
+                    fullWidth={ true }
+                /><br/>
+                <TextField
+                    floatingLabelText="Конечный потенциал"
+                    // value={ fieldLense(voltamogramm, form, 'description') }
+                    onChange={ (e, data) => changeEndPotential(data) }
+                    fullWidth={ true }
+                /><br/>
+                <TextField
+                    floatingLabelText="Номер канала"
+                    // value={ fieldLense(voltamogramm, form, 'description') }
+                    onChange={ (e, data) => changeChannelId(data) }
+                    fullWidth={ true }
+                /><br/>
+                <TextField
+                    floatingLabelText="Имя канала"
+                    // value={ fieldLense(voltamogramm, form, 'description') }
+                    onChange={ (e, data) => changeChannelLabel(data) }
+                    fullWidth={ true }
+                /><br/>
+                <TextField
+                    floatingLabelText="Температура"
+                    // value={ fieldLense(voltamogramm, form, 'description') }
+                    onChange={ (e, data) => changeTemperature(data) }
+                    fullWidth={ true }
+                /><br/>
+                <TextField
+                    floatingLabelText="Давление"
+                    // value={ fieldLense(voltamogramm, form, 'description') }
+                    onChange={ (e, data) => changePressure(data) }
+                    fullWidth={ true }
+                /><br/>
+                <Toggle
+                    label="Прямая развертка"
+                    // toggled={ fieldLense(voltamogramm, form, 'cyclic') }
+                    onChange={ (e, toggled) => changeReverseDirection(toggled) }
+                />
+                <Toggle
+                    label="Мешалка"
+                    // toggled={ fieldLense(voltamogramm, form, 'cyclic') }
+                    onChange={ (e, toggled) => changeStirring(toggled) }
+                />
+                <Toggle
+                    label="Вращение электрода"
+                    // toggled={ fieldLense(voltamogramm, form, 'cyclic') }
+                    onChange={ (e, toggled) => changeRotation(toggled) }
+                />
+                { addScan.stirring &&
+                    <TextField
+                        floatingLabelText="Скорость перемешивания"
+                        // value={addScan.stirring_speed}
+                        onChange={ (e, data) => changeStirringSpeed(data) }
+                    /> }
+                { addScan.rotation &&
+                    <TextField
+                        floatingLabelText="Скорость вращения"
+                        // value={addScan.rotation_speed}
+                        onChange={ (e, data) => changeRotationSpeed(data) }
+                    /> }
+                <SelectField
+                    floatingLabelText="Тип измерения"
+                    value={ addScan.regime }
+                    onChange={ (e, data) => this.props.changeRegime(data) }
+                >
+                    { this.regimeOptions.map(item => (
+                        <MenuItem
+                            key={ item.key }
+                            value={ item.value }
+                            primaryText={ item.text }
                         />
-                        <VAInput
-                            type="text"
-                            placeholder="Начальный потенциал"
-                            value={addScan.start_potential}
-                            error={!!errors.start_potential}
-                            onChange={(e, data) => this.props.changeStartPotential(data.value)}
-                        />
-                        <VAInput
-                            type="text"
-                            placeholder="Конечный потенциал"
-                            value={addScan.end_potential}
-                            error={!!errors.end_potential}
-                            onChange={(e, data) => this.props.changeEndPotential(data.value)}
-                        />
-                    </Form.Group>
-                    <Form.Group widths="equal">
-                        <VAInput
-                            type="text"
-                            placeholder="Номер канала"
-                            value={addScan.channel_id}
-                            onChange={(e, data) => this.props.changeChannelId(data.value)}
-                        />
-                        <VAInput
-                            type="text"
-                            placeholder="Имя канала"
-                            value={addScan.channel_label}
-                            onChange={(e, data) => this.props.changeChannelLabel(data.value)}
-                        />
-                    </Form.Group>
-                    <Form.Group widths="equal">
-                        <VAInput
-                            type="text"
-                            placeholder="Температура"
-                            value={addScan.temperature}
-                            error={!!errors.temperature}
-                            onChange={(e, data) => this.props.changeTemperature(data.value)}
-                        />
-                        <VAInput
-                            type="text"
-                            placeholder="Давление"
-                            value={addScan.pressure}
-                            error={!!errors.pressure}
-                            onChange={(e, data) => this.props.changePressure(data.value)}
-                        />
-                    </Form.Group>
-                    <VACheckbox
-                        label="Прямая развертка"
-                        toggle
-                        checked={addScan.reverse_direction}
-                        onChange={(e, data) => this.props.changeReverseDirection(!addScan.reverse_direction)}
-                    />
-                    <VACheckbox
-                        label="Мешалка"
-                        toggle
-                        checked={addScan.stirring}
-                        onChange={(e, data) => this.props.changeStirring(!addScan.stirring)}
-                    />
-                    {addScan.stirring &&
-                    <VAInput
-                        type="text"
-                        placeholder="Скорость перемешивания"
-                        value={addScan.stirring_speed}
-                        onChange={(e, data) => this.props.changeStirringSpeed(data.value)}
-                    />}
-                    <VACheckbox
-                        label="Вращение электрода"
-                        toggle
-                        checked={addScan.rotation}
-                        onChange={(e, data) => this.props.changeRotation(!addScan.rotation)}
-                    />
-                    {addScan.rotation &&
-                    <VAInput
-                        type="text"
-                        placeholder="Скорость вращения"
-                        value={addScan.rotation_speed}
-                        onChange={(e, data) => this.props.changeRotationSpeed(data.value)}
-                    />}
-                    <VASelect
-                        placeholder="Тип измерения"
-                        options={this.regimeOptions}
-                        value={addScan.regime}
-                        error={!!errors.regime}
-                        onChange={(e, data) => this.props.changeRegime(data.value)}
-                    />
-                    <Regime/>
-                    {!isScanExist && <FileUpload ref={ref => this._file = ref} />}
-                </VASegment>
-            </Form>
+                    )) }
+                </SelectField>
+                <Regime/>
+                { !isScanExist && <FileUpload ref={ ref => this._file = ref } /> }
+            </div>
         );
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})(AddScanForm);
+export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(AddScanForm);
