@@ -1,9 +1,10 @@
-import { Component, PropTypes } from 'react';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 import is from 'is';
-import moment from 'moment';
+import { fieldLense } from '../utils/utils';
 
 export default class AddExperimentForm extends Component {
     static propTypes = {
@@ -33,8 +34,8 @@ export default class AddExperimentForm extends Component {
 
     onChangeName = (e, data) => this.props.changeName(data)
     onChangeDescription = (e, data) => this.props.changeDescription(data)
-    onChangeStartDate = date => this.props.changeStartDate(moment(date).format("YYYY-MM-DD"))
-    onChangeEndDate = date => this.props.changeEndDate(moment(date).format("YYYY-MM-DD"))
+    onChangeStartDate = (e, date) => this.props.changeStartDate(date)
+    onChangeEndDate = (e, date) => this.props.changeEndDate(date)
 
     submitExperiment = event => {
         event.preventDefault();
@@ -48,6 +49,7 @@ export default class AddExperimentForm extends Component {
                     primary={ true }
                     label="Создать"
                     onTouchTap={ this.submitExperiment }
+                    style={{ marginRight: 10 }}
                 />
                 <RaisedButton
                     label="Отмена"
@@ -62,23 +64,37 @@ export default class AddExperimentForm extends Component {
 
         return (
             <div style={{ padding: 30 }}>
-                <DatePicker hintText="Дата начала" />
-                <DatePicker hintText="Дата окончания" />
+                <div>
+                    <DatePicker
+                        hintText="Дата начала"
+                        onChange={ this.onChangeStartDate }
+                        autoOk={ true }
+                        style={{ display: 'inline-block', marginRight: 30 }}
+                    />
+                    <DatePicker
+                        hintText="Дата окончания"
+                        onChange={ this.onChangeEndDate }
+                        autoOk={ true }
+                        style={{ display: 'inline-block' }}
+                    />
+                </div>
                 <TextField
                     type="text"
                     errorText={ !!errors.name ? "Введите название" : "" }
-                    hintText="Название эксперимента"
-                    value={ experiment && !form.name ? experiment.name : form.name }
+                    floatingLabelText="Название эксперимента"
+                    value={ fieldLense(experiment, form, 'name') }
                     disabled={ !active }
                     onChange={ this.onChangeName }
+                    fullWidth={ true }
                 /><br/>
                 <TextField
                     errorText={ !!errors.description ? "Введите описание" : "" }
-                    hintText="Описание эксперимента"
+                    floatingLabelText="Описание эксперимента"
                     rows={ 4 }
-                    value={ experiment && !form.description ? experiment.description : form.description }
+                    value={ fieldLense(experiment, form, 'description') }
                     disabled={ !active }
                     onChange={ this.onChangeDescription }
+                    fullWidth={ true }
                 /><br/>
                 { active && this.renderButtons() }
             </div>

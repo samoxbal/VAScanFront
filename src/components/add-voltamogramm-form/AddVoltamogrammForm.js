@@ -1,13 +1,13 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import Datetime from 'react-datetime';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import moment from 'moment';
-import { Form, Header } from 'semantic-ui-react';
-import VAButton from '../vascan-ui/button/VAButton';
-import { VAInput, VATextArea, VASelect, VACheckbox } from '../vascan-ui/form/VAForm';
-import VASegment from '../vascan-ui/segment/VASegment';
+import DatePicker from 'material-ui/DatePicker';
+import RaisedButton from 'material-ui/RaisedButton';
+import Toggle from 'material-ui/Toggle';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import createFormAction from '../../utils/createFormAction';
 import { fieldLense } from '../../utils/utils';
 import { activeEditVoltamogramm } from '../../actions/index';
@@ -48,11 +48,6 @@ class AddVoltamogrammForm extends Component {
         changeEquipmentId: PropTypes.func
     }
 
-    PickerStyleVoltamogramm = {
-        className: "form-control has-feedback-left",
-        placeholder: "Дата начала"
-    }
-
     numberElectrodsOptions = [
         { key: '1', text: '1', value: 1 },
         { key: '2', text: '2', value: 2 },
@@ -60,82 +55,90 @@ class AddVoltamogrammForm extends Component {
         { key: '4', text: '4', value: 4 }
     ]
 
+    renderButtons() {
+        return (
+            <div>
+                <RaisedButton
+                    primary={ true }
+                    label="Создать"
+                    // onTouchTap={ this.submitExperiment }
+                    style={{ marginRight: 10 }}
+                />
+                <RaisedButton
+                    label="Отмена"
+                    onTouchTap={ () => this.props.activeEditVoltamogramm(false) }
+                />
+            </div>
+        )
+    }
+
     render() {
         const {
             form,
             voltamogramm,
             errors,
             active,
-            activeEditVoltamogramm
+            changeVaCycleDatetime,
+            changeCyclic,
+            changeDescription,
+            changeSolution,
+            changeEquipmentId
         } = this.props;
 
         return (
-            <VASegment className="AddVoltamogrammForm">
-                <Header as="h2">Параметры вольтаммограммы</Header>
-                <Form>
-                    <Form.Group widths="equal">
-                        <VAInput
-                            control={ Datetime }
-                            inputProps={ this.PickerStyleVoltamogramm }
-                            closeOnSelect={ true }
-                            timeFormat={ false }
-                            disabled={ !active }
-                            error={ !!errors.va_cycle_datetime }
-                            value={ fieldLense(voltamogramm, form, 'va_cycle_datetime') }
-                            onChange={ date => this.props.changeVaCycleDatetime(moment(date).format("YYYY-MM-DD")) }
+            <div className="AddVoltamogrammForm">
+                <h3>Параметры вольтаммограммы</h3>
+                <DatePicker
+                    disabled={ !active }
+                    error={ !!errors.va_cycle_datetime }
+                    value={ fieldLense(voltamogramm, form, 'va_cycle_datetime') }
+                    autoOk={ true }
+                    onChange={ date => changeVaCycleDatetime(date) }
+                />
+                <Toggle
+                    label="Цикличная вольтамперограмма"
+                    disabled={ !active }
+                    toggled={ fieldLense(voltamogramm, form, 'cyclic') }
+                    onChange={ (e, toggled) => changeCyclic(toggled) }
+                />
+                <TextField
+                    errorText={ !!errors.description ? "Введите описание" : "" }
+                    floatingLabelText="Описание"
+                    rows={ 4 }
+                    value={ fieldLense(voltamogramm, form, 'description') }
+                    disabled={ !active }
+                    onChange={ (e, data) => changeDescription(data) }
+                    fullWidth={ true }
+                /><br/>
+                <TextField
+                    floatingLabelText="Раствор"
+                    disabled={ !active }
+                    value={ fieldLense(voltamogramm, form, 'solution') }
+                    onChange={ (e, data) => changeSolution(data) }
+                /><br/>
+                <TextField
+                    floatingLabelText="Серийный номер электрода"
+                    disabled={ !active }
+                    value={ fieldLense(voltamogramm, form, 'equipment_id') }
+                    onChange={ (e, data) => changeEquipmentId(data) }
+                /><br/>
+                <SelectField
+                    floatingLabelText="Количество электродов"
+                    error={ !!errors.number_of_electrodes }
+                    disabled={ !active }
+                    value={ fieldLense(voltamogramm, form, 'number_of_electrodes') }
+                    onChange={ (e, data) => this.props.changeNumberOfElectrodes(data) }
+                >
+                    { this.numberElectrodsOptions.map(item => (
+                        <MenuItem
+                            key={ item.key }
+                            value={ item.value }
+                            primaryText={ item.text }
                         />
-                        <VACheckbox
-                            label="Цикличная вольтамперограмма"
-                            toggle
-                            disabled={ !active }
-                            checked={ fieldLense(voltamogramm, form, 'cyclic') }
-                            onChange={ (e, data) => this.props.changeCyclic(!form.cyclic) }
-                        />
-                    </Form.Group>
-                    <VATextArea
-                        placeholder="Описание"
-                        rows="4"
-                        disabled={ !active }
-                        value={ fieldLense(voltamogramm, form, 'description') }
-                        onChange={ (e, data) => this.props.changeDescription(data.value) }
-                    />
-                    <Form.Group widths="equal">
-                        <VAInput
-                            type="text"
-                            placeholder="Раствор"
-                            disabled={ !active }
-                            value={ fieldLense(voltamogramm, form, 'solution') }
-                            onChange={ (e, data) => this.props.changeSolution(data.value) }
-                        />
-                        <VAInput
-                            type="text"
-                            placeholder="Серийный номер электрода"
-                            disabled={ !active }
-                            value={ fieldLense(voltamogramm, form, 'equipment_id') }
-                            onChange={ (e, data) => this.props.changeEquipmentId(data.value) }
-                        />
-                        <VASelect
-                            placeholder="Количество электродов"
-                            options={ this.numberElectrodsOptions }
-                            error={ !!errors.number_of_electrodes }
-                            disabled={ !active }
-                            value={ fieldLense(voltamogramm, form, 'number_of_electrodes') }
-                            onChange={ (e, data) => this.props.changeNumberOfElectrodes(data.value) }
-                        />
-                    </Form.Group>
-                    { active && <Form.Group inline>
-                        <VAButton basic>
-                            Редактировать
-                        </VAButton>
-                        <VAButton
-                            type="button"
-                            onClick={ () => activeEditVoltamogramm(false) }
-                        >
-                            Отмена
-                        </VAButton>
-                    </Form.Group> }
-                </Form>
-            </VASegment>
+                    )) }
+                </SelectField>
+                { active && this.renderButtons() }
+            </div>
         )
     }
 }

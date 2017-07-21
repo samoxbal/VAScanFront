@@ -9,7 +9,6 @@ import AddVoltamogrammForm from './add-voltamogramm-form/AddVoltamogrammForm';
 import AddScanForm from './AddScanForm';
 
 const mapStateToProps = state => ({
-    errors: state.errors,
     openPanel: state.openAddVoltamogramm,
     experiment_id: state.selectedExperimentId
 });
@@ -22,8 +21,23 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 class AddScan extends Component {
 
+    constructor(props) {
+        super(props);
+        this.actions = [
+            <RaisedButton
+                onTouchTap={ this.handleSubmit }
+                primary={ true }
+                label="Создать"
+                style={{ marginRight: 10 }}
+            />,
+            <RaisedButton
+                onTouchTap={ () => this.props.openAddVoltamogramm(false) }
+                label="Отмена"
+            />
+        ];
+    }
+
     static propTypes = {
-        errors: PropTypes.object,
         openPanel: PropTypes.bool,
         createScan: PropTypes.func,
         experiment_id: PropTypes.string,
@@ -42,26 +56,16 @@ class AddScan extends Component {
     }
 
     render() {
-        const {
-            openPanel,
-            openAddVoltamogramm
-        } = this.props;
-
         return (
             <Dialog
-                open={ openPanel }
+                open={ this.props.openPanel }
                 modal={ true }
-                onRequestClose={ () => openAddVoltamogramm(false) }
-                className="VAModal"
                 title="Создать вольтамограмму"
+                actions={ this.actions }
+                autoScrollBodyContent={ true }
             >
                 <AddVoltamogrammForm/>
                 <AddScanForm ref={ ref => this._scanForm = ref } />
-                <br/>
-                <RaisedButton
-                    onTouchTap={ this.handleSubmit }
-                    label="Создать"
-                />
             </Dialog>
         )
     }

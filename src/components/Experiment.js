@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AddVoltamogramm from './AddVoltamogramm';
 import { getSelectedExperiment } from '../selectors/experiment';
+import AddIcon from 'material-ui/svg-icons/content/add';
+import EditIcon from 'material-ui/svg-icons/content/create';
 import { openAddVoltamogramm, editExperiment, resetAddExperimentForm } from '../actions/index';
 import RaisedButton from 'material-ui/RaisedButton';
 import ListLinks from './ListLinks';
@@ -78,7 +80,7 @@ class Experiment extends Component {
         } = this.props;
 
         return (
-            <div style={{ clear: 'both', paddingTop: 10 }}>
+            <div style={{ clear: 'both' }}>
                 <AddExperimentForm
                     experiment={ experiment }
                     form={ form }
@@ -114,10 +116,13 @@ class Experiment extends Component {
                     <RaisedButton
                         onTouchTap={ this.openAddVoltamogramm }
                         label='Создать вольтамограмму'
+                        style={{ margin: 15 }}
+                        icon={ <AddIcon/> }
                     />
                     <RaisedButton
                         onTouchTap={ this.activeEditExperiment }
                         label='Редактировать эксперимент'
+                        icon={ <EditIcon/> }
                     />
                     { this.renderExperiment() }
                     { !!voltamogramms.length && this.renderVoltamogramms(voltamogramms) }
