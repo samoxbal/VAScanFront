@@ -1,11 +1,10 @@
-import {Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {Link} from 'react-router-dom';
-import {List} from 'semantic-ui-react';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import AddVoltamogramm from './AddVoltamogramm';
-import {getSelectedExperiment} from '../selectors/experiment';
-import {openAddVoltamogramm, editExperiment, resetAddExperimentForm} from '../actions/index';
+import { getSelectedExperiment } from '../selectors/experiment';
+import { openAddVoltamogramm, editExperiment, resetAddExperimentForm } from '../actions/index';
 import VAButton from './vascan-ui/button/VAButton';
 import ListLinks from './ListLinks';
 import AddExperimentForm from './AddExperimentForm';
@@ -35,6 +34,18 @@ class Experiment extends Component {
         this.state = {
             activeEdit: false
         }
+    }
+
+    static propTypes = {
+        experiment: PropTypes.object,
+        voltamogramms: PropTypes.array,
+        errors: PropTypes.object,
+        form: PropTypes.object,
+        changeName: PropTypes.func,
+        changeDescription: PropTypes.func,
+        changeStartDate: PropTypes.func,
+        changeEndDate: PropTypes.func,
+        resetAddExperimentForm: PropTypes.func
     }
 
     openAddVoltamogramm = () => this.props.openAddVoltamogramm(true)
@@ -69,17 +80,17 @@ class Experiment extends Component {
         return (
             <div style={{ clear: 'both', paddingTop: 10 }}>
                 <AddExperimentForm
-                    experiment={experiment}
-                    form={form}
-                    errors={errors}
-                    active={this.state.activeEdit}
-                    onCancel={this.deactiveEditExperiment}
-                    onSubmit={this.editExperiment}
-                    changeName={changeName}
-                    changeDescription={changeDescription}
-                    changeStartDate={changeStartDate}
-                    changeEndDate={changeEndDate}
-                    resetForm={resetAddExperimentForm}
+                    experiment={ experiment }
+                    form={ form }
+                    errors={ errors }
+                    active={ this.state.activeEdit }
+                    onCancel={ this.deactiveEditExperiment }
+                    onSubmit={ this.editExperiment }
+                    changeName={ changeName }
+                    changeDescription={ changeDescription }
+                    changeStartDate={ changeStartDate }
+                    changeEndDate={ changeEndDate }
+                    resetForm={ resetAddExperimentForm }
                 />
             </div>
         )
@@ -95,7 +106,7 @@ class Experiment extends Component {
     }
 
     render() {
-        const {experiment, voltamogramms} = this.props;
+        const { experiment, voltamogramms } = this.props;
 
         return (
             <div>
@@ -114,8 +125,8 @@ class Experiment extends Component {
                         labelPosition='left'
                         basic
                     />
-                    {this.renderExperiment()}
-                    {!!voltamogramms.length && this.renderVoltamogramms(voltamogramms)}
+                    { this.renderExperiment() }
+                    { !!voltamogramms.length && this.renderVoltamogramms(voltamogramms) }
                     <AddVoltamogramm/>
                 </div>}
             </div>

@@ -47,6 +47,7 @@ export default class AddExperimentForm extends Component {
                 <RaisedButton
                     primary={ true }
                     label="Создать"
+                    onTouchTap={ this.submitExperiment }
                 />
                 <RaisedButton
                     label="Отмена"
