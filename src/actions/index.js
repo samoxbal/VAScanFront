@@ -93,3 +93,10 @@ export function fetchExperiments(experiments) {
         payload: experiments
     }
 }
+
+export function fetchVoltamogramms(voltamogramms) {
+    return {
+        type: ACTION_TYPES.FETCH_VOLTAMOGRAMMS,
+        payload: voltamogramms
+    }
+}

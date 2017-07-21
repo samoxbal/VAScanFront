@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { withApollo } from 'react-apollo';
 import jwtDecode from 'jwt-decode';
 import TreeFolder from './TreeFolder';
-import { selectExperiment, fetchExperiments } from '../actions';
+import { selectExperiment, fetchExperiments, fetchVoltamogramms } from '../actions';
 import { experiments, voltamogramms } from '../graphql/queries';
 
 const mapStateToProps = state => ({
@@ -15,7 +15,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     selectExperiment,
-    fetchExperiments
+    fetchExperiments,
+    fetchVoltamogramms
 }, dispatch);
 
 class ExperimentTree extends Component {
@@ -24,7 +25,8 @@ class ExperimentTree extends Component {
         experiments: PropTypes.array,
         selectExperiment: PropTypes.func,
         client: PropTypes.object,
-        fetchExperiments: PropTypes.func
+        fetchExperiments: PropTypes.func,
+        fetchVoltamogramms: PropTypes.func
     }
 
     componentWillMount() {
@@ -37,16 +39,22 @@ class ExperimentTree extends Component {
         }).then(data => fetchExperiments(data.data.experiments));
     }
 
-    onClickExperiment = _id => {
-        const { client, selectExperiment } = this.props;
-        selectExperiment(_id);
+    onClickExperiment = id => {
+        const { client, selectExperiment, fetchVoltamogramms } = this.props;
+        selectExperiment(id);
+        client.query({
+            query: voltamogramms,
+            variables: {
+                experiment: id
+            }
+        }).then(data => fetchVoltamogramms(data.data.voltamogramms))
     }
 
     render() {
         return (
             <TreeFolder
                 data={ this.props.experiments }
-                onClickItem={ _id => this.onClickExperiment(_id) }
+                onClickItem={ id => this.onClickExperiment(id) }
             />
         )
     }
