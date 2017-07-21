@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import AddVoltamogramm from './AddVoltamogramm';
 import { getSelectedExperiment } from '../selectors/experiment';
 import { openAddVoltamogramm, editExperiment, resetAddExperimentForm } from '../actions/index';
-import VAButton from './vascan-ui/button/VAButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import ListLinks from './ListLinks';
 import AddExperimentForm from './AddExperimentForm';
 import createFormAction from '../utils/createFormAction';
@@ -111,19 +111,13 @@ class Experiment extends Component {
         return (
             <div>
                 {experiment && <div>
-                    <VAButton
-                        icon='plus'
-                        onClick={this.openAddVoltamogramm}
-                        content='Создать вольтамограмму'
-                        labelPosition='left'
-                        basic
+                    <RaisedButton
+                        onTouchTap={ this.openAddVoltamogramm }
+                        label='Создать вольтамограмму'
                     />
-                    <VAButton
-                        icon='edit'
-                        onClick={this.activeEditExperiment}
-                        content='Редактировать эксперимент'
-                        labelPosition='left'
-                        basic
+                    <RaisedButton
+                        onTouchTap={ this.activeEditExperiment }
+                        label='Редактировать эксперимент'
                     />
                     { this.renderExperiment() }
                     { !!voltamogramms.length && this.renderVoltamogramms(voltamogramms) }

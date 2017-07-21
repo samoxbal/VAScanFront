@@ -1,9 +1,10 @@
-import {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {createScan, openAddVoltamogramm} from '../actions';
-import {Modal} from 'semantic-ui-react';
-import VAButton from './vascan-ui/button/VAButton';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { createScan, openAddVoltamogramm } from '../actions';
+import Dialog from 'material-ui/Dialog';
+import RaisedButton from 'material-ui/RaisedButton';
 import AddVoltamogrammForm from './add-voltamogramm-form/AddVoltamogrammForm';
 import AddScanForm from './AddScanForm';
 
@@ -22,8 +23,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 class AddScan extends Component {
 
     static propTypes = {
+        errors: PropTypes.object,
+        openPanel: PropTypes.bool,
         createScan: PropTypes.func,
-        experiment_id: PropTypes.string
+        experiment_id: PropTypes.string,
+        openAddVoltamogramm: PropTypes.func
     }
 
     handleSubmit = e => {
@@ -44,25 +48,21 @@ class AddScan extends Component {
         } = this.props;
 
         return (
-            <Modal
-                open={openPanel}
-                onClose={() => openAddVoltamogramm(false)}
+            <Dialog
+                open={ openPanel }
+                modal={ true }
+                onRequestClose={ () => openAddVoltamogramm(false) }
                 className="VAModal"
+                title="Создать вольтамограмму"
             >
-                <Modal.Header>Создать вольтамограмму</Modal.Header>
-                <Modal.Content>
-                    <AddVoltamogrammForm/>
-                    <AddScanForm ref={ref => this._scanForm = ref} />
-                    <br/>
-                    <VAButton
-                        primary
-                        basic
-                        onClick={this.handleSubmit}
-                    >
-                        Создать
-                    </VAButton>
-                </Modal.Content>
-            </Modal>
+                <AddVoltamogrammForm/>
+                <AddScanForm ref={ ref => this._scanForm = ref } />
+                <br/>
+                <RaisedButton
+                    onTouchTap={ this.handleSubmit }
+                    label="Создать"
+                />
+            </Dialog>
         )
     }
 }
