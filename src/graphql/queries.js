@@ -19,3 +19,20 @@ export const voltamogramms = gql`
         }
     }
 `;
+
+export const voltamogramm = gql`
+    query voltamogramm($voltamogrammId: String) {
+        voltamogramm(voltamogrammId: $voltamogrammId) {
+            id,
+            cyclic,
+            date,
+            description,
+            solution,
+            numberOfElectrodes,
+            equipmentId,
+            scans {
+                id
+            }
+        }
+    }
+`;

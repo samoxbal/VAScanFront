@@ -3,7 +3,6 @@ import { push } from 'react-router-redux';
 import is from 'is';
 import validator from '../utils/validator';
 import { api } from '../utils/api';
-import { mapOid } from '../utils/utils';
 import ACTION_TYPES from '../constants/actionTypes';
 import {
     experimentRequiredFields,
@@ -98,23 +97,6 @@ function* createScan() {
     }
 }
 
-function* fetchSingleVoltamogramm() {
-    while(true) {
-        const action = yield take(ACTION_TYPES.FETCH_SINGLE_VOLTAMOGRAMM);
-        const { payload } = action;
-        const data = yield call(api.fetch_single_voltamogramm, payload);
-        const voltamogramm = mapOid(data['data']['data']);
-        const {scans} = voltamogramm;
-        yield put({
-            type: ACTION_TYPES.FETCH_SINGLE_VOLTAMOGRAMM_SUCCESS,
-            payload: {
-                ...voltamogramm,
-                scans: scans.map(mapOid)
-            }
-        });
-    }
-}
-
 function* fetchSingleMeasure() {
     while(true) {
         const action = yield take(ACTION_TYPES.FETCH_SINGLE_MEASURE);
@@ -127,25 +109,11 @@ function* fetchSingleMeasure() {
     }
 }
 
-function* fetchMeasures() {
-    while(true) {
-        const action = yield take(ACTION_TYPES.FETCH_MEASURES);
-        const { payload } = action;
-        const data = yield call(api.fetch_measures, payload);
-        yield put({
-            type: ACTION_TYPES.FETCH_MEASURES_SUCCESS,
-            payload: data['data']['data'].map(mapOid)
-        });
-    }
-}
-
 export default function* root() {
     yield fork(createExperiment);
     yield fork(createScan);
-    yield fork(fetchSingleVoltamogramm);
     yield fork(editExperiment);
     yield fork(fetchSingleMeasure);
-    yield fork(fetchMeasures);
     yield fork(createToken);
     yield fork(createVoltamogramm);
 }

@@ -1,7 +1,9 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import is from 'is';
 import { bindActionCreators } from 'redux';
+import { withApollo } from 'react-apollo';
 import { Card } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import AddIcon from 'material-ui/svg-icons/content/add';
@@ -12,75 +14,109 @@ import Scan from '../../components/Scan';
 import AddVoltamogrammForm from '../../components/AddVoltamogrammForm';
 import {
     fetchSingleVoltamogramm,
-    fetchMeasures,
     selectScan,
     activeEditVoltamogramm
 } from '../../actions/index';
-
-import './VoltamogrammPage.css';
+import { voltamogramm as voltamogrammQuery } from '../../graphql/queries';
 
 const mapStateToProps = state => ({
-    voltamogramm: state.voltamogramm,
-    measures: state.measures
+    voltamogramm: state.voltamogramm
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     fetchSingleVoltamogramm,
-    fetchMeasures,
     selectScan,
     activeEditVoltamogramm
 }, dispatch);
 
 class VoltamogrammPage extends Component {
+
+    static propTypes = {
+        voltamogramm: PropTypes.object,
+        fetchSingleVoltamogramm: PropTypes.func,
+        activeEditVoltamogramm: PropTypes.func
+    }
+
+    style = {
+        wrapper: {
+            display: 'flex',
+            justifyContent: 'space-around',
+            marginTop: 40,
+            flexWrap: 'wrap'
+        },
+        tree: {
+            width: '30%',
+            minHeight: 460
+        },
+        scan: {
+            width: '60%',
+            minHeight: 460,
+            margin: 0
+        },
+        form: {
+            width: '80%',
+            paddingBottom: 10
+        }
+    }
+
     componentWillMount() {
-        const {match: { params: { id } }, fetchSingleVoltamogramm} = this.props;
-        fetchSingleVoltamogramm(id);
+        const {
+            match: { params: { id } },
+            fetchSingleVoltamogramm,
+            client
+        } = this.props;
+        client.query({
+            query: voltamogrammQuery,
+            variables: {
+                voltamogrammId: id
+            }
+        }).then(data => fetchSingleVoltamogramm(data.data.voltamogramm));
     }
 
     renderTree(voltamogramm) {
         const { scans } = voltamogramm;
         return (
             <TreeFolder
-                data={scans}
-                onClickItem={_id => {
-                    this.props.selectScan(_id);
-                    this.props.fetchMeasures(_id);
-                }}
+                data={ scans }
+                onClickItem={ id => this.props.selectScan(id) }
             />
         )
     }
 
     renderVoltamogrammForm() {
-        const {activeEditVoltamogramm} = this.props;
+        const { activeEditVoltamogramm } = this.props;
         return (
-            <div className="VoltamogrammPage__voltamogrammForm">
+            <div style={ this.style.form }>
                 <RaisedButton
                     icon={ <AddIcon/> }
-                    // onClick={this.openAddVoltamogramm}
                     label='Создать скан'
-                    style={{ margin: 15 }}
+                    style={{ marginRight: 15, marginBottom: 15 }}
+                    secondary={ true }
                 />
                 <RaisedButton
                     icon={ <EditIcon/> }
-                    onClick={ () => activeEditVoltamogramm(true) }
+                    onTouchTap={ () => activeEditVoltamogramm(true) }
                     label='Редактировать вольтамограмму'
+                    secondary={ true }
                 />
-                <AddVoltamogrammForm/>
+                <Card style={{ padding: 40 }}>
+                    <AddVoltamogrammForm/>
+                </Card>
             </div>
         )
     }
 
     render() {
-        const {voltamogramm} = this.props;
+        const { voltamogramm } = this.props;
 
         return (
             <PageLayout>
-                <div className="VoltamogrammPage">
-                    {this.renderVoltamogrammForm()}
-                    <Card className="VoltamogrammPage__Tree">
-                        {!is.empty(voltamogramm) && this.renderTree(voltamogramm)}
+                <div style={ this.style.wrapper }>
+                    { this.renderVoltamogrammForm() }
+                    <Card style={ this.style.tree }>
+                        { !is.empty(voltamogramm) && this.renderTree(voltamogramm) }
                     </Card>
-                    <Card className="x_panel VoltamogrammPage__Scan">
+                    <Card style={ this.style.scan }>
                         <Scan/>
                     </Card>
                 </div>
@@ -89,4 +125,4 @@ class VoltamogrammPage extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(VoltamogrammPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withApollo(VoltamogrammPage));
