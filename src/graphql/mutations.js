@@ -21,3 +21,29 @@ export const createExperiment = gql`
         }
     }
 `;
+
+export const createVoltamogramm = gql`
+    mutation createVoltamogramm(
+        $experiment: String,
+        $cyclic: Boolean,
+        $date: String,
+        $description: String,
+        $solution: String,
+        $numberOfElectrodes: Int,
+        $equipmentId: String
+    )
+    {
+        createVoltamogramm(
+            experiment: $experiment,
+            cyclic: $cyclic,
+            date: $date,
+            description: $description,
+            solution: $solution,
+            numberOfElectrodes: $numberOfElectrodes,
+            equipmentId: $equipmentId
+        )
+        {
+            id
+        }
+    }
+`;

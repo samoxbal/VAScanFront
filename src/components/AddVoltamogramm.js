@@ -2,11 +2,14 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { graphql } from 'react-apollo';
 import { createScan, openAddVoltamogramm } from '../actions';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
-import AddVoltamogrammForm from './add-voltamogramm-form/AddVoltamogrammForm';
-import AddScanForm from './AddScanForm';
+import AddVoltamogrammForm from './AddVoltamogrammForm';
+import {
+    createVoltamogramm as createVoltamogrammMutation
+} from '../graphql/mutations';
 
 const mapStateToProps = state => ({
     openPanel: state.openAddVoltamogramm,
@@ -41,18 +44,12 @@ class AddScan extends Component {
         openPanel: PropTypes.bool,
         createScan: PropTypes.func,
         experiment_id: PropTypes.string,
-        openAddVoltamogramm: PropTypes.func
+        openAddVoltamogramm: PropTypes.func,
+        mutate: PropTypes.func
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-        let fileData = new FormData();
-        const file = this._scanForm.getFile();
-        fileData.append('file', file);
-        this.props.createScan({
-            experiment_id: this.props.experiment_id,
-            file: fileData
-        });
+    handleSubmit = () => {
+
     }
 
     render() {
@@ -65,10 +62,9 @@ class AddScan extends Component {
                 autoScrollBodyContent={ true }
             >
                 <AddVoltamogrammForm/>
-                <AddScanForm ref={ ref => this._scanForm = ref } />
             </Dialog>
         )
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddScan);
+export default connect(mapStateToProps, mapDispatchToProps)(graphql(createVoltamogrammMutation)(AddScan));

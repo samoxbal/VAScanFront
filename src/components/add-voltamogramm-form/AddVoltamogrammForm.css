@@ -1,8 +1,0 @@
-.AddVoltamogrammForm {
-    width: 100% !important;
-
-    &__formBlock {
-        display: flex;
-        justify-content: space-between;
-    }
-}

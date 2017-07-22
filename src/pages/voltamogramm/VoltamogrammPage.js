@@ -9,7 +9,7 @@ import EditIcon from 'material-ui/svg-icons/content/create';
 import PageLayout from '../../components/PageLayout';
 import TreeFolder from '../../components/TreeFolder';
 import Scan from '../../components/Scan';
-import AddVoltamogrammForm from '../../components/add-voltamogramm-form/AddVoltamogrammForm';
+import AddVoltamogrammForm from '../../components/AddVoltamogrammForm';
 import {
     fetchSingleVoltamogramm,
     fetchMeasures,
