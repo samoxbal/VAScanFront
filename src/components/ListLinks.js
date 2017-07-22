@@ -1,16 +1,17 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { List, ListItem } from 'material-ui/List';
-import Avatar from 'material-ui/Avatar';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
-import { blue500 } from 'material-ui/styles/colors';
 
 export default class ListLinks extends Component {
 
     static propTypes = {
         items: PropTypes.array,
         path: PropTypes.string
+    }
+
+    static contextTypes = {
+        router: PropTypes.object
     }
 
     render() {
@@ -20,13 +21,9 @@ export default class ListLinks extends Component {
                 {items.map((item, index) => (
                     <ListItem
                         key={ index }
-                        leftAvatar={
-                            <Avatar
-                                icon={ <ActionAssignment /> }
-                                backgroundColor={ blue500 }
-                            />
-                        }
-                        primaryText={ <Link to={ `${path}/${item.id}` } /> }
+                        leftIcon={ <ActionAssignment /> }
+                        primaryText={ item.id }
+                        onTouchTap={ () => this.context.router.history.push(`/${path}/${item.id}`) }
                     />
                 ))}
             </List>

@@ -39,6 +39,17 @@ function* createExperiment() {
     }
 }
 
+function* createVoltamogramm() {
+    while(true) {
+        const { payload } = yield take(ACTION_TYPES.ADD_VOLTAMOGRAMM);
+        yield put({
+            type: ACTION_TYPES.OPEN_ADD_VOLTAMOGRAMM,
+            payload: false
+        });
+        yield put(push(`/voltamogramm/${payload}`));
+    }
+}
+
 function* editExperiment() {
     while(true) {
         const action = yield take(ACTION_TYPES.EDIT_EXPERIMENT);
@@ -136,4 +147,5 @@ export default function* root() {
     yield fork(fetchSingleMeasure);
     yield fork(fetchMeasures);
     yield fork(createToken);
+    yield fork(createVoltamogramm);
 }

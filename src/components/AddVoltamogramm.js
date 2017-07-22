@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { graphql } from 'react-apollo';
-import { createScan, openAddVoltamogramm } from '../actions';
+import { createVoltamogramm, openAddVoltamogramm } from '../actions';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import AddVoltamogrammForm from './AddVoltamogrammForm';
@@ -13,11 +13,12 @@ import {
 
 const mapStateToProps = state => ({
     openPanel: state.openAddVoltamogramm,
-    experiment_id: state.selectedExperimentId
+    experiment_id: state.selectedExperimentId,
+    form: state.addVoltamogrammForm,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    createScan,
+    createVoltamogramm,
     openAddVoltamogramm
 }, dispatch);
 
@@ -42,14 +43,39 @@ class AddScan extends Component {
 
     static propTypes = {
         openPanel: PropTypes.bool,
-        createScan: PropTypes.func,
+        createVoltamogramm: PropTypes.func,
         experiment_id: PropTypes.string,
         openAddVoltamogramm: PropTypes.func,
-        mutate: PropTypes.func
+        mutate: PropTypes.func,
+        form: PropTypes.object
     }
 
     handleSubmit = () => {
+        const {
+            mutate,
+            form: {
+                cyclic,
+                va_cycle_datetime,
+                description,
+                solution,
+                number_of_electrodes,
+                equipment_id
+            },
+            experiment_id,
+            createVoltamogramm
+        } = this.props;
 
+        mutate({
+            variables: {
+                experiment: experiment_id,
+                cyclic,
+                date: va_cycle_datetime,
+                description,
+                solution,
+                numberOfElectrodes: number_of_electrodes,
+                equipmentId: equipment_id
+            }
+        }).then(data => createVoltamogramm(data.data.createVoltamogramm.id));
     }
 
     render() {

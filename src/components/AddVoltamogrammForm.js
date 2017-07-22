@@ -11,7 +11,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import createFormAction from '../utils/createFormAction';
 import { fieldLense } from '../utils/utils';
-import { activeEditVoltamogramm } from '../actions/index';
+import { activeEditVoltamogramm, resetAddVoltamogramm } from '../actions/index';
 import ACTION_TYPES from '../constants/actionTypes';
 
 const mapStateToProps = state => ({
@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     activeEditVoltamogramm,
+    resetAddVoltamogramm,
     changeCyclic: createFormAction(ACTION_TYPES.CHANGE_VOLTAMOGRAMM_CYCLIC),
     changeVaCycleDatetime: createFormAction(ACTION_TYPES.CHANGE_VOLTAMOGRAMM_DATE),
     changeDescription: createFormAction(ACTION_TYPES.CHANGE_VOLTAMOGRAMM_DESCRIPTION),
@@ -44,7 +45,8 @@ class AddVoltamogrammForm extends Component {
         changeDescription: PropTypes.func,
         changeSolution: PropTypes.func,
         changeNumberOfElectrodes: PropTypes.func,
-        changeEquipmentId: PropTypes.func
+        changeEquipmentId: PropTypes.func,
+        resetAddVoltamogramm: PropTypes.func
     }
 
     style = {
@@ -66,6 +68,10 @@ class AddVoltamogrammForm extends Component {
         { key: '3', text: '3', value: 3 },
         { key: '4', text: '4', value: 4 }
     ]
+
+    componentWillUnmount() {
+        this.props.resetAddVoltamogramm();
+    }
 
     renderButtons() {
         return (
@@ -103,7 +109,7 @@ class AddVoltamogrammForm extends Component {
                     label="Цикличность"
                     labelPosition="right"
                     toggled={ fieldLense(voltamogramm, form, 'cyclic') }
-                    onChange={ (e, toggled) => changeCyclic(toggled) }
+                    onToggle={ (e, toggled) => changeCyclic(toggled) }
                 /><br/>
                 <div style={ this.style.formBlock }>
                     <DatePicker
@@ -115,7 +121,7 @@ class AddVoltamogrammForm extends Component {
                     <SelectField
                         floatingLabelText="Количество электродов"
                         value={ fieldLense(voltamogramm, form, 'number_of_electrodes') }
-                        onChange={ (e, data) => this.props.changeNumberOfElectrodes(data) }
+                        onChange={ (e, key, data) => this.props.changeNumberOfElectrodes(data) }
                     >
                         { this.numberElectrodsOptions.map(item => (
                             <MenuItem

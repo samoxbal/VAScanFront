@@ -100,3 +100,17 @@ export function fetchVoltamogramms(voltamogramms) {
         payload: voltamogramms
     }
 }
+
+export function createVoltamogramm(id) {
+    return {
+        type: ACTION_TYPES.ADD_VOLTAMOGRAMM,
+        payload: id
+    }
+}
+
+export function resetAddVoltamogramm() {
+    return {
+        type: ACTION_TYPES.RESET_ADD_VOLTAMOGRAMM
+    }
+
+}
