@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 import is from 'is';
+import format from 'date-fns/format';
 import { fieldLense } from '../utils/utils';
 
 export default class AddExperimentForm extends Component {
@@ -34,8 +35,8 @@ export default class AddExperimentForm extends Component {
 
     onChangeName = (e, data) => this.props.changeName(data)
     onChangeDescription = (e, data) => this.props.changeDescription(data)
-    onChangeStartDate = (e, date) => this.props.changeStartDate(date)
-    onChangeEndDate = (e, date) => this.props.changeEndDate(date)
+    onChangeStartDate = (e, date) => this.props.changeStartDate(format(date, 'MM-DD-YYYY'))
+    onChangeEndDate = (e, date) => this.props.changeEndDate(format(date, 'MM-DD-YYYY'))
 
     submitExperiment = event => {
         event.preventDefault();

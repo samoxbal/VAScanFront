@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as d3 from 'd3';
-import PageLayout from '../../components/page-layout/PageLayout';
+import PageLayout from '../../components/PageLayout';
 import { Card } from 'material-ui/Card';
 import { fetchSingleMeasure } from '../../actions/index';
 

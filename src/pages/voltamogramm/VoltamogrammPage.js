@@ -6,7 +6,7 @@ import { Card } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import AddIcon from 'material-ui/svg-icons/content/add';
 import EditIcon from 'material-ui/svg-icons/content/create';
-import PageLayout from '../../components/page-layout/PageLayout';
+import PageLayout from '../../components/PageLayout';
 import TreeFolder from '../../components/TreeFolder';
 import Scan from '../../components/Scan';
 import AddVoltamogrammForm from '../../components/add-voltamogramm-form/AddVoltamogrammForm';

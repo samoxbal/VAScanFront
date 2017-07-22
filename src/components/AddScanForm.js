@@ -59,6 +59,14 @@ class AddScanForm extends Component {
         changeRegime: PropTypes.func
     }
 
+    style = {
+        formBlock: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end'
+        }
+    }
+
     regimeOptions = [
         { key: '01', text: 'normal', value: 'normal' },
         { key: '02', text: 'differential', value: 'differential' },
@@ -95,46 +103,55 @@ class AddScanForm extends Component {
         return (
             <div>
                 <h3>Параметры измерения</h3>
-                <DatePicker
-                    autoOk={ true }
-                    onChange={ date => changeScanDatetime(date) }
-                />
-                <TextField
-                    floatingLabelText="Начальный потенциал"
-                    // value={ fieldLense(voltamogramm, form, 'description') }
-                    onChange={ (e, data) => changeStartPotential(data) }
-                    fullWidth={ true }
-                /><br/>
-                <TextField
-                    floatingLabelText="Конечный потенциал"
-                    // value={ fieldLense(voltamogramm, form, 'description') }
-                    onChange={ (e, data) => changeEndPotential(data) }
-                    fullWidth={ true }
-                /><br/>
-                <TextField
-                    floatingLabelText="Номер канала"
-                    // value={ fieldLense(voltamogramm, form, 'description') }
-                    onChange={ (e, data) => changeChannelId(data) }
-                    fullWidth={ true }
-                /><br/>
-                <TextField
-                    floatingLabelText="Имя канала"
-                    // value={ fieldLense(voltamogramm, form, 'description') }
-                    onChange={ (e, data) => changeChannelLabel(data) }
-                    fullWidth={ true }
-                /><br/>
-                <TextField
-                    floatingLabelText="Температура"
-                    // value={ fieldLense(voltamogramm, form, 'description') }
-                    onChange={ (e, data) => changeTemperature(data) }
-                    fullWidth={ true }
-                /><br/>
-                <TextField
-                    floatingLabelText="Давление"
-                    // value={ fieldLense(voltamogramm, form, 'description') }
-                    onChange={ (e, data) => changePressure(data) }
-                    fullWidth={ true }
-                /><br/>
+                <div style={ this.style.formBlock }>
+                    <DatePicker
+                        hintText="Дата проведения"
+                        autoOk={ true }
+                        onChange={ date => changeScanDatetime(date) }
+                    />
+                    <TextField
+                        floatingLabelText="Название"
+                        // value={ fieldLense(voltamogramm, form, 'description') }
+                        // onChange={ (e, data) => changeStartPotential(data) }
+                    />
+                </div>
+                <div style={ this.style.formBlock }>
+                    <TextField
+                        floatingLabelText="Начальный потенциал"
+                        // value={ fieldLense(voltamogramm, form, 'description') }
+                        onChange={ (e, data) => changeStartPotential(data) }
+                    />
+                    <TextField
+                        floatingLabelText="Конечный потенциал"
+                        // value={ fieldLense(voltamogramm, form, 'description') }
+                        onChange={ (e, data) => changeEndPotential(data) }
+                    />
+                </div>
+                <div style={ this.style.formBlock }>
+                    <TextField
+                        floatingLabelText="Номер канала"
+                        // value={ fieldLense(voltamogramm, form, 'description') }
+                        onChange={ (e, data) => changeChannelId(data) }
+                    />
+                    <TextField
+                        floatingLabelText="Имя канала"
+                        // value={ fieldLense(voltamogramm, form, 'description') }
+                        onChange={ (e, data) => changeChannelLabel(data) }
+                    />
+                </div>
+                <div style={ this.style.formBlock }>
+                    <TextField
+                        floatingLabelText="Температура"
+                        // value={ fieldLense(voltamogramm, form, 'description') }
+                        onChange={ (e, data) => changeTemperature(data) }
+                    />
+                    <TextField
+                        floatingLabelText="Давление"
+                        // value={ fieldLense(voltamogramm, form, 'description') }
+                        onChange={ (e, data) => changePressure(data) }
+                    />
+                </div>
+
                 <Toggle
                     label="Прямая развертка"
                     // toggled={ fieldLense(voltamogramm, form, 'cyclic') }

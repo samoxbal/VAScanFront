@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import PageLayout from '../../components/page-layout/PageLayout';
+import PageLayout from '../../components/PageLayout';
 import ExperimentTree from '../../components/ExperimentTree';
 import Experiment from '../../components/Experiment';
 import { Card } from 'material-ui/Card';

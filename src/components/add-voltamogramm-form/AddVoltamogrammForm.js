@@ -90,6 +90,7 @@ class AddVoltamogrammForm extends Component {
                 <h3>Параметры вольтаммограммы</h3>
                 <div className="AddVoltamogrammForm__formBlock">
                     <DatePicker
+                        hintText="Дата проведения"
                         disabled={ !active }
                         value={ fieldLense(voltamogramm, form, 'va_cycle_datetime') }
                         autoOk={ true }
