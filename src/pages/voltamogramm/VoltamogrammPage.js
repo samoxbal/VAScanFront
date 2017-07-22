@@ -1,10 +1,12 @@
-import {Component} from 'react';
-import {connect} from 'react-redux';
+import { Component } from 'react';
+import { connect } from 'react-redux';
 import is from 'is';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
+import { Card } from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+import AddIcon from 'material-ui/svg-icons/content/add';
+import EditIcon from 'material-ui/svg-icons/content/create';
 import PageLayout from '../../components/page-layout/PageLayout';
-import VACard from '../../components/vascan-ui/card/VACard';
-import VAButton from '../../components/vascan-ui/button/VAButton';
 import TreeFolder from '../../components/TreeFolder';
 import Scan from '../../components/Scan';
 import AddVoltamogrammForm from '../../components/add-voltamogramm-form/AddVoltamogrammForm';
@@ -52,19 +54,16 @@ class VoltamogrammPage extends Component {
         const {activeEditVoltamogramm} = this.props;
         return (
             <div className="VoltamogrammPage__voltamogrammForm">
-                <VAButton
-                    icon='plus'
+                <RaisedButton
+                    icon={ <AddIcon/> }
                     // onClick={this.openAddVoltamogramm}
-                    content='Создать скан'
-                    labelPosition='left'
-                    basic
+                    label='Создать скан'
+                    style={{ margin: 15 }}
                 />
-                <VAButton
-                    icon='edit'
-                    onClick={() => activeEditVoltamogramm(true)}
-                    content='Редактировать вольтамограмму'
-                    labelPosition='left'
-                    basic
+                <RaisedButton
+                    icon={ <EditIcon/> }
+                    onClick={ () => activeEditVoltamogramm(true) }
+                    label='Редактировать вольтамограмму'
                 />
                 <AddVoltamogrammForm/>
             </div>
@@ -78,12 +77,12 @@ class VoltamogrammPage extends Component {
             <PageLayout>
                 <div className="VoltamogrammPage">
                     {this.renderVoltamogrammForm()}
-                    <VACard className="VoltamogrammPage__Tree">
+                    <Card className="VoltamogrammPage__Tree">
                         {!is.empty(voltamogramm) && this.renderTree(voltamogramm)}
-                    </VACard>
-                    <VACard className="x_panel VoltamogrammPage__Scan">
+                    </Card>
+                    <Card className="x_panel VoltamogrammPage__Scan">
                         <Scan/>
-                    </VACard>
+                    </Card>
                 </div>
             </PageLayout>
         )

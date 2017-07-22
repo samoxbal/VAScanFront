@@ -88,19 +88,22 @@ class AddVoltamogrammForm extends Component {
         return (
             <div className="AddVoltamogrammForm">
                 <h3>Параметры вольтаммограммы</h3>
-                <DatePicker
-                    disabled={ !active }
-                    error={ !!errors.va_cycle_datetime }
-                    value={ fieldLense(voltamogramm, form, 'va_cycle_datetime') }
-                    autoOk={ true }
-                    onChange={ date => changeVaCycleDatetime(date) }
-                />
-                <Toggle
-                    label="Цикличная вольтамперограмма"
-                    disabled={ !active }
-                    toggled={ fieldLense(voltamogramm, form, 'cyclic') }
-                    onChange={ (e, toggled) => changeCyclic(toggled) }
-                />
+                <div className="AddVoltamogrammForm__formBlock">
+                    <DatePicker
+                        disabled={ !active }
+                        value={ fieldLense(voltamogramm, form, 'va_cycle_datetime') }
+                        autoOk={ true }
+                        onChange={ date => changeVaCycleDatetime(date) }
+                    />
+                    <Toggle
+                        label="Цикличная вольтамперограмма"
+                        labelPosition="right"
+                        disabled={ !active }
+                        toggled={ fieldLense(voltamogramm, form, 'cyclic') }
+                        onChange={ (e, toggled) => changeCyclic(toggled) }
+                        style={{ width: '50%' }}
+                    />
+                </div>
                 <TextField
                     errorText={ !!errors.description ? "Введите описание" : "" }
                     floatingLabelText="Описание"
@@ -110,33 +113,38 @@ class AddVoltamogrammForm extends Component {
                     onChange={ (e, data) => changeDescription(data) }
                     fullWidth={ true }
                 /><br/>
-                <TextField
-                    floatingLabelText="Раствор"
-                    disabled={ !active }
-                    value={ fieldLense(voltamogramm, form, 'solution') }
-                    onChange={ (e, data) => changeSolution(data) }
-                /><br/>
-                <TextField
-                    floatingLabelText="Серийный номер электрода"
-                    disabled={ !active }
-                    value={ fieldLense(voltamogramm, form, 'equipment_id') }
-                    onChange={ (e, data) => changeEquipmentId(data) }
-                /><br/>
-                <SelectField
-                    floatingLabelText="Количество электродов"
-                    error={ !!errors.number_of_electrodes }
-                    disabled={ !active }
-                    value={ fieldLense(voltamogramm, form, 'number_of_electrodes') }
-                    onChange={ (e, data) => this.props.changeNumberOfElectrodes(data) }
-                >
-                    { this.numberElectrodsOptions.map(item => (
-                        <MenuItem
-                            key={ item.key }
-                            value={ item.value }
-                            primaryText={ item.text }
-                        />
-                    )) }
-                </SelectField>
+                <div className="AddVoltamogrammForm__formBlock">
+                    <TextField
+                        floatingLabelText="Раствор"
+                        disabled={ !active }
+                        value={ fieldLense(voltamogramm, form, 'solution') }
+                        onChange={ (e, data) => changeSolution(data) }
+                        style={{ display: 'inline-block' }}
+                    />
+                    <TextField
+                        floatingLabelText="Серийный номер электрода"
+                        disabled={ !active }
+                        value={ fieldLense(voltamogramm, form, 'equipment_id') }
+                        onChange={ (e, data) => changeEquipmentId(data) }
+                        style={{ width: '30%' }}
+                    />
+                    <SelectField
+                        floatingLabelText="Количество электродов"
+                        error={ !!errors.number_of_electrodes }
+                        disabled={ !active }
+                        value={ fieldLense(voltamogramm, form, 'number_of_electrodes') }
+                        onChange={ (e, data) => this.props.changeNumberOfElectrodes(data) }
+                        style={{ width: '30%' }}
+                    >
+                        { this.numberElectrodsOptions.map(item => (
+                            <MenuItem
+                                key={ item.key }
+                                value={ item.value }
+                                primaryText={ item.text }
+                            />
+                        )) }
+                    </SelectField>
+                </div>
                 { active && this.renderButtons() }
             </div>
         )

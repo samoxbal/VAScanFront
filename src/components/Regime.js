@@ -1,8 +1,7 @@
-import {Component} from 'react';
-import {Form} from 'semantic-ui-react';
-import {VAInput} from './vascan-ui/form/VAForm';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { Component } from 'react';
+import TextField from 'material-ui/TextField';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import createFormAction from '../utils/createFormAction';
 import ACTION_TYPES from '../constants/actionTypes';
 
@@ -40,20 +39,20 @@ class Regime extends Component {
             changeNormalPulsePeriod
         } = this.props;
         return (
-            <Form.Group inline>
-                <VAInput
+            <div>
+                <TextField
                     type="text"
                     placeholder="Normal pulse life"
                     value={normal_pulse_life}
                     onChange={(e, data) => changeNormalPulseLife(data.value)}
                 />
-                <VAInput
+                <TextField
                     type="text"
                     placeholder="Normal pulse period"
                     value={normal_pulse_period}
                     onChange={(e, data) => changeNormalPulsePeriod(data.value)}
                 />
-            </Form.Group>
+            </div>
         )
     }
 
@@ -71,26 +70,26 @@ class Regime extends Component {
             changeDifferentialPulsePeriod
         } = this.props;
         return (
-            <Form.Group inline>
-                <VAInput
+            <div>
+                <TextField
                     type="text"
                     placeholder="Differential pulse amplitude"
                     value={differential_pulse_amplitude}
                     onChange={(e, data) => changeDifferentialPulseAmplitude(data.value)}
                 />
-                <VAInput
+                <TextField
                     type="text"
                     placeholder="Differential pulse pulsewidth"
                     value={differential_pulse_pulsewidth}
                     onChange={(e, data) => changeDifferentialPulsePulseWidth(data.value)}
                 />
-                <VAInput
+                <TextField
                     type="text"
                     placeholder="Differential pulse period"
                     value={differential_pulse_period}
                     onChange={(e, data) => changeDifferentialPulsePeriod(data.value)}
                 />
-            </Form.Group>
+            </div>
         )
     }
 
@@ -108,26 +107,26 @@ class Regime extends Component {
             changeSquareWaveTimePeriod
         } = this.props;
         return (
-            <Form.Group inline>
-                <VAInput
+            <div>
+                <TextField
                     type="text"
                     placeholder="Square wave amplitude"
                     value={square_wave_amplitude}
                     onChange={(e, data) => changeSquareWaveAmplitude(data.value)}
                 />
-                <VAInput
+                <TextField
                     type="text"
                     placeholder="Square wave estep"
                     value={square_wave_estep}
                     onChange={(e, data) => changeSquareWaveEstep(data.value)}
                 />
-                <VAInput
+                <TextField
                     type="text"
                     placeholder="Square wave time period"
                     value={square_wave_time_period}
                     onChange={(e, data) => changeSquareWaveTimePeriod(data.value)}
                 />
-            </Form.Group>
+            </div>
         )
     }
 
@@ -143,20 +142,20 @@ class Regime extends Component {
             changeStaircaseEstep
         } = this.props;
         return (
-            <Form.Group inline>
-                <VAInput
+            <div>
+                <TextField
                     type="text"
                     placeholder="Staircase time step"
                     value={staircase_time_step}
                     onChange={(e, data) => changeStaircaseTimeStep(data.value)}
                 />
-                <VAInput
+                <TextField
                     type="text"
                     placeholder="Staircase estep"
                     value={staircase_estep}
                     onChange={(e, data) => changeStaircaseEstep(data.value)}
                 />
-            </Form.Group>
+            </div>
         )
     }
 
@@ -172,20 +171,20 @@ class Regime extends Component {
             changeAcFrequency
         } = this.props;
         return (
-            <Form.Group inline>
-                <VAInput
+            <div>
+                <TextField
                     type="text"
                     placeholder="Ac amplitude"
                     value={ac_amplitude}
                     onChange={(e, data) => changeAcAmplitude(data.value)}
                 />
-                <VAInput
+                <TextField
                     type="text"
                     placeholder="Ac frequency"
                     value={ac_frequency}
                     onChange={(e, data) => changeAcFrequency(data.value)}
                 />
-            </Form.Group>
+            </div>
         )
     }
 

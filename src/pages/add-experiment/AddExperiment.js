@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import PageLayout from '../../components/page-layout/PageLayout';
 import { connect } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 import { bindActionCreators } from 'redux';
 import { resetAddExperimentForm } from '../../actions/index';
 import AddExperimentForm from '../../components/AddExperimentForm';
@@ -53,6 +54,7 @@ class AddExperiment extends Component {
 
         mutate({
             variables: {
+                user: jwtDecode(localStorage.getItem('token')).sub,
                 name,
                 description,
                 startDate,

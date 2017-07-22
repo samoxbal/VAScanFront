@@ -1,10 +1,10 @@
-import {Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as d3 from 'd3';
 import PageLayout from '../../components/page-layout/PageLayout';
-import VACard from '../../components/vascan-ui/card/VACard';
-import {fetchSingleMeasure} from '../../actions/index';
+import { Card } from 'material-ui/Card';
+import { fetchSingleMeasure } from '../../actions/index';
 
 const mapStateToProps = state => ({
     measure: state.measure
@@ -107,10 +107,10 @@ class MeasurePage extends Component {
         return (
             <PageLayout>
                 <div className="MeasurePage">
-                    <VACard className="MeasurePage__ChartCard">
+                    <Card className="MeasurePage__ChartCard">
                         <div className="MeasurePage__Chart">
                         </div>
-                    </VACard>
+                    </Card>
                 </div>
             </PageLayout>
         )

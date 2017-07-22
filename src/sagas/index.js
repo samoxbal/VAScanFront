@@ -11,7 +11,6 @@ import {
     scanRequiredFields,
     loginRequiredFields
 } from '../constants/requiredFields';
-import { addExperimentForm } from '../selectors/experiment';
 import { addVoltamogrammForm, addScanForm } from '../selectors/scan';
 
 function* createToken() {
@@ -36,17 +35,7 @@ function* createToken() {
 function* createExperiment() {
     while(true) {
         yield take(ACTION_TYPES.ADD_EXPERIMENT);
-        const form = yield select(addExperimentForm);
-        const [invalidFields, experimentObj] = validator(form, experimentRequiredFields);
-        if(is.empty(invalidFields)) {
-            yield call(api.add_experiment, experimentObj);
-            yield put(push('/all'));
-        } else {
-            yield put({
-                type: ACTION_TYPES.SET_ERROR,
-                payload: invalidFields
-            })
-        }
+        yield put(push('/all'));
     }
 }
 

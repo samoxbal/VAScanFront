@@ -4,7 +4,6 @@ const ACTION_TYPES = keyMirror({
     FETCH_EXPERIMENTS: null,
     FETCH_VOLTAMOGRAMMS: null,
     ADD_EXPERIMENT: null,
-    ADD_EXPERIMENT_SUCCESS: null,
     SELECT_EXPERIMENT: null,
     SET_ERROR: null,
     ADD_SCAN: null,

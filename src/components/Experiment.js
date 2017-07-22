@@ -118,11 +118,13 @@ class Experiment extends Component {
                         label='Создать вольтамограмму'
                         style={{ margin: 15 }}
                         icon={ <AddIcon/> }
+                        secondary={ true }
                     />
                     <RaisedButton
                         onTouchTap={ this.activeEditExperiment }
                         label='Редактировать эксперимент'
                         icon={ <EditIcon/> }
+                        secondary={ true }
                     />
                     { this.renderExperiment() }
                     { !!voltamogramms.length && this.renderVoltamogramms(voltamogramms) }
