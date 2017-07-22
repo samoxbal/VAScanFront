@@ -112,7 +112,10 @@ class VoltamogrammPage extends Component {
     }
 
     render() {
-        const { voltamogramm } = this.props;
+        const {
+            match: { params: { id } },
+            voltamogramm
+        } = this.props;
 
         return (
             <PageLayout>
@@ -125,7 +128,7 @@ class VoltamogrammPage extends Component {
                         <Scan/>
                     </Card>
                 </div>
-                <AddScan/>
+                <AddScan voltamogramm={ id } />
             </PageLayout>
         )
     }

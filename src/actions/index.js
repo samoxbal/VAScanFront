@@ -20,10 +20,13 @@ export function editExperiment(experiment) {
     }
 }
 
-export function createScan(data) {
+export function createScan(id, file) {
     return {
         type: ACTION_TYPES.ADD_SCAN,
-        payload: data
+        payload: {
+            id,
+            file
+        }
     }
 }
 

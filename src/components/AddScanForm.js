@@ -8,7 +8,6 @@ import MenuItem from 'material-ui/MenuItem';
 import FileUpload from './FileUpload';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Regime from './Regime';
 import createFormAction from '../utils/createFormAction';
 import ACTION_TYPES from '../constants/actionTypes';
 import { getSelectedScan, isSelectedScan } from '../selectors/scan';
@@ -63,7 +62,7 @@ class AddScanForm extends Component {
     style = {
         formBlock: {
             display: 'flex',
-            alignItems: 'flex-end'
+            alignItems: 'baseline'
         },
         margin: {
             marginRight: 30
@@ -166,6 +165,7 @@ class AddScanForm extends Component {
                         labelPosition="right"
                         toggled={ fieldLense(scan, form, 'stirring') }
                         onToggle={ (e, toggled) => changeStirring(toggled) }
+                        style={{ width: '41%' }}
                     />
                     { form.stirring &&
                     <TextField
@@ -180,6 +180,7 @@ class AddScanForm extends Component {
                         labelPosition="right"
                         toggled={ fieldLense(scan, form, 'rotation') }
                         onToggle={ (e, toggled) => changeRotation(toggled) }
+                        style={{ width: '41%' }}
                     />
                     { form.rotation &&
                     <TextField
@@ -201,7 +202,6 @@ class AddScanForm extends Component {
                         />
                     )) }
                 </SelectField>
-                <Regime/>
                 { !isScanExist && <FileUpload ref={ ref => this._file = ref } /> }
             </div>
         );

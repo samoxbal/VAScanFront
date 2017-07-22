@@ -47,3 +47,39 @@ export const createVoltamogramm = gql`
         }
     }
 `;
+
+export const createScan = gql`
+    mutation createScan(
+        $voltamogramm: String,
+        $date: String,
+        $startPotential: Float,
+        $endPotential: Float,
+        $reverseDirection: Boolean,
+        $stirring: Boolean,
+        $rotation: Boolean,
+        $channelId: String,
+        $channelLabel: String,
+        $temperature: Float,
+        $pressure: Float,
+        $measureMode: String
+    )
+    {
+        createScan(
+            voltamogramm: $voltamogramm,
+            date: $date,
+            startPotential: $startPotential,
+            endPotential: $endPotential,
+            reverseDirection: $reverseDirection,
+            stirring: $stirring,
+            rotation: $rotation,
+            channelId: $channelId,
+            channelLabel: $channelLabel,
+            temperature: $temperature,
+            pressure: $pressure,
+            measureMode: $measureMode
+        )
+        {
+            id
+        }
+    }
+`;
