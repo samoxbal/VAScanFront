@@ -9,6 +9,7 @@ const ACTION_TYPES = keyMirror({
     SET_ERROR: null,
     ADD_SCAN: null,
     OPEN_ADD_VOLTAMOGRAMM: null,
+    OPEN_ADD_SCAN: null,
     FETCH_SINGLE_VOLTAMOGRAMM: null,
     EDIT_EXPERIMENT: null,
     EDIT_EXPERIMENT_SUCCESS: null,

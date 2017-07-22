@@ -12,10 +12,12 @@ import PageLayout from '../../components/PageLayout';
 import TreeFolder from '../../components/TreeFolder';
 import Scan from '../../components/Scan';
 import AddVoltamogrammForm from '../../components/AddVoltamogrammForm';
+import AddScan from '../../components/AddScan';
 import {
     fetchSingleVoltamogramm,
     selectScan,
-    activeEditVoltamogramm
+    activeEditVoltamogramm,
+    openAddScan
 } from '../../actions/index';
 import { voltamogramm as voltamogrammQuery } from '../../graphql/queries';
 
@@ -26,7 +28,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
     fetchSingleVoltamogramm,
     selectScan,
-    activeEditVoltamogramm
+    activeEditVoltamogramm,
+    openAddScan
 }, dispatch);
 
 class VoltamogrammPage extends Component {
@@ -34,7 +37,8 @@ class VoltamogrammPage extends Component {
     static propTypes = {
         voltamogramm: PropTypes.object,
         fetchSingleVoltamogramm: PropTypes.func,
-        activeEditVoltamogramm: PropTypes.func
+        activeEditVoltamogramm: PropTypes.func,
+        openAddScan: PropTypes.func
     }
 
     style = {
@@ -84,13 +88,14 @@ class VoltamogrammPage extends Component {
     }
 
     renderVoltamogrammForm() {
-        const { activeEditVoltamogramm } = this.props;
+        const { activeEditVoltamogramm, openAddScan } = this.props;
         return (
             <div style={ this.style.form }>
                 <RaisedButton
                     icon={ <AddIcon/> }
                     label='Создать скан'
                     style={{ marginRight: 15, marginBottom: 15 }}
+                    onTouchTap={ () => openAddScan(true) }
                     secondary={ true }
                 />
                 <RaisedButton
@@ -120,6 +125,7 @@ class VoltamogrammPage extends Component {
                         <Scan/>
                     </Card>
                 </div>
+                <AddScan/>
             </PageLayout>
         )
     }

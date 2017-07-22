@@ -34,6 +34,13 @@ export function openAddVoltamogramm(state) {
     }
 }
 
+export function openAddScan(state) {
+    return {
+        type: ACTION_TYPES.OPEN_ADD_SCAN,
+        payload: state
+    }
+}
+
 export function fetchSingleVoltamogramm(voltamogramm) {
     return {
         type: ACTION_TYPES.FETCH_SINGLE_VOLTAMOGRAMM,

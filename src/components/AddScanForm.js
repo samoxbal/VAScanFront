@@ -12,10 +12,11 @@ import Regime from './Regime';
 import createFormAction from '../utils/createFormAction';
 import ACTION_TYPES from '../constants/actionTypes';
 import { getSelectedScan, isSelectedScan } from '../selectors/scan';
+import { fieldLense } from '../utils/utils';
 
 const mapStateToProps = state => ({
     errors: state.errors,
-    addScan: state.addScanForm,
+    form: state.addScanForm,
     scan: getSelectedScan(state),
     isScanExist: isSelectedScan(state)
 });
@@ -41,7 +42,7 @@ class AddScanForm extends Component {
 
     static propTypes = {
         errors: PropTypes.object,
-        addScan: PropTypes.object,
+        form: PropTypes.object,
         scan: PropTypes.object,
         isScanExist: PropTypes.bool,
         changeScanDatetime: PropTypes.func,
@@ -62,8 +63,10 @@ class AddScanForm extends Component {
     style = {
         formBlock: {
             display: 'flex',
-            justifyContent: 'space-between',
             alignItems: 'flex-end'
+        },
+        margin: {
+            marginRight: 30
         }
     }
 
@@ -81,7 +84,7 @@ class AddScanForm extends Component {
 
     render() {
         const {
-            addScan,
+            form,
             errors,
             scan,
             isScanExist,
@@ -108,81 +111,87 @@ class AddScanForm extends Component {
                         hintText="Дата проведения"
                         autoOk={ true }
                         onChange={ date => changeScanDatetime(date) }
+                        style={ this.style.margin }
                     />
-                    <TextField
-                        floatingLabelText="Название"
-                        // value={ fieldLense(voltamogramm, form, 'description') }
-                        // onChange={ (e, data) => changeStartPotential(data) }
+                    <Toggle
+                        label="Прямая развертка"
+                        labelPosition="right"
+                        toggled={ fieldLense(scan, form, 'reverse_direction') }
+                        onToggle={ (e, toggled) => changeReverseDirection(toggled) }
+                        style={{ width: '50%' }}
                     />
                 </div>
                 <div style={ this.style.formBlock }>
                     <TextField
                         floatingLabelText="Начальный потенциал"
-                        // value={ fieldLense(voltamogramm, form, 'description') }
+                        value={ fieldLense(scan, form, 'start_potential') }
                         onChange={ (e, data) => changeStartPotential(data) }
+                        style={ this.style.margin }
                     />
                     <TextField
                         floatingLabelText="Конечный потенциал"
-                        // value={ fieldLense(voltamogramm, form, 'description') }
+                        value={ fieldLense(scan, form, 'end_potential') }
                         onChange={ (e, data) => changeEndPotential(data) }
                     />
                 </div>
                 <div style={ this.style.formBlock }>
                     <TextField
                         floatingLabelText="Номер канала"
-                        // value={ fieldLense(voltamogramm, form, 'description') }
+                        value={ fieldLense(scan, form, 'channel_id') }
                         onChange={ (e, data) => changeChannelId(data) }
+                        style={ this.style.margin }
                     />
                     <TextField
                         floatingLabelText="Имя канала"
-                        // value={ fieldLense(voltamogramm, form, 'description') }
+                        value={ fieldLense(scan, form, 'channel_label') }
                         onChange={ (e, data) => changeChannelLabel(data) }
                     />
                 </div>
                 <div style={ this.style.formBlock }>
                     <TextField
                         floatingLabelText="Температура"
-                        // value={ fieldLense(voltamogramm, form, 'description') }
+                        value={ fieldLense(scan, form, 'temperature') }
                         onChange={ (e, data) => changeTemperature(data) }
+                        style={ this.style.margin }
                     />
                     <TextField
                         floatingLabelText="Давление"
-                        // value={ fieldLense(voltamogramm, form, 'description') }
+                        value={ fieldLense(scan, form, 'pressure') }
                         onChange={ (e, data) => changePressure(data) }
                     />
                 </div>
-
-                <Toggle
-                    label="Прямая развертка"
-                    // toggled={ fieldLense(voltamogramm, form, 'cyclic') }
-                    onChange={ (e, toggled) => changeReverseDirection(toggled) }
-                />
-                <Toggle
-                    label="Мешалка"
-                    // toggled={ fieldLense(voltamogramm, form, 'cyclic') }
-                    onChange={ (e, toggled) => changeStirring(toggled) }
-                />
-                <Toggle
-                    label="Вращение электрода"
-                    // toggled={ fieldLense(voltamogramm, form, 'cyclic') }
-                    onChange={ (e, toggled) => changeRotation(toggled) }
-                />
-                { addScan.stirring &&
+                <div style={ this.style.formBlock }>
+                    <Toggle
+                        label="Мешалка"
+                        labelPosition="right"
+                        toggled={ fieldLense(scan, form, 'stirring') }
+                        onToggle={ (e, toggled) => changeStirring(toggled) }
+                    />
+                    { form.stirring &&
                     <TextField
                         floatingLabelText="Скорость перемешивания"
-                        // value={addScan.stirring_speed}
+                        value={ fieldLense(scan, form, 'stirring_speed') }
                         onChange={ (e, data) => changeStirringSpeed(data) }
                     /> }
-                { addScan.rotation &&
+                </div>
+                <div style={ this.style.formBlock }>
+                    <Toggle
+                        label="Вращение электрода"
+                        labelPosition="right"
+                        toggled={ fieldLense(scan, form, 'rotation') }
+                        onToggle={ (e, toggled) => changeRotation(toggled) }
+                    />
+                    { form.rotation &&
                     <TextField
                         floatingLabelText="Скорость вращения"
-                        // value={addScan.rotation_speed}
+                        value={ fieldLense(scan, form, 'rotation_speed') }
                         onChange={ (e, data) => changeRotationSpeed(data) }
                     /> }
+                </div>
                 <SelectField
                     floatingLabelText="Тип измерения"
-                    value={ addScan.regime }
-                    onChange={ (e, data) => this.props.changeRegime(data) }
+                    value={ fieldLense(scan, form, 'regime') }
+                    onChange={ (e, key, data) => changeRegime(data) }
                 >
                     { this.regimeOptions.map(item => (
                         <MenuItem
