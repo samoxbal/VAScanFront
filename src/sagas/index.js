@@ -10,7 +10,6 @@ import {
     scanRequiredFields,
     loginRequiredFields
 } from '../constants/requiredFields';
-import { addVoltamogrammForm, addScanForm } from '../selectors/scan';
 
 function* createToken() {
     while(true) {
@@ -67,45 +66,9 @@ function* editExperiment() {
 
 function* createScan() {
     while(true) {
-        const action = yield take(ACTION_TYPES.ADD_SCAN);
-        const { payload } = action;
-        const voltamogramm = yield select(addVoltamogrammForm);
-        const scan = yield select(addScanForm);
-        const [invalidVoltamogrammFields] = validator(voltamogramm, voltamogrammRequiredFields);
-        const [invalidScanFields] = validator(scan, scanRequiredFields);
-        if(is.empty(invalidVoltamogrammFields) && is.empty(invalidScanFields)) {
-            const { regime, measure_mode, ...restScan } = scan;
-            const data = {
-                ...payload,
-                voltamogramm,
-                scan: {
-                    regime,
-                    measure_mode: measure_mode[regime],
-                    ...restScan
-                }
-            };
-            yield call(api.add_scan, data);
-        } else {
-            yield put({
-                type: ACTION_TYPES.SET_ERROR,
-                payload: {
-                    ...invalidVoltamogrammFields,
-                    ...invalidScanFields
-                }
-            })
-        }
-    }
-}
-
-function* fetchSingleMeasure() {
-    while(true) {
-        const action = yield take(ACTION_TYPES.FETCH_SINGLE_MEASURE);
-        const { payload } = action;
-        const data = yield call(api.fetch_single_measure, payload);
-        yield put({
-            type: ACTION_TYPES.FETCH_SINGLE_MEASURE_SUCCESS,
-            payload: data['data']['data']
-        });
+        const { payload } = yield take(ACTION_TYPES.ADD_SCAN);
+        const data = yield call(api.add_measure, payload);
+        console.log(data);
     }
 }
 
@@ -113,7 +76,6 @@ export default function* root() {
     yield fork(createExperiment);
     yield fork(createScan);
     yield fork(editExperiment);
-    yield fork(fetchSingleMeasure);
     yield fork(createToken);
     yield fork(createVoltamogramm);
 }

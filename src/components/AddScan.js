@@ -70,6 +70,9 @@ class AddScan extends Component {
             createScan
         } = this.props;
 
+        const file = new FormData();
+        file.append('file', this._scanForm.getWrappedInstance().getFile());
+
         mutate({
             variables: {
                 voltamogramm,
@@ -85,7 +88,10 @@ class AddScan extends Component {
                 pressure,
                 measureMode: regime
             }
-        }).then(data => createScan(data.data.createScan.id, this._scanForm.getFile()));
+        }).then(data => {
+            file.append('scan', data.data.createScan.id);
+            createScan(file);
+        });
     }
 
     render() {
