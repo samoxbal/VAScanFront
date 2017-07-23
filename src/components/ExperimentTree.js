@@ -47,7 +47,7 @@ class ExperimentTree extends Component {
             variables: {
                 experiment: id
             }
-        }).then(data => fetchVoltamogramms(data.data.voltamogramms))
+        }).then(data => fetchVoltamogramms(data.data.voltamogramms));
     }
 
     render() {

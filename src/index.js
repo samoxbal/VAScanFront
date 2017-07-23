@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import configureStore, { sagaMiddleware } from './store/configureStore';
-import App from './components/app/App';
+import App from './components/App';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import root from './sagas';

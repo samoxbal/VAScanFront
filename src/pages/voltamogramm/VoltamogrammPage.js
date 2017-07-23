@@ -17,9 +17,13 @@ import {
     fetchSingleVoltamogramm,
     selectScan,
     activeEditVoltamogramm,
-    openAddScan
+    openAddScan,
+    fetchSingleScan
 } from '../../actions/index';
-import { voltamogramm as voltamogrammQuery } from '../../graphql/queries';
+import {
+    voltamogramm as voltamogrammQuery,
+    scan as scanQuery
+} from '../../graphql/queries';
 
 const mapStateToProps = state => ({
     voltamogramm: state.voltamogramm
@@ -29,7 +33,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     fetchSingleVoltamogramm,
     selectScan,
     activeEditVoltamogramm,
-    openAddScan
+    openAddScan,
+    fetchSingleScan
 }, dispatch);
 
 class VoltamogrammPage extends Component {
@@ -38,7 +43,10 @@ class VoltamogrammPage extends Component {
         voltamogramm: PropTypes.object,
         fetchSingleVoltamogramm: PropTypes.func,
         activeEditVoltamogramm: PropTypes.func,
-        openAddScan: PropTypes.func
+        openAddScan: PropTypes.func,
+        fetchSingleScan: PropTypes.func,
+        selectScan: PropTypes.func,
+        client: PropTypes.object
     }
 
     style = {
@@ -77,12 +85,23 @@ class VoltamogrammPage extends Component {
         }).then(data => fetchSingleVoltamogramm(data.data.voltamogramm));
     }
 
+    onSelectScan = scanId => {
+        const { client, selectScan, fetchSingleScan } = this.props;
+        selectScan(scanId);
+        client.query({
+            query: scanQuery,
+            variables: {
+                scanId
+            }
+        }).then(data => fetchSingleScan(data.data.scan));
+    }
+
     renderTree(voltamogramm) {
         const { scans } = voltamogramm;
         return (
             <TreeFolder
                 data={ scans }
-                onClickItem={ id => this.props.selectScan(id) }
+                onClickItem={ id => this.onSelectScan(id) }
             />
         )
     }

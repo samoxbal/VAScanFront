@@ -1,10 +1,13 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withApollo } from 'react-apollo';
 import * as d3 from 'd3';
 import PageLayout from '../../components/PageLayout';
 import { Card } from 'material-ui/Card';
 import { fetchSingleMeasure } from '../../actions/index';
+import { measure } from '../../graphql/queries';
 
 const mapStateToProps = state => ({
     measure: state.measure
@@ -15,13 +18,42 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 class MeasurePage extends Component {
+
+    static propTypes = {
+        measure: PropTypes.object,
+        fetchSingleMeasure: PropTypes.func,
+        client: PropTypes.object
+    }
+
+    style = {
+        wrapper: {
+            display: 'flex',
+            justifyContent: 'space-around',
+            marginTop: 40,
+            flexWrap: 'wrap'
+        },
+        chartCard: {
+            width: '70%',
+            minHeight: 600
+        }
+    }
+
     componentWillMount() {
-        const {match: { params: { id } }, fetchSingleMeasure} = this.props;
-        fetchSingleMeasure(id);
+        const {
+            client,
+            match: { params: { id } },
+            fetchSingleMeasure
+        } = this.props;
+        client.query({
+            query: measure,
+            variables: {
+                measureId: id
+            }
+        }).then(data => fetchSingleMeasure(data.data.measure));
     }
 
     componentWillReceiveProps(nextProps) {
-        const {points} = nextProps.measure;
+        const { points } = nextProps.measure;
         points && this.renderChart(points);
     }
 
@@ -106,8 +138,8 @@ class MeasurePage extends Component {
     render() {
         return (
             <PageLayout>
-                <div className="MeasurePage">
-                    <Card className="MeasurePage__ChartCard">
+                <div style={ this.style.wrapper }>
+                    <Card style={ this.style.chartCard }>
                         <div className="MeasurePage__Chart">
                         </div>
                     </Card>
@@ -117,4 +149,4 @@ class MeasurePage extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MeasurePage);
+export default connect(mapStateToProps, mapDispatchToProps)(withApollo(MeasurePage));

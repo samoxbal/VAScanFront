@@ -1,15 +1,13 @@
 import { Route, Redirect } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import { Switch } from 'react-router-dom';
-import AddExperiment from '../../pages/add-experiment/AddExperiment';
-import ExperimentsPage from '../../pages/experiments/ExperimentsPage';
-import VoltamogrammPage from '../../pages/voltamogramm/VoltamogrammPage';
-import MeasurePage from '../../pages/measure/MeasurePage';
-import Login from '../../pages/login/Login';
-import { Auth } from '../Auth';
-import { history } from '../../store/configureStore';
-
-import './App.css';
+import AddExperiment from '../pages/add-experiment/AddExperiment';
+import ExperimentsPage from '../pages/experiments/ExperimentsPage';
+import VoltamogrammPage from '../pages/voltamogramm/VoltamogrammPage';
+import MeasurePage from '../pages/measure/MeasurePage';
+import Login from '../pages/login/Login';
+import { Auth } from './Auth';
+import { history } from '../store/configureStore';
 
 const renderLogin = props => {
     if(!localStorage.getItem("token")) {

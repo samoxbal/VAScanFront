@@ -1,7 +1,0 @@
-.axis {
-    path, line, text {
-        stroke: #fff;
-        fill: none;
-        shape-rendering: crispEdges;
-    }
-}

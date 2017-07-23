@@ -4,14 +4,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import EditIcon from 'material-ui/svg-icons/content/create';
-import { getSelectedScan } from '../selectors/scan';
+import { isSelectedScan } from '../selectors/scan';
 import AddScanForm from './AddScanForm';
 import ListLinks from './ListLinks';
 
 const mapStateToProps = state => ({
-    measures: state.measures,
-    scan: getSelectedScan(state),
-    form: state.addScanForm
+    scan: state.scan,
+    isScanExist: isSelectedScan(state)
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -22,8 +21,7 @@ class Scan extends Component {
 
     static propTypes = {
         scan: PropTypes.object,
-        measures: PropTypes.array,
-        form: PropTypes.object
+        isScanExist: PropTypes.bool
     }
 
     style = {
@@ -44,7 +42,8 @@ class Scan extends Component {
         )
     }
 
-    renderScan(measures) {
+    renderScan() {
+        const { measures } = this.props.scan;
         return (
             <div style={ this.style.scanWrapper }>
                 <RaisedButton
@@ -54,17 +53,15 @@ class Scan extends Component {
                     style={ this.style.editButton }
                 />
                 <AddScanForm/>
-                { !!measures.length && this.renderMeasures(measures) }
+                { measures && this.renderMeasures(measures) }
             </div>
         )
     }
 
     render() {
-        const { scan, measures } = this.props;
-
         return (
             <div>
-                { scan && this.renderScan(measures) }
+                { this.props.isScanExist && this.renderScan() }
             </div>
         )
     }

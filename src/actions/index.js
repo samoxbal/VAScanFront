@@ -48,27 +48,23 @@ export function fetchSingleVoltamogramm(voltamogramm) {
     }
 }
 
+export function fetchSingleScan(scan) {
+    return {
+        type: ACTION_TYPES.FETCH_SINGLE_SCAN,
+        payload: scan
+    }
+}
+
 export function resetAddExperimentForm() {
     return {
         type: ACTION_TYPES.RESET_ADD_EXPERIMENT
     }
 }
 
-export function fetchSingleMeasure(id) {
+export function fetchSingleMeasure(measure) {
     return {
         type: ACTION_TYPES.FETCH_SINGLE_MEASURE,
-        payload: {
-            measure: id
-        }
-    }
-}
-
-export function fetchMeasures(id) {
-    return {
-        type: ACTION_TYPES.FETCH_MEASURES,
-        payload: {
-            scan: id
-        }
+        payload: measure
     }
 }
 

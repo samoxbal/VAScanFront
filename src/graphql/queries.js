@@ -36,3 +36,32 @@ export const voltamogramm = gql`
         }
     }
 `;
+
+export const scan = gql`
+    query scan($scanId: String) {
+        scan(scanId: $scanId) {
+            id,
+            startPotential,
+            endPotential,
+            reverseDirection,
+            stirring,
+            rotation,
+            channelId,
+            channelLabel,
+            temperature,
+            pressure,
+            measureMode,
+            measures {
+                id
+            }
+        }
+    }
+`;
+
+export const measure = gql`
+    query measure($measureId: String) {
+        measure(measureId: $measureId) {
+            points
+        }
+    }
+`;
