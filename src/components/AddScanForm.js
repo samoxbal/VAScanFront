@@ -104,7 +104,6 @@ class AddScanForm extends Component {
 
         return (
             <div>
-                <h3>Параметры измерения</h3>
                 <div style={ this.style.formBlock }>
                     <DatePicker
                         hintText="Дата проведения"
