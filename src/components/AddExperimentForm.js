@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 import is from 'is';
 import format from 'date-fns/format';
-import { fieldLense } from '../utils/utils';
+import { fieldLense, fieldDateLense } from '../utils/utils';
 
 export default class AddExperimentForm extends Component {
     static propTypes = {
@@ -15,11 +15,13 @@ export default class AddExperimentForm extends Component {
         experiment: PropTypes.object,
         active: PropTypes.bool,
         form: PropTypes.object,
-        resetForm: PropTypes.func
+        resetForm: PropTypes.func,
+        isEditMode: PropTypes.bool
     }
 
     static defaultProps = {
-        active: true
+        active: true,
+        isEditMode: false
     }
 
     componentWillUnmount() {
@@ -48,7 +50,7 @@ export default class AddExperimentForm extends Component {
             <div>
                 <RaisedButton
                     primary={ true }
-                    label="Создать"
+                    label={ this.props.isEditMode ? "Редактировать" : "Создать" }
                     onTouchTap={ this.submitExperiment }
                     style={{ marginRight: 10 }}
                 />
@@ -70,13 +72,17 @@ export default class AddExperimentForm extends Component {
                         hintText="Дата начала"
                         onChange={ this.onChangeStartDate }
                         autoOk={ true }
+                        disabled={ !active }
                         style={{ display: 'inline-block', marginRight: 30 }}
+                        value={ fieldDateLense(experiment, form, 'startDate') }
                     />
                     <DatePicker
                         hintText="Дата окончания"
                         onChange={ this.onChangeEndDate }
                         autoOk={ true }
+                        disabled={ !active }
                         style={{ display: 'inline-block' }}
+                        value={ fieldDateLense(experiment, form, 'endDate') }
                     />
                 </div>
                 <TextField

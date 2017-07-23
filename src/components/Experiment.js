@@ -2,6 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { graphql } from 'react-apollo';
 import AddVoltamogramm from './AddVoltamogramm';
 import { getSelectedExperiment } from '../selectors/experiment';
 import AddIcon from 'material-ui/svg-icons/content/add';
@@ -12,6 +13,9 @@ import ListLinks from './ListLinks';
 import AddExperimentForm from './AddExperimentForm';
 import createFormAction from '../utils/createFormAction';
 import ACTION_TYPES from '../constants/actionTypes';
+import {
+    updateExperiment as updateExperimentMutation
+} from '../graphql/mutations';
 
 const mapStateToProps = state => ({
     experiment: getSelectedExperiment(state),
@@ -47,7 +51,8 @@ class Experiment extends Component {
         changeDescription: PropTypes.func,
         changeStartDate: PropTypes.func,
         changeEndDate: PropTypes.func,
-        resetAddExperimentForm: PropTypes.func
+        resetAddExperimentForm: PropTypes.func,
+        mutate: PropTypes.func
     }
 
     openAddVoltamogramm = () => this.props.openAddVoltamogramm(true)
@@ -59,12 +64,33 @@ class Experiment extends Component {
         this.props.resetAddExperimentForm();
     }
 
-    editExperiment = experiment_update => {
-        const { experiment: { _id }, editExperiment } = this.props;
-        editExperiment({
-            _id,
-            ...experiment_update
-        })
+    editExperiment = () => {
+        const {
+            experiment: {
+                id,
+                name,
+                description,
+                startDate,
+                endDate
+            },
+            form: {
+                name: formName,
+                description: formDescription,
+                startDate: formStartDate,
+                endDate: formEndDate
+            },
+            mutate
+        } = this.props;
+
+        mutate({
+            variables: {
+                id,
+                name: formName || name,
+                description: formDescription || description,
+                startDate: formStartDate || startDate,
+                endDate: formEndDate || endDate
+            }
+        });
     }
 
     renderExperiment() {
@@ -93,6 +119,7 @@ class Experiment extends Component {
                     changeStartDate={ changeStartDate }
                     changeEndDate={ changeEndDate }
                     resetForm={ resetAddExperimentForm }
+                    isEditMode={ true }
                 />
             </div>
         )
@@ -135,4 +162,4 @@ class Experiment extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Experiment);
+export default connect(mapStateToProps, mapDispatchToProps)(graphql(updateExperimentMutation)(Experiment));

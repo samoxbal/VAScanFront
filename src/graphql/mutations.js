@@ -22,6 +22,28 @@ export const createExperiment = gql`
     }
 `;
 
+export const updateExperiment = gql`
+    mutation updateExperiment(
+        $id: String,
+        $name: String,
+        $description: String,
+        $startDate: String,
+        $endDate: String
+    ) 
+    {
+        updateExperiment(
+            id: $id,
+            name: $name,
+            description: $description,
+            startDate: $startDate,
+            endDate: $endDate
+        ) 
+        {
+            id
+        }
+    }
+`;
+
 export const createVoltamogramm = gql`
     mutation createVoltamogramm(
         $experiment: String,
