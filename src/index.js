@@ -27,7 +27,7 @@ networkInterface.use([{
     }
 }]);
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
     networkInterface
 });
 

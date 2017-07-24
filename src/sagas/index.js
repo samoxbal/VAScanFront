@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 import is from 'is';
 import validator from '../utils/validator';
 import { api } from '../utils/api';
+import { client } from '../index';
 import ACTION_TYPES from '../constants/actionTypes';
 import {
     experimentRequiredFields,
