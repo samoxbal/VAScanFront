@@ -8,6 +8,9 @@ import { client } from '../index';
 import ACTION_TYPES from '../constants/actionTypes';
 import { experiments, voltamogramms } from '../graphql/queries';
 import {
+    updateExperiment as updateExperimentMutation
+} from '../graphql/mutations';
+import {
     experimentRequiredFields,
     voltamogrammRequiredFields,
     scanRequiredFields,
@@ -72,6 +75,19 @@ function* createExperiment() {
     }
 }
 
+function* updateExperiment() {
+    while(true) {
+        const { payload } = yield take(ACTION_TYPES.UPDATE_EXPERIMENT);
+        yield client.mutate({
+            mutation: updateExperimentMutation,
+            variables: payload
+        });
+        yield put({
+            type: ACTION_TYPES.FETCH_EXPERIMENTS
+        })
+    }
+}
+
 function* createVoltamogramm() {
     while(true) {
         const { payload } = yield take(ACTION_TYPES.ADD_VOLTAMOGRAMM);
@@ -80,22 +96,6 @@ function* createVoltamogramm() {
             payload: false
         });
         yield put(push(`/voltamogramm/${payload}`));
-    }
-}
-
-function* editExperiment() {
-    while(true) {
-        const action = yield take(ACTION_TYPES.EDIT_EXPERIMENT);
-        const { payload: { _id, ...restObj } } = action;
-        const [invalidFields, experimentObj] = validator(restObj, experimentRequiredFields);
-        if(is.empty(invalidFields)) {
-            yield call(api.edit_experiment, {_id, ...experimentObj});
-        } else {
-            yield put({
-                type: ACTION_TYPES.SET_ERROR,
-                payload: invalidFields
-            })
-        }
     }
 }
 
@@ -112,7 +112,7 @@ export default function* root() {
     yield fork(fetchExperiments);
     yield fork(fetchVoltamogramms);
     yield fork(createScan);
-    yield fork(editExperiment);
     yield fork(createToken);
     yield fork(createVoltamogramm);
+    yield fork(updateExperiment);
 }

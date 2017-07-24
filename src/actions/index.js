@@ -13,10 +13,10 @@ export function createExperiment() {
     }
 }
 
-export function editExperiment(experiment) {
+export function updateExperiment(variables) {
     return {
-        type: ACTION_TYPES.EDIT_EXPERIMENT,
-        payload: experiment
+        type: ACTION_TYPES.UPDATE_EXPERIMENT,
+        payload: variables
     }
 }
 

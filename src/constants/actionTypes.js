@@ -14,8 +14,6 @@ const ACTION_TYPES = keyMirror({
     OPEN_ADD_SCAN: null,
     FETCH_SINGLE_VOLTAMOGRAMM: null,
     FETCH_SINGLE_SCAN: null,
-    EDIT_EXPERIMENT: null,
-    EDIT_EXPERIMENT_SUCCESS: null,
     CHANGE_EXPERIMENT_NAME: null,
     CHANGE_EXPERIMENT_DESCRIPTION: null,
     CHANGE_EXPERIMENT_START: null,
@@ -59,7 +57,8 @@ const ACTION_TYPES = keyMirror({
     ACTIVE_EDIT_VOLTAMOGRAMM: null,
     CHANGE_EMAIL: null,
     CHANGE_PASSWORD: null,
-    LOGIN: null
+    LOGIN: null,
+    UPDATE_EXPERIMENT: null
 });
 
 export default ACTION_TYPES;
