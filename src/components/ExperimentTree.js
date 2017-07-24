@@ -2,11 +2,8 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withApollo } from 'react-apollo';
-import jwtDecode from 'jwt-decode';
 import TreeFolder from './TreeFolder';
 import { selectExperiment, fetchExperiments, fetchVoltamogramms } from '../actions';
-import { experiments, voltamogramms } from '../graphql/queries';
 
 const mapStateToProps = state => ({
     experiments: state.experiments,
@@ -24,30 +21,18 @@ class ExperimentTree extends Component {
     static propTypes = {
         experiments: PropTypes.array,
         selectExperiment: PropTypes.func,
-        client: PropTypes.object,
         fetchExperiments: PropTypes.func,
         fetchVoltamogramms: PropTypes.func
     }
 
     componentWillMount() {
-        const { client, fetchExperiments } = this.props;
-        client.query({
-            query: experiments,
-            variables: {
-                user: jwtDecode(localStorage.getItem('token')).sub
-            }
-        }).then(data => fetchExperiments(data.data.experiments));
+        this.props.fetchExperiments();
     }
 
     onClickExperiment = id => {
-        const { client, selectExperiment, fetchVoltamogramms } = this.props;
+        const { selectExperiment, fetchVoltamogramms } = this.props;
         selectExperiment(id);
-        client.query({
-            query: voltamogramms,
-            variables: {
-                experiment: id
-            }
-        }).then(data => fetchVoltamogramms(data.data.voltamogramms));
+        fetchVoltamogramms(id);
     }
 
     render() {
@@ -60,4 +45,4 @@ class ExperimentTree extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withApollo(ExperimentTree));
+export default connect(mapStateToProps, mapDispatchToProps)(ExperimentTree);

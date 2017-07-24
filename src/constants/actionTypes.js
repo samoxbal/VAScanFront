@@ -2,7 +2,9 @@ import keyMirror from 'key-mirror';
 
 const ACTION_TYPES = keyMirror({
     FETCH_EXPERIMENTS: null,
+    FETCH_EXPERIMENTS_SUCCESS: null,
     FETCH_VOLTAMOGRAMMS: null,
+    FETCH_VOLTAMOGRAMMS_SUCCESS: null,
     ADD_EXPERIMENT: null,
     ADD_VOLTAMOGRAMM: null,
     SELECT_EXPERIMENT: null,

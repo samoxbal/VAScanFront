@@ -1,10 +1,12 @@
 import { take, put, fork, call, select } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import is from 'is';
+import jwtDecode from 'jwt-decode';
 import validator from '../utils/validator';
 import { api } from '../utils/api';
 import { client } from '../index';
 import ACTION_TYPES from '../constants/actionTypes';
+import { experiments, voltamogramms } from '../graphql/queries';
 import {
     experimentRequiredFields,
     voltamogrammRequiredFields,
@@ -28,6 +30,38 @@ function* createToken() {
                 payload: invalidFields
             })
         }
+    }
+}
+
+function* fetchExperiments() {
+    while(true) {
+        yield take(ACTION_TYPES.FETCH_EXPERIMENTS);
+        const data = yield client.query({
+            query: experiments,
+            variables: {
+                user: jwtDecode(localStorage.getItem('token')).sub
+            }
+        });
+        yield put({
+            type: ACTION_TYPES.FETCH_EXPERIMENTS_SUCCESS,
+            payload: data.data.experiments
+        })
+    }
+}
+
+function* fetchVoltamogramms() {
+    while(true) {
+        const { payload } = yield take(ACTION_TYPES.FETCH_VOLTAMOGRAMMS);
+        const data = yield client.query({
+            query: voltamogramms,
+            variables: {
+                experiment: payload
+            }
+        });
+        yield put({
+            type: ACTION_TYPES.FETCH_VOLTAMOGRAMMS_SUCCESS,
+            payload: data.data.voltamogramms
+        })
     }
 }
 
@@ -75,6 +109,8 @@ function* createScan() {
 
 export default function* root() {
     yield fork(createExperiment);
+    yield fork(fetchExperiments);
+    yield fork(fetchVoltamogramms);
     yield fork(createScan);
     yield fork(editExperiment);
     yield fork(createToken);

@@ -1,9 +1,9 @@
 import ACTION_TYPES from '../constants/actionTypes';
 
-export function selectExperiment(_id) {
+export function selectExperiment(id) {
     return {
         type: ACTION_TYPES.SELECT_EXPERIMENT,
-        payload: _id
+        payload: id
     }
 }
 
@@ -95,10 +95,10 @@ export function fetchExperiments(experiments) {
     }
 }
 
-export function fetchVoltamogramms(voltamogramms) {
+export function fetchVoltamogramms(experimentId) {
     return {
         type: ACTION_TYPES.FETCH_VOLTAMOGRAMMS,
-        payload: voltamogramms
+        payload: experimentId
     }
 }
 
