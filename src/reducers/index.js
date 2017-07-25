@@ -9,9 +9,9 @@ const errors = createSimpleReducer({}, ACTION_TYPES.SET_ERROR);
 const openAddVoltamogramm = createSimpleReducer(false, ACTION_TYPES.OPEN_ADD_VOLTAMOGRAMM);
 const openAddScan = createSimpleReducer(false, ACTION_TYPES.OPEN_ADD_SCAN);
 const voltamogramms = createSimpleReducer([], ACTION_TYPES.FETCH_VOLTAMOGRAMMS_SUCCESS);
-const voltamogramm = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_VOLTAMOGRAMM);
+const voltamogramm = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_VOLTAMOGRAMM_SUCCESS);
 const measure = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_MEASURE);
-const scan = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_SCAN);
+const scan = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_SCAN_SUCCESS);
 const selectedScanId = createSimpleReducer("", ACTION_TYPES.SELECT_SCAN);
 const activeEditVoltamogramm = createSimpleReducer(false, ACTION_TYPES.ACTIVE_EDIT_VOLTAMOGRAMM);
 

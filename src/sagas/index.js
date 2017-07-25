@@ -6,7 +6,12 @@ import validator from '../utils/validator';
 import { api } from '../utils/api';
 import { client } from '../index';
 import ACTION_TYPES from '../constants/actionTypes';
-import { experiments, voltamogramms } from '../graphql/queries';
+import {
+    experiments,
+    voltamogramms,
+    voltamogramm,
+    scan
+} from '../graphql/queries';
 import {
     updateExperiment as updateExperimentMutation,
     createExperiment as createExperimentMutation,
@@ -94,6 +99,38 @@ function* updateExperiment() {
     }
 }
 
+function* fetchSingleVoltamogramm() {
+    while(true) {
+        const { payload } = yield take(ACTION_TYPES.FETCH_SINGLE_VOLTAMOGRAMM);
+        const { data } = yield client.query({
+            query: voltamogramm,
+            variables: {
+                voltamogrammId: payload
+            }
+        });
+        yield put({
+            type: ACTION_TYPES.FETCH_SINGLE_VOLTAMOGRAMM_SUCCESS,
+            payload: data.voltamogramm
+        })
+    }
+}
+
+function* fetchSingleScan() {
+    while(true) {
+        const { payload } = yield take(ACTION_TYPES.FETCH_SINGLE_SCAN);
+        const { data } = yield client.query({
+            query: scan,
+            variables: {
+                scanId: payload
+            }
+        });
+        yield put({
+            type: ACTION_TYPES.FETCH_SINGLE_SCAN_SUCCESS,
+            payload: data.scan
+        })
+    }
+}
+
 function* createVoltamogramm() {
     while(true) {
         const { payload } = yield take(ACTION_TYPES.ADD_VOLTAMOGRAMM);
@@ -121,6 +158,8 @@ export default function* root() {
     yield fork(createExperiment);
     yield fork(fetchExperiments);
     yield fork(fetchVoltamogramms);
+    yield fork(fetchSingleVoltamogramm);
+    yield fork(fetchSingleScan);
     yield fork(createScan);
     yield fork(createToken);
     yield fork(createVoltamogramm);

@@ -42,17 +42,17 @@ export function openAddScan(state) {
     }
 }
 
-export function fetchSingleVoltamogramm(voltamogramm) {
+export function fetchSingleVoltamogramm(id) {
     return {
         type: ACTION_TYPES.FETCH_SINGLE_VOLTAMOGRAMM,
-        payload: voltamogramm
+        payload: id
     }
 }
 
-export function fetchSingleScan(scan) {
+export function fetchSingleScan(id) {
     return {
         type: ACTION_TYPES.FETCH_SINGLE_SCAN,
-        payload: scan
+        payload: id
     }
 }
 

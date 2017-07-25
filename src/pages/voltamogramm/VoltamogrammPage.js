@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import is from 'is';
 import { bindActionCreators } from 'redux';
-import { withApollo } from 'react-apollo';
 import { Card } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import AddIcon from 'material-ui/svg-icons/content/add';
@@ -20,10 +19,6 @@ import {
     openAddScan,
     fetchSingleScan
 } from '../../actions/index';
-import {
-    voltamogramm as voltamogrammQuery,
-    scan as scanQuery
-} from '../../graphql/queries';
 
 const mapStateToProps = state => ({
     voltamogramm: state.voltamogramm
@@ -45,8 +40,7 @@ class VoltamogrammPage extends Component {
         activeEditVoltamogramm: PropTypes.func,
         openAddScan: PropTypes.func,
         fetchSingleScan: PropTypes.func,
-        selectScan: PropTypes.func,
-        client: PropTypes.object
+        selectScan: PropTypes.func
     }
 
     style = {
@@ -75,25 +69,14 @@ class VoltamogrammPage extends Component {
         const {
             match: { params: { id } },
             fetchSingleVoltamogramm,
-            client
         } = this.props;
-        client.query({
-            query: voltamogrammQuery,
-            variables: {
-                voltamogrammId: id
-            }
-        }).then(data => fetchSingleVoltamogramm(data.data.voltamogramm));
+        fetchSingleVoltamogramm(id);
     }
 
     onSelectScan = scanId => {
-        const { client, selectScan, fetchSingleScan } = this.props;
+        const { selectScan, fetchSingleScan } = this.props;
         selectScan(scanId);
-        client.query({
-            query: scanQuery,
-            variables: {
-                scanId
-            }
-        }).then(data => fetchSingleScan(data.data.scan));
+        fetchSingleScan(scanId);
     }
 
     renderTree(voltamogramm) {
@@ -153,4 +136,4 @@ class VoltamogrammPage extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withApollo(VoltamogrammPage));
+export default connect(mapStateToProps, mapDispatchToProps)(VoltamogrammPage);
