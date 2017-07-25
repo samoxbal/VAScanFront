@@ -7,9 +7,10 @@ export function selectExperiment(id) {
     }
 }
 
-export function createExperiment() {
+export function createExperiment(variables) {
     return {
-        type: ACTION_TYPES.ADD_EXPERIMENT
+        type: ACTION_TYPES.ADD_EXPERIMENT,
+        payload: variables
     }
 }
 
@@ -102,10 +103,10 @@ export function fetchVoltamogramms(experimentId) {
     }
 }
 
-export function createVoltamogramm(id) {
+export function createVoltamogramm(variables) {
     return {
         type: ACTION_TYPES.ADD_VOLTAMOGRAMM,
-        payload: id
+        payload: variables
     }
 }
 

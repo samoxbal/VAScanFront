@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { graphql } from 'react-apollo';
 import PageLayout from '../../components/PageLayout';
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
@@ -10,7 +9,6 @@ import AddExperimentForm from '../../components/AddExperimentForm';
 import { Card } from 'material-ui/Card';
 import createFormAction from '../../utils/createFormAction';
 import ACTION_TYPES from '../../constants/actionTypes';
-import { createExperiment as createExperimentMutation } from '../../graphql/mutations';
 
 const mapStateToProps = state => ({
     errors: state.errors,
@@ -32,7 +30,6 @@ class AddExperiment extends Component {
     static propTypes = {
         errors: PropTypes.object,
         form: PropTypes.object,
-        mutate: PropTypes.func,
         resetAddExperimentForm: PropTypes.func,
         changeName: PropTypes.func,
         changeDescription: PropTypes.func,
@@ -55,7 +52,6 @@ class AddExperiment extends Component {
 
     submitExperiment = () => {
         const {
-            mutate,
             form: {
                 name,
                 description,
@@ -65,15 +61,13 @@ class AddExperiment extends Component {
             createExperiment
         } = this.props;
 
-        mutate({
-            variables: {
-                user: jwtDecode(localStorage.getItem('token')).sub,
-                name,
-                description,
-                startDate,
-                endDate
-            }
-        }).then(() => createExperiment());
+        createExperiment({
+            user: jwtDecode(localStorage.getItem('token')).sub,
+            name,
+            description,
+            startDate,
+            endDate
+        });
     }
 
     render() {
@@ -109,4 +103,4 @@ class AddExperiment extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(graphql(createExperimentMutation)(AddExperiment));
+export default connect(mapStateToProps, mapDispatchToProps)(AddExperiment);

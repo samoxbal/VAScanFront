@@ -8,7 +8,9 @@ import { client } from '../index';
 import ACTION_TYPES from '../constants/actionTypes';
 import { experiments, voltamogramms } from '../graphql/queries';
 import {
-    updateExperiment as updateExperimentMutation
+    updateExperiment as updateExperimentMutation,
+    createExperiment as createExperimentMutation,
+    createVoltamogramm as createVoltamogrammMutation
 } from '../graphql/mutations';
 import {
     experimentRequiredFields,
@@ -70,7 +72,11 @@ function* fetchVoltamogramms() {
 
 function* createExperiment() {
     while(true) {
-        yield take(ACTION_TYPES.ADD_EXPERIMENT);
+        const { payload } = yield take(ACTION_TYPES.ADD_EXPERIMENT);
+        yield client.mutate({
+            mutation: createExperimentMutation,
+            variables: payload
+        });
         yield put(push('/all'));
     }
 }
@@ -91,11 +97,15 @@ function* updateExperiment() {
 function* createVoltamogramm() {
     while(true) {
         const { payload } = yield take(ACTION_TYPES.ADD_VOLTAMOGRAMM);
+        const { data } = yield client.mutate({
+            mutation: createVoltamogrammMutation,
+            variables: payload
+        });
         yield put({
             type: ACTION_TYPES.OPEN_ADD_VOLTAMOGRAMM,
             payload: false
         });
-        yield put(push(`/voltamogramm/${payload}`));
+        yield put(push(`/voltamogramm/${data.createVoltamogramm.id}`));
     }
 }
 

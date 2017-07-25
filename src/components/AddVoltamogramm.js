@@ -2,14 +2,10 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { graphql } from 'react-apollo';
 import { createVoltamogramm, openAddVoltamogramm } from '../actions';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import AddVoltamogrammForm from './AddVoltamogrammForm';
-import {
-    createVoltamogramm as createVoltamogrammMutation
-} from '../graphql/mutations';
 
 const mapStateToProps = state => ({
     openPanel: state.openAddVoltamogramm,
@@ -46,13 +42,11 @@ class AddScan extends Component {
         createVoltamogramm: PropTypes.func,
         experiment_id: PropTypes.string,
         openAddVoltamogramm: PropTypes.func,
-        mutate: PropTypes.func,
         form: PropTypes.object
     }
 
     handleSubmit = () => {
         const {
-            mutate,
             form: {
                 cyclic,
                 va_cycle_datetime,
@@ -65,17 +59,15 @@ class AddScan extends Component {
             createVoltamogramm
         } = this.props;
 
-        mutate({
-            variables: {
-                experiment: experiment_id,
-                cyclic,
-                date: va_cycle_datetime,
-                description,
-                solution,
-                numberOfElectrodes: number_of_electrodes,
-                equipmentId: equipment_id
-            }
-        }).then(data => createVoltamogramm(data.data.createVoltamogramm.id));
+        createVoltamogramm({
+            experiment: experiment_id,
+            cyclic,
+            date: va_cycle_datetime,
+            description,
+            solution,
+            numberOfElectrodes: number_of_electrodes,
+            equipmentId: equipment_id
+        });
     }
 
     render() {
@@ -93,4 +85,4 @@ class AddScan extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(graphql(createVoltamogrammMutation)(AddScan));
+export default connect(mapStateToProps, mapDispatchToProps)(AddScan);
