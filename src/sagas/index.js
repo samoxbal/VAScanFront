@@ -145,7 +145,7 @@ function* fetchSingleMeasure() {
         });
         yield put({
             type: ACTION_TYPES.FETCH_SINGLE_MEASURE_SUCCESS,
-            payload: data.scan
+            payload: data.measure
         })
     }
 }
@@ -167,9 +167,17 @@ function* createVoltamogramm() {
 
 function* createScan() {
     while(true) {
-        const { payload } = yield take(ACTION_TYPES.ADD_SCAN);
-        const data = yield call(api.add_measure, payload);
-        console.log(data);
+        const { payload: { file, ...variables } } = yield take(ACTION_TYPES.ADD_SCAN);
+        const createScanData = yield client.mutate({
+            mutation: createScanMutation,
+            variables
+        });
+        file.append('scan', createScanData.data.createScan.id);
+        yield call(api.add_measure, file);
+        yield put({
+            type: ACTION_TYPES.OPEN_ADD_SCAN,
+            payload: false
+        })
     }
 }
 

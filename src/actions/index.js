@@ -21,10 +21,10 @@ export function updateExperiment(variables) {
     }
 }
 
-export function createScan(file) {
+export function createScan(variables) {
     return {
         type: ACTION_TYPES.ADD_SCAN,
-        payload: file
+        payload: variables
     }
 }
 

@@ -85,7 +85,6 @@ class MeasurePage extends Component {
 
         main.append('g')
             .attr('transform', 'translate(0,' + y(0) + ')')
-            .attr('class', 'axis')
             .call(xAxis);
 
         const yAxis = d3.axisLeft()
@@ -93,7 +92,6 @@ class MeasurePage extends Component {
 
         main.append('g')
             .attr('transform', 'translate(0,0)')
-            .attr('class', 'axis')
             .call(yAxis);
 
         main.append("g")
