@@ -62,10 +62,10 @@ export function resetAddExperimentForm() {
     }
 }
 
-export function fetchSingleMeasure(measure) {
+export function fetchSingleMeasure(id) {
     return {
         type: ACTION_TYPES.FETCH_SINGLE_MEASURE,
-        payload: measure
+        payload: id
     }
 }
 

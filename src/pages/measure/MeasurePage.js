@@ -2,12 +2,10 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withApollo } from 'react-apollo';
 import * as d3 from 'd3';
 import PageLayout from '../../components/PageLayout';
 import { Card } from 'material-ui/Card';
 import { fetchSingleMeasure } from '../../actions/index';
-import { measure } from '../../graphql/queries';
 
 const mapStateToProps = state => ({
     measure: state.measure
@@ -21,8 +19,7 @@ class MeasurePage extends Component {
 
     static propTypes = {
         measure: PropTypes.object,
-        fetchSingleMeasure: PropTypes.func,
-        client: PropTypes.object
+        fetchSingleMeasure: PropTypes.func
     }
 
     style = {
@@ -40,16 +37,10 @@ class MeasurePage extends Component {
 
     componentWillMount() {
         const {
-            client,
             match: { params: { id } },
             fetchSingleMeasure
         } = this.props;
-        client.query({
-            query: measure,
-            variables: {
-                measureId: id
-            }
-        }).then(data => fetchSingleMeasure(data.data.measure));
+        fetchSingleMeasure(id);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -149,4 +140,4 @@ class MeasurePage extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withApollo(MeasurePage));
+export default connect(mapStateToProps, mapDispatchToProps)(MeasurePage);

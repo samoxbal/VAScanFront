@@ -10,12 +10,14 @@ import {
     experiments,
     voltamogramms,
     voltamogramm,
-    scan
+    scan,
+    measure
 } from '../graphql/queries';
 import {
     updateExperiment as updateExperimentMutation,
     createExperiment as createExperimentMutation,
-    createVoltamogramm as createVoltamogrammMutation
+    createVoltamogramm as createVoltamogrammMutation,
+    createScan as createScanMutation
 } from '../graphql/mutations';
 import {
     experimentRequiredFields,
@@ -48,6 +50,7 @@ function* fetchExperiments() {
         yield take(ACTION_TYPES.FETCH_EXPERIMENTS);
         const data = yield client.query({
             query: experiments,
+            fetchPolicy: 'network-only',
             variables: {
                 user: jwtDecode(localStorage.getItem('token')).sub
             }
@@ -131,6 +134,22 @@ function* fetchSingleScan() {
     }
 }
 
+function* fetchSingleMeasure() {
+    while(true) {
+        const { payload } = yield take(ACTION_TYPES.FETCH_SINGLE_MEASURE);
+        const { data } = yield client.query({
+            query: measure,
+            variables: {
+                measureId: payload
+            }
+        });
+        yield put({
+            type: ACTION_TYPES.FETCH_SINGLE_MEASURE_SUCCESS,
+            payload: data.scan
+        })
+    }
+}
+
 function* createVoltamogramm() {
     while(true) {
         const { payload } = yield take(ACTION_TYPES.ADD_VOLTAMOGRAMM);
@@ -160,6 +179,7 @@ export default function* root() {
     yield fork(fetchVoltamogramms);
     yield fork(fetchSingleVoltamogramm);
     yield fork(fetchSingleScan);
+    yield fork(fetchSingleMeasure);
     yield fork(createScan);
     yield fork(createToken);
     yield fork(createVoltamogramm);
