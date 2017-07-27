@@ -5,5 +5,5 @@ export default function validator(validateObj, fieldsToValidate = []) {
             invalidFields[field] = true;
         }
     });
-    return [invalidFields, validateObj];
+    return invalidFields;
 }

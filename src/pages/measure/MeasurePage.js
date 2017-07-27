@@ -129,8 +129,7 @@ class MeasurePage extends Component {
             <PageLayout>
                 <div style={ this.style.wrapper }>
                     <Card style={ this.style.chartCard }>
-                        <div className="MeasurePage__Chart">
-                        </div>
+                        <div className="MeasurePage__Chart"/>
                     </Card>
                 </div>
             </PageLayout>

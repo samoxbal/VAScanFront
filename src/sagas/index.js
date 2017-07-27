@@ -31,9 +31,9 @@ function* createToken() {
         const loginSelector = state => state.loginForm;
         yield take(ACTION_TYPES.LOGIN);
         const form = yield select(loginSelector);
-        const [invalidFields, loginObj] = validator(form, loginRequiredFields);
+        const invalidFields = validator(form, loginRequiredFields);
         if(is.empty(invalidFields)) {
-            const token = yield call(api.login, loginObj);
+            const token = yield call(api.login, form);
             localStorage.setItem('token', token.data.data);
             yield put(push('/all'));
         } else {
@@ -81,11 +81,19 @@ function* fetchVoltamogramms() {
 function* createExperiment() {
     while(true) {
         const { payload } = yield take(ACTION_TYPES.ADD_EXPERIMENT);
-        yield client.mutate({
-            mutation: createExperimentMutation,
-            variables: payload
-        });
-        yield put(push('/all'));
+        const invalidFields = validator(payload, experimentRequiredFields);
+        if (is.empty(invalidFields)) {
+            yield client.mutate({
+                mutation: createExperimentMutation,
+                variables: payload
+            });
+            yield put(push('/all'));
+        } else {
+            yield put({
+                type: ACTION_TYPES.SET_ERROR,
+                payload: invalidFields
+            })
+        }
     }
 }
 
