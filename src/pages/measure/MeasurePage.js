@@ -7,6 +7,8 @@ import PageLayout from '../../components/PageLayout';
 import { Card } from 'material-ui/Card';
 import { fetchSingleMeasure } from '../../actions/index';
 
+import './MeasurePage.css';
+
 const mapStateToProps = state => ({
     measure: state.measure
 });
@@ -81,17 +83,21 @@ class MeasurePage extends Component {
             .attr('height', height);
 
         const xAxis = d3.axisBottom()
-            .scale(x);
+            .scale(x)
+            .ticks(5);
 
         main.append('g')
             .attr('transform', 'translate(0,' + y(0) + ')')
+            .attr('class', 'axis')
             .call(xAxis);
 
         const yAxis = d3.axisLeft()
-            .scale(y);
+            .scale(y)
+            .ticks(5);
 
         main.append('g')
             .attr('transform', 'translate(0,0)')
+            .attr('class', 'axis')
             .call(yAxis);
 
         main.append("g")

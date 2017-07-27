@@ -2,8 +2,6 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import RaisedButton from 'material-ui/RaisedButton';
-import EditIcon from 'material-ui/svg-icons/content/create';
 import { isSelectedScan } from '../selectors/scan';
 import AddScanForm from './AddScanForm';
 import ListLinks from './ListLinks';
@@ -27,9 +25,6 @@ class Scan extends Component {
     style = {
         scanWrapper: {
             padding: 25
-        },
-        editButton: {
-            marginBottom: 15
         }
     }
 
@@ -46,12 +41,6 @@ class Scan extends Component {
         const { measures } = this.props.scan;
         return (
             <div style={ this.style.scanWrapper }>
-                <RaisedButton
-                    label='Редактировать скан'
-                    icon={ <EditIcon/> }
-                    secondary={ true }
-                    style={ this.style.editButton }
-                />
                 <AddScanForm/>
                 { measures && this.renderMeasures(measures) }
             </div>

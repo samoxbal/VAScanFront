@@ -10,13 +10,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import createFormAction from '../utils/createFormAction';
 import ACTION_TYPES from '../constants/actionTypes';
-import { getSelectedScan, isSelectedScan } from '../selectors/scan';
-import { fieldLense } from '../utils/utils';
+import { isSelectedScan } from '../selectors/scan';
+import { fieldLense, fieldDateLense } from '../utils/utils';
 
 const mapStateToProps = state => ({
     errors: state.errors,
     form: state.addScanForm,
-    scan: getSelectedScan(state),
+    scan: state.scan,
     isScanExist: isSelectedScan(state)
 });
 
@@ -56,7 +56,8 @@ class AddScanForm extends Component {
         changeChannelLabel: PropTypes.func,
         changeTemperature: PropTypes.func,
         changePressure: PropTypes.func,
-        changeRegime: PropTypes.func
+        changeRegime: PropTypes.func,
+        isEditMode: PropTypes.bool
     }
 
     style = {
@@ -109,6 +110,7 @@ class AddScanForm extends Component {
                         hintText="Дата проведения"
                         autoOk={ true }
                         onChange={ date => changeScanDatetime(date) }
+                        value={ fieldDateLense(scan, form, 'scan_datetime') }
                         style={ this.style.margin }
                     />
                     <Toggle
