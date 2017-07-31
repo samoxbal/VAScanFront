@@ -13,14 +13,12 @@ export default class AddExperimentForm extends Component {
         onCancel: PropTypes.func,
         errors: PropTypes.object,
         experiment: PropTypes.object,
-        active: PropTypes.bool,
         form: PropTypes.object,
         resetForm: PropTypes.func,
         isEditMode: PropTypes.bool
     }
 
     static defaultProps = {
-        active: true,
         isEditMode: false
     }
 
@@ -63,7 +61,7 @@ export default class AddExperimentForm extends Component {
     }
 
     render() {
-        const { errors, experiment, active, form } = this.props;
+        const { errors, experiment, form } = this.props;
 
         return (
             <div style={{ padding: 30 }}>
@@ -72,7 +70,6 @@ export default class AddExperimentForm extends Component {
                         hintText="Дата начала"
                         onChange={ this.onChangeStartDate }
                         autoOk={ true }
-                        disabled={ !active }
                         style={{ display: 'inline-block', marginRight: 30 }}
                         value={ fieldDateLense(experiment, form, 'startDate') }
                     />
@@ -80,7 +77,6 @@ export default class AddExperimentForm extends Component {
                         hintText="Дата окончания"
                         onChange={ this.onChangeEndDate }
                         autoOk={ true }
-                        disabled={ !active }
                         style={{ display: 'inline-block' }}
                         value={ fieldDateLense(experiment, form, 'endDate') }
                     />
@@ -90,7 +86,6 @@ export default class AddExperimentForm extends Component {
                     errorText={ !!errors.name ? "Введите название" : "" }
                     floatingLabelText="Название эксперимента"
                     value={ fieldLense(experiment, form, 'name') }
-                    disabled={ !active }
                     onChange={ this.onChangeName }
                     fullWidth={ true }
                 /><br/>
@@ -99,11 +94,10 @@ export default class AddExperimentForm extends Component {
                     floatingLabelText="Описание эксперимента"
                     rows={ 4 }
                     value={ fieldLense(experiment, form, 'description') }
-                    disabled={ !active }
                     onChange={ this.onChangeDescription }
                     fullWidth={ true }
                 /><br/>
-                { active && this.renderButtons() }
+                { this.renderButtons() }
             </div>
         )
     }

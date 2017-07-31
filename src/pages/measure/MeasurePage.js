@@ -93,7 +93,9 @@ class MeasurePage extends Component {
 
         const yAxis = d3.axisLeft()
             .scale(y)
-            .ticks(5);
+            .ticks(5)
+            .tickSize([-width])
+            .tickSizeOuter(0);
 
         main.append('g')
             .attr('transform', 'translate(0,0)')

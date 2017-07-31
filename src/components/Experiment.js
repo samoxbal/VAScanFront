@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import AddVoltamogramm from './AddVoltamogramm';
 import { getSelectedExperiment } from '../selectors/experiment';
 import AddIcon from 'material-ui/svg-icons/content/add';
-import EditIcon from 'material-ui/svg-icons/content/create';
 import { openAddVoltamogramm, updateExperiment, resetAddExperimentForm } from '../actions/index';
 import RaisedButton from 'material-ui/RaisedButton';
 import ListLinks from './ListLinks';
@@ -31,12 +30,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 class Experiment extends Component {
-    constructor() {
-        super();
-        this.state = {
-            activeEdit: false
-        }
-    }
 
     static propTypes = {
         experiment: PropTypes.object,
@@ -51,14 +44,11 @@ class Experiment extends Component {
         updateExperiment: PropTypes.func
     }
 
-    openAddVoltamogramm = () => this.props.openAddVoltamogramm(true)
-
-    activeEditExperiment = () => this.setState({ activeEdit: true })
-
-    deactiveEditExperiment = () => {
-        this.setState({ activeEdit: false });
+    componentWillUnmount() {
         this.props.resetAddExperimentForm();
     }
+
+    openAddVoltamogramm = () => this.props.openAddVoltamogramm(true)
 
     editExperiment = () => {
         const {
@@ -105,8 +95,6 @@ class Experiment extends Component {
                     experiment={ experiment }
                     form={ form }
                     errors={ errors }
-                    active={ this.state.activeEdit }
-                    onCancel={ this.deactiveEditExperiment }
                     onSubmit={ this.editExperiment }
                     changeName={ changeName }
                     changeDescription={ changeDescription }
@@ -139,12 +127,6 @@ class Experiment extends Component {
                         label='Создать вольтамограмму'
                         style={{ margin: 15 }}
                         icon={ <AddIcon/> }
-                        secondary={ true }
-                    />
-                    <RaisedButton
-                        onTouchTap={ this.activeEditExperiment }
-                        label='Редактировать эксперимент'
-                        icon={ <EditIcon/> }
                         secondary={ true }
                     />
                     { this.renderExperiment() }
