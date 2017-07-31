@@ -100,13 +100,21 @@ function* createExperiment() {
 function* updateExperiment() {
     while(true) {
         const { payload } = yield take(ACTION_TYPES.UPDATE_EXPERIMENT);
-        yield client.mutate({
-            mutation: updateExperimentMutation,
-            variables: payload
-        });
-        yield put({
-            type: ACTION_TYPES.FETCH_EXPERIMENTS
-        })
+        const invalidFields = validator(payload, experimentRequiredFields);
+        if (is.empty(invalidFields)) {
+            yield client.mutate({
+                mutation: updateExperimentMutation,
+                variables: payload
+            });
+            yield put({
+                type: ACTION_TYPES.FETCH_EXPERIMENTS
+            });
+        } else {
+            yield put({
+                type: ACTION_TYPES.SET_ERROR,
+                payload: invalidFields
+            })
+        }
     }
 }
 

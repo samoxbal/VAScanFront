@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import { Card } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import AddIcon from 'material-ui/svg-icons/content/add';
-import EditIcon from 'material-ui/svg-icons/content/create';
 import PageLayout from '../../components/PageLayout';
 import TreeFolder from '../../components/TreeFolder';
 import Scan from '../../components/Scan';
@@ -15,7 +14,6 @@ import AddScan from '../../components/AddScan';
 import {
     fetchSingleVoltamogramm,
     selectScan,
-    activeEditVoltamogramm,
     openAddScan,
     fetchSingleScan
 } from '../../actions/index';
@@ -27,7 +25,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
     fetchSingleVoltamogramm,
     selectScan,
-    activeEditVoltamogramm,
     openAddScan,
     fetchSingleScan
 }, dispatch);
@@ -37,7 +34,6 @@ class VoltamogrammPage extends Component {
     static propTypes = {
         voltamogramm: PropTypes.object,
         fetchSingleVoltamogramm: PropTypes.func,
-        activeEditVoltamogramm: PropTypes.func,
         openAddScan: PropTypes.func,
         fetchSingleScan: PropTypes.func,
         selectScan: PropTypes.func
@@ -90,7 +86,7 @@ class VoltamogrammPage extends Component {
     }
 
     renderVoltamogrammForm() {
-        const { activeEditVoltamogramm, openAddScan } = this.props;
+        const { openAddScan } = this.props;
         return (
             <div style={ this.style.form }>
                 <RaisedButton
@@ -98,12 +94,6 @@ class VoltamogrammPage extends Component {
                     label='Создать скан'
                     style={{ marginRight: 15, marginBottom: 15 }}
                     onTouchTap={ () => openAddScan(true) }
-                    secondary={ true }
-                />
-                <RaisedButton
-                    icon={ <EditIcon/> }
-                    onTouchTap={ () => activeEditVoltamogramm(true) }
-                    label='Редактировать вольтамограмму'
                     secondary={ true }
                 />
                 <Card style={{ padding: 40 }}>

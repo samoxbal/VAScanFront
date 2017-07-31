@@ -76,13 +76,6 @@ export function selectScan(_id) {
     }
 }
 
-export function activeEditVoltamogramm(state) {
-    return {
-        type: ACTION_TYPES.ACTIVE_EDIT_VOLTAMOGRAMM,
-        payload: state
-    }
-}
-
 export function login() {
     return {
         type: ACTION_TYPES.LOGIN
