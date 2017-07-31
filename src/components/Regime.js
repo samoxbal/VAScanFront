@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -27,6 +28,23 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 class Regime extends Component {
 
+    static propTypes = {
+        regime: PropTypes.string,
+        measure_mode: PropTypes.object,
+        changeNormalPulseLife: PropTypes.func,
+        changeNormalPulsePeriod: PropTypes.func,
+        changeDifferentialPulseAmplitude: PropTypes.func,
+        changeDifferentialPulsePulseWidth: PropTypes.func,
+        changeDifferentialPulsePeriod: PropTypes.func,
+        changeSquareWaveAmplitude: PropTypes.func,
+        changeSquareWaveEstep: PropTypes.func,
+        changeSquareWaveTimePeriod: PropTypes.func,
+        changeStaircaseTimeStep: PropTypes.func,
+        changeStaircaseEstep: PropTypes.func,
+        changeAcAmplitude: PropTypes.func,
+        changeAcFrequency: PropTypes.func
+    }
+
     renderNormal() {
         const {
             measure_mode: {
@@ -41,16 +59,14 @@ class Regime extends Component {
         return (
             <div>
                 <TextField
-                    type="text"
-                    placeholder="Normal pulse life"
-                    value={normal_pulse_life}
-                    onChange={(e, data) => changeNormalPulseLife(data.value)}
+                    floatingLabelText="Normal pulse life"
+                    value={ normal_pulse_life }
+                    onChange={ (e, data) => changeNormalPulseLife(data) }
                 />
                 <TextField
-                    type="text"
-                    placeholder="Normal pulse period"
-                    value={normal_pulse_period}
-                    onChange={(e, data) => changeNormalPulsePeriod(data.value)}
+                    floatingLabelText="Normal pulse period"
+                    value={ normal_pulse_period }
+                    onChange={ (e, data) => changeNormalPulsePeriod(data) }
                 />
             </div>
         )
@@ -72,22 +88,19 @@ class Regime extends Component {
         return (
             <div>
                 <TextField
-                    type="text"
-                    placeholder="Differential pulse amplitude"
-                    value={differential_pulse_amplitude}
-                    onChange={(e, data) => changeDifferentialPulseAmplitude(data.value)}
+                    floatingLabelText="Differential pulse amplitude"
+                    value={ differential_pulse_amplitude }
+                    onChange={ (e, data) => changeDifferentialPulseAmplitude(data) }
                 />
                 <TextField
-                    type="text"
-                    placeholder="Differential pulse pulsewidth"
+                    floatingLabelText="Differential pulse pulsewidth"
                     value={differential_pulse_pulsewidth}
-                    onChange={(e, data) => changeDifferentialPulsePulseWidth(data.value)}
+                    onChange={ (e, data) => changeDifferentialPulsePulseWidth(data) }
                 />
                 <TextField
-                    type="text"
-                    placeholder="Differential pulse period"
-                    value={differential_pulse_period}
-                    onChange={(e, data) => changeDifferentialPulsePeriod(data.value)}
+                    floatingLabelText="Differential pulse period"
+                    value={ differential_pulse_period }
+                    onChange={ (e, data) => changeDifferentialPulsePeriod(data) }
                 />
             </div>
         )
@@ -109,22 +122,19 @@ class Regime extends Component {
         return (
             <div>
                 <TextField
-                    type="text"
-                    placeholder="Square wave amplitude"
-                    value={square_wave_amplitude}
-                    onChange={(e, data) => changeSquareWaveAmplitude(data.value)}
+                    floatingLabelText="Square wave amplitude"
+                    value={ square_wave_amplitude }
+                    onChange={ (e, data) => changeSquareWaveAmplitude(data) }
                 />
                 <TextField
-                    type="text"
-                    placeholder="Square wave estep"
-                    value={square_wave_estep}
-                    onChange={(e, data) => changeSquareWaveEstep(data.value)}
+                    floatingLabelText="Square wave estep"
+                    value={ square_wave_estep }
+                    onChange={ (e, data) => changeSquareWaveEstep(data) }
                 />
                 <TextField
-                    type="text"
-                    placeholder="Square wave time period"
-                    value={square_wave_time_period}
-                    onChange={(e, data) => changeSquareWaveTimePeriod(data.value)}
+                    floatingLabelText="Square wave time period"
+                    value={ square_wave_time_period }
+                    onChange={ (e, data) => changeSquareWaveTimePeriod(data) }
                 />
             </div>
         )
@@ -144,16 +154,14 @@ class Regime extends Component {
         return (
             <div>
                 <TextField
-                    type="text"
-                    placeholder="Staircase time step"
-                    value={staircase_time_step}
-                    onChange={(e, data) => changeStaircaseTimeStep(data.value)}
+                    floatingLabelText="Staircase time step"
+                    value={ staircase_time_step }
+                    onChange={ (e, data) => changeStaircaseTimeStep(data) }
                 />
                 <TextField
-                    type="text"
-                    placeholder="Staircase estep"
-                    value={staircase_estep}
-                    onChange={(e, data) => changeStaircaseEstep(data.value)}
+                    floatingLabelText="Staircase estep"
+                    value={ staircase_estep }
+                    onChange={ (e, data) => changeStaircaseEstep(data) }
                 />
             </div>
         )
@@ -173,16 +181,14 @@ class Regime extends Component {
         return (
             <div>
                 <TextField
-                    type="text"
-                    placeholder="Ac amplitude"
-                    value={ac_amplitude}
-                    onChange={(e, data) => changeAcAmplitude(data.value)}
+                    floatingLabelText="Ac amplitude"
+                    value={ ac_amplitude }
+                    onChange={ (e, data) => changeAcAmplitude(data) }
                 />
                 <TextField
-                    type="text"
-                    placeholder="Ac frequency"
-                    value={ac_frequency}
-                    onChange={(e, data) => changeAcFrequency(data.value)}
+                    floatingLabelText="Ac frequency"
+                    value={ ac_frequency }
+                    onChange={ (e, data) => changeAcFrequency(data) }
                 />
             </div>
         )
@@ -208,7 +214,7 @@ class Regime extends Component {
     render() {
         return (
             <div>
-                {this.renderRegime(this.props.regime)}
+                { this.renderRegime(this.props.regime) }
             </div>
         )
     }
