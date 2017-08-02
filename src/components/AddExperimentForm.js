@@ -1,13 +1,13 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import TextField from 'material-ui/TextField';
+import { Field, reduxForm } from 'redux-form';
+import { DatePicker, TextField } from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
-import DatePicker from 'material-ui/DatePicker';
 import is from 'is';
 import format from 'date-fns/format';
 import { fieldLense, fieldDateLense } from '../utils/utils';
 
-export default class AddExperimentForm extends Component {
+class AddExperimentForm extends Component {
     static propTypes = {
         onSubmit: PropTypes.func,
         onCancel: PropTypes.func,
@@ -66,39 +66,39 @@ export default class AddExperimentForm extends Component {
         return (
             <div style={{ padding: 30 }}>
                 <div>
-                    <DatePicker
-                        hintText="Дата начала"
-                        onChange={ this.onChangeStartDate }
-                        autoOk={ true }
-                        style={{ display: 'inline-block', marginRight: 30 }}
-                        value={ fieldDateLense(experiment, form, 'startDate') }
-                    />
-                    <DatePicker
-                        hintText="Дата окончания"
-                        onChange={ this.onChangeEndDate }
+                    <Field
+                        name="startDate"
+                        component={ DatePicker }
+                        format={ null }
                         autoOk={ true }
                         style={{ display: 'inline-block' }}
-                        value={ fieldDateLense(experiment, form, 'endDate') }
+                        hintText="Дата начала"
+                    />
+                    <Field
+                        name="endDate"
+                        component={ DatePicker }
+                        format={ null }
+                        autoOk={ true }
+                        style={{ display: 'inline-block' }}
+                        hintText="Дата окончания"
                     />
                 </div>
-                <TextField
-                    type="text"
-                    errorText={ !!errors.name ? "Введите название" : "" }
+                <Field
+                    name="name"
+                    component={ TextField }
                     floatingLabelText="Название эксперимента"
-                    value={ fieldLense(experiment, form, 'name') }
-                    onChange={ this.onChangeName }
-                    fullWidth={ true }
+                    // validate={[required, email]}
                 /><br/>
-                <TextField
-                    errorText={ !!errors.description ? "Введите описание" : "" }
+                <Field
+                    name="description"
+                    component={ TextField }
                     floatingLabelText="Описание эксперимента"
-                    rows={ 4 }
-                    value={ fieldLense(experiment, form, 'description') }
-                    onChange={ this.onChangeDescription }
-                    fullWidth={ true }
+                    // validate={[required, email]}
                 /><br/>
                 { this.renderButtons() }
             </div>
         )
     }
 }
+
+export default reduxForm({ form: 'AddExperimentForm' })(AddExperimentForm);

@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
+import { reducer as formReducer } from 'redux-form';
 import ACTION_TYPES from '../constants/actionTypes';
 import { createSimpleReducer, createFormReducer } from '../utils/createReducers';
 
@@ -77,6 +78,7 @@ const loginForm = combineReducers({
 
 const rootReducer = {
     router: routerReducer,
+    form: formReducer,
     experiments,
     selectedExperimentId,
     errors,

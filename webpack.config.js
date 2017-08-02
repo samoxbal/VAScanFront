@@ -6,9 +6,10 @@ const isProduction = process.env.NODE_ENV === 'production';
 module.exports = {
     devtool: isProduction ? 'source-map' : 'eval',
     entry: !isProduction ? [
-      'webpack-dev-server/client?http://localhost:3002',
-      'webpack/hot/only-dev-server',
-      './src/index'
+        'react-hot-loader/patch',
+        'webpack-dev-server/client?http://localhost:3002',
+        'webpack/hot/only-dev-server',
+        './src/index'
     ] : [
         './src/index'
     ],
@@ -29,7 +30,7 @@ module.exports = {
         rules: [
             {
                 test: /\.jsx?$/,
-                use: isProduction ? ['babel-loader'] : ['react-hot-loader', 'babel-loader'],
+                use: ['babel-loader'],
                 include: path.join(__dirname, 'src')
             },
             {   test: /\.css$/,
