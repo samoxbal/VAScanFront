@@ -1,10 +1,22 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import jwtDecode from 'jwt-decode';
+import { bindActionCreators } from 'redux';
+import { resetAddExperimentForm, createExperiment } from '../actions/index';
 import { Field, reduxForm } from 'redux-form';
 import { DatePicker, TextField } from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
 import is from 'is';
+
+const mapStateToProps = state => ({
+    errors: state.errors
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    resetAddExperimentForm,
+    createExperiment
+}, dispatch);
 
 class AddExperimentForm extends Component {
     static propTypes = {
@@ -25,9 +37,24 @@ class AddExperimentForm extends Component {
         }
     }
 
-    submitExperiment = event => {
-        event.preventDefault();
-        this.props.onSubmit();
+    submitExperiment = () => {
+        const {
+            form: {
+                name,
+                description,
+                startDate,
+                endDate
+            },
+            createExperiment
+        } = this.props;
+
+        createExperiment({
+            user: jwtDecode(localStorage.getItem('token')).sub,
+            name,
+            description,
+            startDate,
+            endDate
+        });
     }
 
     renderButtons() {
