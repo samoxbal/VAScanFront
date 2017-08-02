@@ -1,25 +1,17 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { DatePicker, TextField } from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
 import is from 'is';
-import format from 'date-fns/format';
-import { fieldLense, fieldDateLense } from '../utils/utils';
 
 class AddExperimentForm extends Component {
     static propTypes = {
         onSubmit: PropTypes.func,
         onCancel: PropTypes.func,
-        errors: PropTypes.object,
-        experiment: PropTypes.object,
-        form: PropTypes.object,
         resetForm: PropTypes.func,
         isEditMode: PropTypes.bool
-    }
-
-    static defaultProps = {
-        isEditMode: false
     }
 
     componentWillUnmount() {
@@ -33,11 +25,6 @@ class AddExperimentForm extends Component {
         }
     }
 
-    onChangeName = (e, data) => this.props.changeName(data)
-    onChangeDescription = (e, data) => this.props.changeDescription(data)
-    onChangeStartDate = (e, date) => this.props.changeStartDate(format(date, 'MM-DD-YYYY'))
-    onChangeEndDate = (e, date) => this.props.changeEndDate(format(date, 'MM-DD-YYYY'))
-
     submitExperiment = event => {
         event.preventDefault();
         this.props.onSubmit();
@@ -45,7 +32,7 @@ class AddExperimentForm extends Component {
 
     renderButtons() {
         return (
-            <div>
+            <div style={{ marginTop: 20 }}>
                 <RaisedButton
                     primary={ true }
                     label={ this.props.isEditMode ? "Редактировать" : "Создать" }
@@ -61,8 +48,6 @@ class AddExperimentForm extends Component {
     }
 
     render() {
-        const { errors, experiment, form } = this.props;
-
         return (
             <div style={{ padding: 30 }}>
                 <div>
@@ -71,7 +56,7 @@ class AddExperimentForm extends Component {
                         component={ DatePicker }
                         format={ null }
                         autoOk={ true }
-                        style={{ display: 'inline-block' }}
+                        style={{ display: 'inline-block', marginRight: 30 }}
                         hintText="Дата начала"
                     />
                     <Field
@@ -87,13 +72,14 @@ class AddExperimentForm extends Component {
                     name="name"
                     component={ TextField }
                     floatingLabelText="Название эксперимента"
-                    // validate={[required, email]}
+                    fullWidth={ true }
                 /><br/>
                 <Field
                     name="description"
                     component={ TextField }
                     floatingLabelText="Описание эксперимента"
-                    // validate={[required, email]}
+                    fullWidth={ true }
+                    rows={ 3 }
                 /><br/>
                 { this.renderButtons() }
             </div>
@@ -101,4 +87,4 @@ class AddExperimentForm extends Component {
     }
 }
 
-export default reduxForm({ form: 'AddExperimentForm' })(AddExperimentForm);
+export default reduxForm({ form: 'AddExperiment' })(AddExperimentForm);

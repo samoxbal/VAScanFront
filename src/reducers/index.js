@@ -15,13 +15,6 @@ const measure = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_MEASURE_SUCCES
 const scan = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_SCAN_SUCCESS);
 const selectedScanId = createSimpleReducer("", ACTION_TYPES.SELECT_SCAN);
 
-const addExperimentForm = combineReducers({
-    name: createFormReducer("", ACTION_TYPES.CHANGE_EXPERIMENT_NAME, ACTION_TYPES.RESET_ADD_EXPERIMENT),
-    description: createFormReducer("", ACTION_TYPES.CHANGE_EXPERIMENT_DESCRIPTION, ACTION_TYPES.RESET_ADD_EXPERIMENT),
-    startDate: createFormReducer("", ACTION_TYPES.CHANGE_EXPERIMENT_START, ACTION_TYPES.RESET_ADD_EXPERIMENT),
-    endDate: createFormReducer("", ACTION_TYPES.CHANGE_EXPERIMENT_END, ACTION_TYPES.RESET_ADD_EXPERIMENT)
-});
-
 const addVoltamogrammForm = combineReducers({
     cyclic: createFormReducer(false, ACTION_TYPES.CHANGE_VOLTAMOGRAMM_CYCLIC, ACTION_TYPES.RESET_ADD_VOLTAMOGRAMM),
     va_cycle_datetime: createFormReducer("", ACTION_TYPES.CHANGE_VOLTAMOGRAMM_DATE, ACTION_TYPES.RESET_ADD_VOLTAMOGRAMM),
@@ -85,7 +78,6 @@ const rootReducer = {
     openAddVoltamogramm,
     voltamogramms,
     voltamogramm,
-    addExperimentForm,
     addVoltamogrammForm,
     addScanForm,
     measure,
