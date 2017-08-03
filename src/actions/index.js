@@ -7,10 +7,9 @@ export function selectExperiment(id) {
     }
 }
 
-export function createExperiment(variables) {
+export function createExperiment() {
     return {
-        type: ACTION_TYPES.ADD_EXPERIMENT,
-        payload: variables
+        type: ACTION_TYPES.ADD_EXPERIMENT
     }
 }
 

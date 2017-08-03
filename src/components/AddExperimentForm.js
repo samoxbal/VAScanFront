@@ -1,13 +1,11 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import jwtDecode from 'jwt-decode';
 import { bindActionCreators } from 'redux';
 import { resetAddExperimentForm, createExperiment } from '../actions/index';
 import { Field, reduxForm } from 'redux-form';
 import { DatePicker, TextField } from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
-import is from 'is';
 
 const mapStateToProps = state => ({
     errors: state.errors
@@ -23,7 +21,8 @@ class AddExperimentForm extends Component {
         onSubmit: PropTypes.func,
         onCancel: PropTypes.func,
         resetForm: PropTypes.func,
-        isEditMode: PropTypes.bool
+        isEditMode: PropTypes.bool,
+        createExperiment: PropTypes.func
     }
 
     componentWillUnmount() {
@@ -32,30 +31,10 @@ class AddExperimentForm extends Component {
 
     onCancelClick = () => {
         const { onCancel } = this.props;
-        if (is.fn(onCancel)) {
-            onCancel();
-        }
+
     }
 
-    submitExperiment = () => {
-        const {
-            form: {
-                name,
-                description,
-                startDate,
-                endDate
-            },
-            createExperiment
-        } = this.props;
-
-        createExperiment({
-            user: jwtDecode(localStorage.getItem('token')).sub,
-            name,
-            description,
-            startDate,
-            endDate
-        });
-    }
+    submitExperiment = () => this.props.createExperiment()
 
     renderButtons() {
         return (

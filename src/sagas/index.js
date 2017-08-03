@@ -80,12 +80,15 @@ function* fetchVoltamogramms() {
 
 function* createExperiment() {
     while(true) {
-        const { payload } = yield take(ACTION_TYPES.ADD_EXPERIMENT);
-        const invalidFields = validator(payload, experimentRequiredFields);
+        yield take(ACTION_TYPES.ADD_EXPERIMENT);
+        const form = {
+            user: jwtDecode(localStorage.getItem('token')).sub
+        };
+        const invalidFields = validator(form, experimentRequiredFields);
         if (is.empty(invalidFields)) {
             yield client.mutate({
                 mutation: createExperimentMutation,
-                variables: payload
+                variables: form
             });
             yield put(push('/all'));
         } else {
