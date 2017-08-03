@@ -6,6 +6,7 @@ import { resetAddExperimentForm, createExperiment } from '../actions/index';
 import { Field, reduxForm } from 'redux-form';
 import { DatePicker, TextField } from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
+import { AddExperimentName } from '../constants/formNames';
 
 const mapStateToProps = state => ({
     errors: state.errors
@@ -18,8 +19,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 class AddExperimentForm extends Component {
     static propTypes = {
-        onSubmit: PropTypes.func,
-        onCancel: PropTypes.func,
         resetForm: PropTypes.func,
         isEditMode: PropTypes.bool,
         createExperiment: PropTypes.func
@@ -27,11 +26,6 @@ class AddExperimentForm extends Component {
 
     componentWillUnmount() {
         this.props.resetForm();
-    }
-
-    onCancelClick = () => {
-        const { onCancel } = this.props;
-
     }
 
     submitExperiment = () => this.props.createExperiment()
@@ -44,10 +38,6 @@ class AddExperimentForm extends Component {
                     label={ this.props.isEditMode ? "Редактировать" : "Создать" }
                     onTouchTap={ this.submitExperiment }
                     style={{ marginRight: 10 }}
-                />
-                <RaisedButton
-                    label="Отмена"
-                    onTouchTap={ this.onCancelClick }
                 />
             </div>
         )
@@ -93,4 +83,6 @@ class AddExperimentForm extends Component {
     }
 }
 
-export default reduxForm({ form: 'AddExperiment' })(AddExperimentForm);
+const Form = reduxForm({ form: AddExperimentName })(AddExperimentForm);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

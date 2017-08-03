@@ -1,11 +1,13 @@
 import { take, put, fork, call, select } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
+import { stopSubmit, getFormValues } from 'redux-form';
 import is from 'is';
 import jwtDecode from 'jwt-decode';
 import validator from '../utils/validator';
 import { api } from '../utils/api';
 import { client } from '../index';
 import ACTION_TYPES from '../constants/actionTypes';
+import { AddExperimentName } from '../constants/formNames';
 import {
     experiments,
     voltamogramms,
@@ -81,8 +83,10 @@ function* fetchVoltamogramms() {
 function* createExperiment() {
     while(true) {
         yield take(ACTION_TYPES.ADD_EXPERIMENT);
+        const stateForm = yield select(state => getFormValues(AddExperimentName)(state));
         const form = {
-            user: jwtDecode(localStorage.getItem('token')).sub
+            user: jwtDecode(localStorage.getItem('token')).sub,
+            ...stateForm
         };
         const invalidFields = validator(form, experimentRequiredFields);
         if (is.empty(invalidFields)) {
@@ -92,10 +96,7 @@ function* createExperiment() {
             });
             yield put(push('/all'));
         } else {
-            yield put({
-                type: ACTION_TYPES.SET_ERROR,
-                payload: invalidFields
-            })
+            yield put(stopSubmit(AddExperimentName, invalidFields));
         }
     }
 }

@@ -1,8 +1,8 @@
 export default function validator(validateObj, fieldsToValidate = []) {
-    let invalidFields = {};
-    Object.keys(validateObj).forEach(field => {
-        if (fieldsToValidate.includes(field) && !validateObj[field]) {
-            invalidFields[field] = true;
+    const invalidFields = {};
+    fieldsToValidate.forEach(field => {
+        if (!validateObj[field]) {
+            invalidFields[field] = 'Это поле обязательно!';
         }
     });
     return invalidFields;

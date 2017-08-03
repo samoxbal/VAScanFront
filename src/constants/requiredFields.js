@@ -1,8 +1,8 @@
 export const experimentRequiredFields = [
     'name',
     'description',
-    'start_date',
-    'end_date'
+    'startDate',
+    'endDate'
 ];
 
 export const voltamogrammRequiredFields = [
