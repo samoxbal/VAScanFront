@@ -15,55 +15,6 @@ const measure = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_MEASURE_SUCCES
 const scan = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_SCAN_SUCCESS);
 const selectedScanId = createSimpleReducer("", ACTION_TYPES.SELECT_SCAN);
 
-const addVoltamogrammForm = combineReducers({
-    cyclic: createFormReducer(false, ACTION_TYPES.CHANGE_VOLTAMOGRAMM_CYCLIC, ACTION_TYPES.RESET_ADD_VOLTAMOGRAMM),
-    va_cycle_datetime: createFormReducer("", ACTION_TYPES.CHANGE_VOLTAMOGRAMM_DATE, ACTION_TYPES.RESET_ADD_VOLTAMOGRAMM),
-    description: createFormReducer("", ACTION_TYPES.CHANGE_VOLTAMOGRAMM_DESCRIPTION, ACTION_TYPES.RESET_ADD_VOLTAMOGRAMM),
-    solution: createFormReducer("", ACTION_TYPES.CHANGE_VOLTAMOGRAMM_SOLUTION, ACTION_TYPES.RESET_ADD_VOLTAMOGRAMM),
-    number_of_electrodes: createFormReducer(1, ACTION_TYPES.CHANGE_VOLTAMOGRAMM_ELECTROD_NUMBERS, ACTION_TYPES.RESET_ADD_VOLTAMOGRAMM),
-    equipment_id: createFormReducer("", ACTION_TYPES.CHANGE_VOLTAMOGRAMM_EQUIPMENT_ID, ACTION_TYPES.RESET_ADD_VOLTAMOGRAMM),
-});
-
-const addScanForm = combineReducers({
-    scan_datetime: createFormReducer("", ACTION_TYPES.CHANGE_SCAN_DATETIME, ACTION_TYPES.RESET_ADD_SCAN),
-    start_potential: createFormReducer("", ACTION_TYPES.CHANGE_START_POTENTIAL, ACTION_TYPES.RESET_ADD_SCAN),
-    end_potential: createFormReducer("", ACTION_TYPES.CHANGE_END_POTENTIAL, ACTION_TYPES.RESET_ADD_SCAN),
-    reverse_direction: createFormReducer(false, ACTION_TYPES.CHANGE_REVERSE_DIRECTION, ACTION_TYPES.RESET_ADD_SCAN),
-    stirring: createFormReducer(false, ACTION_TYPES.CHANGE_STIRRING, ACTION_TYPES.RESET_ADD_SCAN),
-    stirring_speed: createFormReducer("", ACTION_TYPES.CHANGE_STIRRING_SPEED, ACTION_TYPES.RESET_ADD_SCAN),
-    rotation: createFormReducer(false, ACTION_TYPES.CHANGE_ROTATION, ACTION_TYPES.RESET_ADD_SCAN),
-    rotation_speed: createFormReducer("", ACTION_TYPES.CHANGE_ROTATION_SPEED, ACTION_TYPES.RESET_ADD_SCAN),
-    channel_id: createFormReducer("", ACTION_TYPES.CHANGE_CHANNEL_ID, ACTION_TYPES.RESET_ADD_SCAN),
-    channel_label: createFormReducer("", ACTION_TYPES.CHANGE_CHANNEL_LABEL, ACTION_TYPES.RESET_ADD_SCAN),
-    temperature: createFormReducer("", ACTION_TYPES.CHANGE_TEMPERATURE, ACTION_TYPES.RESET_ADD_SCAN),
-    pressure: createFormReducer("", ACTION_TYPES.CHANGE_PRESSURE, ACTION_TYPES.RESET_ADD_SCAN),
-    regime: createFormReducer("", ACTION_TYPES.CHANGE_REGIME, ACTION_TYPES.RESET_ADD_SCAN),
-    measure_mode: combineReducers({
-        normal: combineReducers({
-            normal_pulse_life: createSimpleReducer("", ACTION_TYPES.CHANGE_NORMAL_PULSE_LIFE),
-            normal_pulse_period: createSimpleReducer("", ACTION_TYPES.CHANGE_NORMAL_PULSE_PERIOD)
-        }),
-        differential: combineReducers({
-            differential_pulse_amplitude: createSimpleReducer("", ACTION_TYPES.CHANGE_DIFFERENTIAL_PULSE_AMPLITUDE),
-            differential_pulse_pulsewidth: createSimpleReducer("", ACTION_TYPES.CHANGE_DIFFERENTIAL_PULSE_PULSEWIDTH),
-            differential_pulse_period: createSimpleReducer("", ACTION_TYPES.CHANGE_DIFFERENTIAL_PULSE_PERIOD)
-        }),
-        square_wave: combineReducers({
-            square_wave_amplitude: createSimpleReducer("", ACTION_TYPES.CHANGE_SQUARE_WAVE_AMPLITUDE),
-            square_wave_estep: createSimpleReducer("", ACTION_TYPES.CHANGE_SQUARE_WAVE_ESTEP),
-            square_wave_time_period: createSimpleReducer("", ACTION_TYPES.CHANGE_SQUARE_WAVE_TIME_PERIOD)
-        }),
-        staircase: combineReducers({
-            staircase_time_step: createSimpleReducer("", ACTION_TYPES.CHANGE_STAIRCASE_TIME_STEP),
-            staircase_estep: createSimpleReducer("", ACTION_TYPES.CHANGE_STAIRCASE_ESTEP)
-        }),
-        ac: combineReducers({
-            ac_amplitude: createSimpleReducer("", ACTION_TYPES.CHANGE_AC_AMPLITUDE),
-            ac_frequency: createSimpleReducer("", ACTION_TYPES.CHANGE_AC_FREQUENCY)
-        })
-    })
-});
-
 const loginForm = combineReducers({
     email: createFormReducer("", ACTION_TYPES.CHANGE_EMAIL),
     password: createFormReducer("", ACTION_TYPES.CHANGE_PASSWORD)
@@ -78,8 +29,6 @@ const rootReducer = {
     openAddVoltamogramm,
     voltamogramms,
     voltamogramm,
-    addVoltamogrammForm,
-    addScanForm,
     measure,
     scan,
     selectedScanId,

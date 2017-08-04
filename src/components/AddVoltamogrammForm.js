@@ -2,17 +2,16 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import format from 'date-fns/format';
-import DatePicker from 'material-ui/DatePicker';
+import { Field, reduxForm } from 'redux-form';
 import RaisedButton from 'material-ui/RaisedButton';
-import Toggle from 'material-ui/Toggle';
-import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import createFormAction from '../utils/createFormAction';
-import { fieldLense } from '../utils/utils';
-import { activeEditVoltamogramm, resetAddVoltamogramm } from '../actions/index';
-import ACTION_TYPES from '../constants/actionTypes';
+import { resetAddVoltamogramm } from '../actions/index';
+import {
+    DatePicker,
+    SelectField,
+    TextField,
+    Toggle,
+} from 'redux-form-material-ui';
 
 const mapStateToProps = state => ({
     errors: state.errors,
@@ -22,14 +21,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    activeEditVoltamogramm,
     resetAddVoltamogramm,
-    changeCyclic: createFormAction(ACTION_TYPES.CHANGE_VOLTAMOGRAMM_CYCLIC),
-    changeVaCycleDatetime: createFormAction(ACTION_TYPES.CHANGE_VOLTAMOGRAMM_DATE),
-    changeDescription: createFormAction(ACTION_TYPES.CHANGE_VOLTAMOGRAMM_DESCRIPTION),
-    changeSolution: createFormAction(ACTION_TYPES.CHANGE_VOLTAMOGRAMM_SOLUTION),
-    changeNumberOfElectrodes: createFormAction(ACTION_TYPES.CHANGE_VOLTAMOGRAMM_ELECTROD_NUMBERS),
-    changeEquipmentId: createFormAction(ACTION_TYPES.CHANGE_VOLTAMOGRAMM_EQUIPMENT_ID)
 }, dispatch);
 
 class AddVoltamogrammForm extends Component {
@@ -38,14 +30,6 @@ class AddVoltamogrammForm extends Component {
         errors: PropTypes.object,
         form: PropTypes.object,
         voltamogramm: PropTypes.object,
-        active: PropTypes.bool,
-        activeEditVoltamogramm: PropTypes.func,
-        changeCyclic: PropTypes.func,
-        changeVaCycleDatetime: PropTypes.func,
-        changeDescription: PropTypes.func,
-        changeSolution: PropTypes.func,
-        changeNumberOfElectrodes: PropTypes.func,
-        changeEquipmentId: PropTypes.func,
         resetAddVoltamogramm: PropTypes.func
     }
 
@@ -82,46 +66,32 @@ class AddVoltamogrammForm extends Component {
                     // onTouchTap={ this.submitExperiment }
                     style={{ marginRight: 10 }}
                 />
-                <RaisedButton
-                    label="Отмена"
-                    onTouchTap={ () => this.props.activeEditVoltamogramm(false) }
-                />
             </div>
         )
     }
 
     render() {
-        const {
-            form,
-            voltamogramm,
-            errors,
-            changeVaCycleDatetime,
-            changeCyclic,
-            changeDescription,
-            changeSolution,
-            changeEquipmentId
-        } = this.props;
-
         return (
             <div style={ this.style.wrapper }>
                 <br/>
-                <Toggle
+                <Field
+                    name="cyclic"
+                    component={ Toggle }
                     label="Цикличность"
                     labelPosition="right"
-                    toggled={ fieldLense(voltamogramm, form, 'cyclic') }
-                    onToggle={ (e, toggled) => changeCyclic(toggled) }
                 /><br/>
                 <div style={ this.style.formBlock }>
-                    <DatePicker
+                    <Field
+                        name="vaDate"
+                        component={ DatePicker }
                         hintText="Дата проведения"
                         autoOk={ true }
-                        onChange={ date => changeVaCycleDatetime(format(date, 'MM-DD-YYYY')) }
+                        format={ null }
                         style={ this.style.margin }
                     />
-                    <SelectField
-                        floatingLabelText="Количество электродов"
-                        value={ fieldLense(voltamogramm, form, 'number_of_electrodes') }
-                        onChange={ (e, key, data) => this.props.changeNumberOfElectrodes(data) }
+                    <Field
+                        name="numberOfElectrodes"
+                        component={ SelectField }
                     >
                         { this.numberElectrodsOptions.map(item => (
                             <MenuItem
@@ -130,27 +100,26 @@ class AddVoltamogrammForm extends Component {
                                 primaryText={ item.text }
                             />
                         )) }
-                    </SelectField>
+                    </Field>
                 </div>
-                <TextField
-                    errorText={ !!errors.description ? "Введите описание" : "" }
+                <Field
+                    name="description"
+                    component={ TextField }
                     floatingLabelText="Описание"
                     rows={ 4 }
-                    value={ fieldLense(voltamogramm, form, 'description') }
-                    onChange={ (e, data) => changeDescription(data) }
                     fullWidth={ true }
                 /><br/>
                 <div style={ this.style.formBlock }>
-                    <TextField
+                    <Field
+                        name="solution"
+                        component={ TextField }
                         floatingLabelText="Раствор"
-                        value={ fieldLense(voltamogramm, form, 'solution') }
-                        onChange={ (e, data) => changeSolution(data) }
                         style={ this.style.margin }
                     />
-                    <TextField
+                    <Field
+                        name="equipmentId"
+                        component={ TextField }
                         floatingLabelText="Серийный номер электрода"
-                        value={ fieldLense(voltamogramm, form, 'equipment_id') }
-                        onChange={ (e, data) => changeEquipmentId(data) }
                     />
                 </div>
                 { false && this.renderButtons() }
