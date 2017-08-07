@@ -9,24 +9,17 @@ import { openAddVoltamogramm, updateExperiment, resetAddExperimentForm } from '.
 import RaisedButton from 'material-ui/RaisedButton';
 import ListLinks from './ListLinks';
 import AddExperimentForm from './AddExperimentForm';
-import createFormAction from '../utils/createFormAction';
-import ACTION_TYPES from '../constants/actionTypes';
 
 const mapStateToProps = state => ({
     experiment: getSelectedExperiment(state),
     voltamogramms: state.voltamogramms,
-    errors: state.errors,
-    form: state.addExperimentForm
+    errors: state.errors
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     openAddVoltamogramm,
     updateExperiment,
-    resetAddExperimentForm,
-    changeName: createFormAction(ACTION_TYPES.CHANGE_EXPERIMENT_NAME),
-    changeDescription: createFormAction(ACTION_TYPES.CHANGE_EXPERIMENT_DESCRIPTION),
-    changeStartDate: createFormAction(ACTION_TYPES.CHANGE_EXPERIMENT_START),
-    changeEndDate: createFormAction(ACTION_TYPES.CHANGE_EXPERIMENT_END)
+    resetAddExperimentForm
 }, dispatch);
 
 class Experiment extends Component {
@@ -36,10 +29,6 @@ class Experiment extends Component {
         voltamogramms: PropTypes.array,
         errors: PropTypes.object,
         form: PropTypes.object,
-        changeName: PropTypes.func,
-        changeDescription: PropTypes.func,
-        changeStartDate: PropTypes.func,
-        changeEndDate: PropTypes.func,
         resetAddExperimentForm: PropTypes.func,
         updateExperiment: PropTypes.func
     }
@@ -78,31 +67,9 @@ class Experiment extends Component {
     }
 
     renderExperiment() {
-        const {
-            experiment,
-            errors,
-            changeName,
-            changeDescription,
-            changeStartDate,
-            changeEndDate,
-            form,
-            resetAddExperimentForm
-        } = this.props;
-
         return (
             <div style={{ clear: 'both' }}>
-                <AddExperimentForm
-                    experiment={ experiment }
-                    form={ form }
-                    errors={ errors }
-                    onSubmit={ this.editExperiment }
-                    changeName={ changeName }
-                    changeDescription={ changeDescription }
-                    changeStartDate={ changeStartDate }
-                    changeEndDate={ changeEndDate }
-                    resetForm={ resetAddExperimentForm }
-                    isEditMode={ true }
-                />
+                <AddExperimentForm/>
             </div>
         )
     }

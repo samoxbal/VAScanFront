@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 import ACTION_TYPES from '../constants/actionTypes';
-import { createSimpleReducer, createFormReducer } from '../utils/createReducers';
+import { createSimpleReducer } from '../utils/createReducers';
 
 const experiments = createSimpleReducer([], ACTION_TYPES.FETCH_EXPERIMENTS_SUCCESS);
 const selectedExperimentId = createSimpleReducer("", ACTION_TYPES.SELECT_EXPERIMENT);
@@ -14,11 +14,6 @@ const voltamogramm = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_VOLTAMOGR
 const measure = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_MEASURE_SUCCESS);
 const scan = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_SCAN_SUCCESS);
 const selectedScanId = createSimpleReducer("", ACTION_TYPES.SELECT_SCAN);
-
-const loginForm = combineReducers({
-    email: createFormReducer("", ACTION_TYPES.CHANGE_EMAIL),
-    password: createFormReducer("", ACTION_TYPES.CHANGE_PASSWORD)
-});
 
 const rootReducer = {
     router: routerReducer,
@@ -32,7 +27,6 @@ const rootReducer = {
     measure,
     scan,
     selectedScanId,
-    loginForm,
     openAddScan
 };
 

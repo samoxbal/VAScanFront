@@ -22,8 +22,6 @@ const ACTION_TYPES = keyMirror({
     FETCH_SINGLE_MEASURE: null,
     FETCH_SINGLE_MEASURE_SUCCESS: null,
     SELECT_SCAN: null,
-    CHANGE_EMAIL: null,
-    CHANGE_PASSWORD: null,
     LOGIN: null,
     UPDATE_EXPERIMENT: null
 });
