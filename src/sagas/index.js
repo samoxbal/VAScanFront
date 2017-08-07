@@ -98,7 +98,7 @@ function* createExperiment() {
             });
             yield put(push('/all'));
         } else {
-            yield put(stopSubmit(AddExperimentName, invalidFields));
+            yield put(stopSubmit(AddExperimentFormName, invalidFields));
         }
     }
 }

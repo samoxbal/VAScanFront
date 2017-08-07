@@ -55,12 +55,6 @@ export function fetchSingleScan(id) {
     }
 }
 
-export function resetAddExperimentForm() {
-    return {
-        type: ACTION_TYPES.RESET_ADD_EXPERIMENT
-    }
-}
-
 export function fetchSingleMeasure(id) {
     return {
         type: ACTION_TYPES.FETCH_SINGLE_MEASURE,
@@ -100,11 +94,4 @@ export function createVoltamogramm(variables) {
         type: ACTION_TYPES.ADD_VOLTAMOGRAMM,
         payload: variables
     }
-}
-
-export function resetAddVoltamogramm() {
-    return {
-        type: ACTION_TYPES.RESET_ADD_VOLTAMOGRAMM
-    }
-
 }

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import AddVoltamogramm from './AddVoltamogramm';
 import { getSelectedExperiment } from '../selectors/experiment';
 import AddIcon from 'material-ui/svg-icons/content/add';
-import { openAddVoltamogramm, updateExperiment, resetAddExperimentForm } from '../actions/index';
+import { openAddVoltamogramm, updateExperiment } from '../actions/index';
 import RaisedButton from 'material-ui/RaisedButton';
 import ListLinks from './ListLinks';
 import AddExperimentForm from './AddExperimentForm';
@@ -18,8 +18,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     openAddVoltamogramm,
-    updateExperiment,
-    resetAddExperimentForm
+    updateExperiment
 }, dispatch);
 
 class Experiment extends Component {
@@ -29,12 +28,7 @@ class Experiment extends Component {
         voltamogramms: PropTypes.array,
         errors: PropTypes.object,
         form: PropTypes.object,
-        resetAddExperimentForm: PropTypes.func,
         updateExperiment: PropTypes.func
-    }
-
-    componentWillUnmount() {
-        this.props.resetAddExperimentForm();
     }
 
     openAddVoltamogramm = () => this.props.openAddVoltamogramm(true)

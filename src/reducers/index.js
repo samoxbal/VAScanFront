@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 import ACTION_TYPES from '../constants/actionTypes';
@@ -14,6 +13,7 @@ const voltamogramm = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_VOLTAMOGR
 const measure = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_MEASURE_SUCCESS);
 const scan = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_SCAN_SUCCESS);
 const selectedScanId = createSimpleReducer("", ACTION_TYPES.SELECT_SCAN);
+const isEditExperiment = createSimpleReducer(false, ACTION_TYPES.EDIT_EXPERIMENT_MODE);
 
 const rootReducer = {
     router: routerReducer,
@@ -27,7 +27,8 @@ const rootReducer = {
     measure,
     scan,
     selectedScanId,
-    openAddScan
+    openAddScan,
+    isEditExperiment
 };
 
 export default rootReducer;

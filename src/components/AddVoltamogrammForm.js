@@ -2,35 +2,30 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset as resetForm } from 'redux-form';
 import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
-import { resetAddVoltamogramm } from '../actions/index';
 import {
     DatePicker,
     SelectField,
     TextField,
     Toggle,
 } from 'redux-form-material-ui';
+import { AddVoltamogrammFormName } from '../constants/formNames';
 
 const mapStateToProps = state => ({
-    errors: state.errors,
-    form: state.addVoltamogrammForm,
-    voltamogramm: state.voltamogramm,
-    active: state.activeEditVoltamogramm
+    voltamogramm: state.voltamogramm
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    resetAddVoltamogramm,
+    resetForm,
 }, dispatch);
 
 class AddVoltamogrammForm extends Component {
 
     static propTypes = {
-        errors: PropTypes.object,
-        form: PropTypes.object,
         voltamogramm: PropTypes.object,
-        resetAddVoltamogramm: PropTypes.func
+        resetForm: PropTypes.func
     }
 
     style = {
@@ -54,7 +49,7 @@ class AddVoltamogrammForm extends Component {
     ]
 
     componentWillUnmount() {
-        this.props.resetAddVoltamogramm();
+        this.props.resetForm(AddVoltamogrammFormName);
     }
 
     renderButtons() {
@@ -128,4 +123,6 @@ class AddVoltamogrammForm extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddVoltamogrammForm);
+const Form = reduxForm({ form: AddVoltamogrammFormName })(AddVoltamogrammForm);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

@@ -20,7 +20,8 @@ const ACTION_TYPES = keyMirror({
     FETCH_SINGLE_MEASURE_SUCCESS: null,
     SELECT_SCAN: null,
     LOGIN: null,
-    UPDATE_EXPERIMENT: null
+    UPDATE_EXPERIMENT: null,
+    EDIT_EXPERIMENT_MODE: null
 });
 
 export default ACTION_TYPES;

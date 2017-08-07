@@ -2,19 +2,19 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { resetAddExperimentForm, createExperiment } from '../actions/index';
-import { Field, reduxForm } from 'redux-form';
+import { createExperiment } from '../actions/index';
+import { Field, reduxForm, reset as resetForm } from 'redux-form';
 import { DatePicker, TextField } from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
 import { AddExperimentFormName } from '../constants/formNames';
 
 const mapStateToProps = state => ({
-    errors: state.errors
+    isEditMode: state.isEditExperiment
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    resetAddExperimentForm,
-    createExperiment
+    createExperiment,
+    resetForm
 }, dispatch);
 
 class AddExperimentForm extends Component {
@@ -25,7 +25,7 @@ class AddExperimentForm extends Component {
     }
 
     componentWillUnmount() {
-        this.props.resetForm();
+        this.props.resetForm(AddExperimentFormName);
     }
 
     submitExperiment = () => this.props.createExperiment()
