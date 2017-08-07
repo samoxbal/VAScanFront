@@ -119,16 +119,15 @@ class MeasurePage extends Component {
         function onBrushEnd() {
             const selection = d3.event.selection;
             const [leftX, rightX] = selection.map(x.invert);
-            const selectedPoints = points
-                .filter(point => point[0] > leftX && point[0] < rightX)
-                .sort((first, second) => first[1] - second[1]);
-            const maxPoint = selectedPoints[selectedPoints.length - 1];
+            const leftEdge = points.find(point => point[0] > leftX);
+            const rightDiapason = points.filter(point => point[0] < rightX);
+            const rightEdge = rightDiapason[rightDiapason.length - 1];
             d3.selectAll(".peakline").remove();
             main.append("path")
                 .attr("class", "peakline")
                 .attr("stroke", "red")
                 .attr("stroke-width", 2)
-                .attr("d", peakLine([[maxPoint[0], 0], maxPoint]));
+                .attr("d", peakLine([leftEdge, rightEdge]));
         }
     }
 

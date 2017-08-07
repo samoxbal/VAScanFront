@@ -1,36 +1,41 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
 import MenuItem from 'material-ui/MenuItem';
 import FileUpload from './FileUpload';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { isSelectedScan } from '../selectors/scan';
+import { AddScanFormName } from '../constants/formNames';
 import {
     DatePicker,
     SelectField,
     TextField,
     Toggle,
 } from 'redux-form-material-ui';
+import {
+    Field,
+    reduxForm,
+    getFormValues,
+    reset as resetForm
+} from 'redux-form';
 
 const mapStateToProps = state => ({
-    errors: state.errors,
-    form: state.addScanForm,
+    formValues: getFormValues(AddScanFormName)(state),
     isScanExist: isSelectedScan(state)
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-
+    resetForm
 }, dispatch);
 
 
 class AddScanForm extends Component {
 
     static propTypes = {
-        errors: PropTypes.object,
-        form: PropTypes.object,
+        formValues: PropTypes.object,
         isScanExist: PropTypes.bool,
-        isEditMode: PropTypes.bool
+        isEditMode: PropTypes.bool,
+        resetForm: PropTypes.func
     }
 
     style = {
@@ -51,13 +56,17 @@ class AddScanForm extends Component {
         { key: '05', text: 'ac', value: 'ac' }
     ]
 
+    componentWillUnmount() {
+        this.props.resetForm(AddScanFormName);
+    }
+
     getFile() {
         return this._file.getFile();
     }
 
     render() {
         const {
-            form,
+            formValues,
             isScanExist
         } = this.props;
 
@@ -127,7 +136,7 @@ class AddScanForm extends Component {
                         labelPosition="right"
                         style={{ width: '41%' }}
                     />
-                    { form.stirring &&
+                    { formValues && formValues.stirring &&
                     <Field
                         name="stirringSpeed"
                         component={ TextField }
@@ -142,7 +151,7 @@ class AddScanForm extends Component {
                         labelPosition="right"
                         style={{ width: '41%' }}
                     />
-                    { form.rotation &&
+                    { formValues && formValues.rotation &&
                     <Field
                         name="rotationSpeed"
                         component={ TextField }
@@ -168,4 +177,6 @@ class AddScanForm extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(AddScanForm);
+const Form = reduxForm({ form: AddScanFormName })(AddScanForm);
+
+export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(Form);
