@@ -7,7 +7,10 @@ import validator from '../utils/validator';
 import { api } from '../utils/api';
 import { client } from '../index';
 import ACTION_TYPES from '../constants/actionTypes';
-import { AddExperimentName } from '../constants/formNames';
+import {
+    AddExperimentFormName,
+    LoginFormName
+} from '../constants/formNames';
 import {
     experiments,
     voltamogramms,
@@ -30,9 +33,8 @@ import {
 
 function* createToken() {
     while(true) {
-        const loginSelector = state => state.loginForm;
         yield take(ACTION_TYPES.LOGIN);
-        const form = yield select(loginSelector);
+        const form = yield yield select(state => getFormValues(LoginFormName)(state));
         const invalidFields = validator(form, loginRequiredFields);
         if(is.empty(invalidFields)) {
             const token = yield call(api.login, form);
@@ -83,7 +85,7 @@ function* fetchVoltamogramms() {
 function* createExperiment() {
     while(true) {
         yield take(ACTION_TYPES.ADD_EXPERIMENT);
-        const stateForm = yield select(state => getFormValues(AddExperimentName)(state));
+        const stateForm = yield select(state => getFormValues(AddExperimentFormName)(state));
         const form = {
             user: jwtDecode(localStorage.getItem('token')).sub,
             ...stateForm

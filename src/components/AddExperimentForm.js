@@ -6,7 +6,7 @@ import { resetAddExperimentForm, createExperiment } from '../actions/index';
 import { Field, reduxForm } from 'redux-form';
 import { DatePicker, TextField } from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
-import { AddExperimentName } from '../constants/formNames';
+import { AddExperimentFormName } from '../constants/formNames';
 
 const mapStateToProps = state => ({
     errors: state.errors
@@ -83,6 +83,6 @@ class AddExperimentForm extends Component {
     }
 }
 
-const Form = reduxForm({ form: AddExperimentName })(AddExperimentForm);
+const Form = reduxForm({ form: AddExperimentFormName })(AddExperimentForm);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

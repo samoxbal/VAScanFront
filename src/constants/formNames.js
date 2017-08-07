@@ -1,4 +1,5 @@
-export const AddExperimentName = 'AddExperiment';
-export const AddScanName = 'AddScan';
-export const AddVoltamogrammName = 'AddVoltamogramm';
-export const RegimeName = 'Regime';
+export const AddExperimentFormName = 'AddExperiment';
+export const AddScanFormName = 'AddScan';
+export const AddVoltamogrammFormName = 'AddVoltamogramm';
+export const RegimeFormName = 'Regime';
+export const LoginFormName = 'Login';
