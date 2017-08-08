@@ -9,6 +9,8 @@ import { client } from '../index';
 import ACTION_TYPES from '../constants/actionTypes';
 import {
     AddExperimentFormName,
+    AddVoltamogrammFormName,
+    AddScanFormName,
     LoginFormName
 } from '../constants/formNames';
 import {
@@ -41,10 +43,7 @@ function* createToken() {
             localStorage.setItem('token', token.data.data);
             yield put(push('/all'));
         } else {
-            yield put({
-                type: ACTION_TYPES.SET_ERROR,
-                payload: invalidFields
-            })
+            yield put(stopSubmit(LoginFormName, invalidFields));
         }
     }
 }
@@ -174,16 +173,22 @@ function* fetchSingleMeasure() {
 
 function* createVoltamogramm() {
     while(true) {
-        const { payload } = yield take(ACTION_TYPES.ADD_VOLTAMOGRAMM);
-        const { data } = yield client.mutate({
-            mutation: createVoltamogrammMutation,
-            variables: payload
-        });
-        yield put({
-            type: ACTION_TYPES.OPEN_ADD_VOLTAMOGRAMM,
-            payload: false
-        });
-        yield put(push(`/voltamogramm/${data.createVoltamogramm.id}`));
+        yield take(ACTION_TYPES.ADD_VOLTAMOGRAMM);
+        const stateForm = yield select(state => getFormValues(AddVoltamogrammFormName)(state));
+        const invalidFields = validator(stateForm, voltamogrammRequiredFields);
+        if (is.empty(invalidFields)) {
+            const { data } = yield client.mutate({
+                mutation: createVoltamogrammMutation,
+                variables: stateForm
+            });
+            yield put({
+                type: ACTION_TYPES.OPEN_ADD_VOLTAMOGRAMM,
+                payload: false
+            });
+            yield put(push(`/voltamogramm/${data.createVoltamogramm.id}`));
+        } else {
+            yield put(stopSubmit(AddVoltamogrammFormName, invalidFields));
+        }
     }
 }
 

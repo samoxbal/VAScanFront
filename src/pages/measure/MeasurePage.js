@@ -51,7 +51,7 @@ class MeasurePage extends Component {
     }
 
     renderChart(points) {
-        const margin = {top: 20, right: 30, bottom: 20, left: 40},
+        const margin = { top: 20, right: 30, bottom: 20, left: 40 },
             width = 900 - margin.left - margin.right,
             height = 600 - margin.top - margin.bottom;
 
