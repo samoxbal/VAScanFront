@@ -87,6 +87,7 @@ class AddVoltamogrammForm extends Component {
                     <Field
                         name="numberOfElectrodes"
                         component={ SelectField }
+                        hintText="Количество электродов"
                     >
                         { this.numberElectrodsOptions.map(item => (
                             <MenuItem

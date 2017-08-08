@@ -13,7 +13,6 @@ const voltamogramm = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_VOLTAMOGR
 const measure = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_MEASURE_SUCCESS);
 const scan = createSimpleReducer({}, ACTION_TYPES.FETCH_SINGLE_SCAN_SUCCESS);
 const selectedScanId = createSimpleReducer("", ACTION_TYPES.SELECT_SCAN);
-const isEditExperiment = createSimpleReducer(false, ACTION_TYPES.EDIT_EXPERIMENT_MODE);
 
 const rootReducer = {
     router: routerReducer,
@@ -27,8 +26,7 @@ const rootReducer = {
     measure,
     scan,
     selectedScanId,
-    openAddScan,
-    isEditExperiment
+    openAddScan
 };
 
 export default rootReducer;

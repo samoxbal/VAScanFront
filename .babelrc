@@ -1,4 +1,4 @@
 {
   "presets": ["es2015", "stage-0", "react-native", "react"],
-  "plugins": ["react-hot-loader/babel", "transform-runtime"]
+  "plugins": ["react-hot-loader/babel", "transform-runtime", "transform-decorators"]
 }
