@@ -2,7 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { isSelectedScan } from '../selectors/scan';
+import { isSelectedScan } from '../selectors';
 import AddScanForm from './AddScanForm';
 import ListLinks from './ListLinks';
 

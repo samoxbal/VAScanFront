@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AddVoltamogramm from './AddVoltamogramm';
-import { getSelectedExperiment } from '../selectors/experiment';
+import { getSelectedExperiment } from '../selectors';
 import AddIcon from 'material-ui/svg-icons/content/add';
 import { openAddVoltamogramm, updateExperiment } from '../actions/index';
 import RaisedButton from 'material-ui/RaisedButton';

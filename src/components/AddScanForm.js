@@ -4,7 +4,6 @@ import MenuItem from 'material-ui/MenuItem';
 import FileUpload from './FileUpload';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { isSelectedScan } from '../selectors/scan';
 import { AddScanFormName } from '../constants/formNames';
 import {
     DatePicker,
@@ -20,8 +19,7 @@ import {
 } from 'redux-form';
 
 const mapStateToProps = state => ({
-    formValues: getFormValues(AddScanFormName)(state),
-    isScanExist: isSelectedScan(state)
+    formValues: getFormValues(AddScanFormName)(state)
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -35,7 +33,6 @@ class AddScanForm extends Component {
 
     static propTypes = {
         formValues: PropTypes.object,
-        isScanExist: PropTypes.bool,
         isEditMode: PropTypes.bool,
         resetForm: PropTypes.func
     }
@@ -68,8 +65,7 @@ class AddScanForm extends Component {
 
     render() {
         const {
-            formValues,
-            isScanExist
+            formValues
         } = this.props;
 
         return (
@@ -173,7 +169,7 @@ class AddScanForm extends Component {
                         />
                     )) }
                 </Field>
-                { !isScanExist && <FileUpload ref={ ref => this._file = ref } /> }
+                <FileUpload ref={ ref => this._file = ref } />
             </div>
         );
     }

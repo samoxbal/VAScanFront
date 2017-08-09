@@ -7,7 +7,7 @@ import { Field, reduxForm, reset as resetForm } from 'redux-form';
 import { DatePicker, TextField } from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
 import { EditExperimentFormName } from '../constants/formNames';
-import { getSelectedExperiment } from '../selectors/experiment';
+import { getSelectedExperiment } from '../selectors';
 
 const mapStateToProps = state => ({
     initialValues: getSelectedExperiment(state)
