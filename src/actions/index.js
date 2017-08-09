@@ -100,3 +100,9 @@ export function updateVoltamogramm() {
         type: ACTION_TYPES.UPDATE_VOLTAMOGRAMM
     }
 }
+
+export function updateScan() {
+    return {
+        type: ACTION_TYPES.UPDATE_SCAN
+    }
+}

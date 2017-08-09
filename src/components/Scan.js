@@ -1,19 +1,14 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { isSelectedScan } from '../selectors';
-import AddScanForm from './AddScanForm';
+import EditScanForm from './EditScanForm';
 import ListLinks from './ListLinks';
 
 const mapStateToProps = state => ({
     scan: state.scan,
     isScanExist: isSelectedScan(state)
 });
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-
-}, dispatch);
 
 class Scan extends Component {
 
@@ -41,7 +36,7 @@ class Scan extends Component {
         const { measures } = this.props.scan;
         return (
             <div style={ this.style.scanWrapper }>
-                <AddScanForm/>
+                <EditScanForm/>
                 { measures && this.renderMeasures(measures) }
             </div>
         )
@@ -56,4 +51,4 @@ class Scan extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Scan);
+export default connect(mapStateToProps)(Scan);

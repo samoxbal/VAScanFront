@@ -1,33 +1,37 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import MenuItem from 'material-ui/MenuItem';
-import FileUpload from './FileUpload';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { AddScanFormName } from '../constants/formNames';
+import { updateScan } from '../actions/index';
+import { Field, reduxForm, reset as resetForm } from 'redux-form';
+import MenuItem from 'material-ui/MenuItem';
 import {
     DatePicker,
     SelectField,
     TextField,
     Toggle
 } from 'redux-form-material-ui';
-import {
-    Field,
-    reduxForm,
-    reset as resetForm
-} from 'redux-form';
+import { getSelectedScan } from '../selectors';
+import { EditScanFormName } from '../constants/formNames';
+
+const mapStateToProps = state => ({
+    initialValues: getSelectedScan(state)
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+    updateScan,
     resetForm
 }, dispatch);
 
 @reduxForm({
-    form: AddScanFormName
+    form: EditScanFormName,
+    enableReinitialize: true
 })
-class AddScanForm extends Component {
+class EditScanForm extends Component {
 
     static propTypes = {
-        isEditMode: PropTypes.bool,
+        initialValues: PropTypes.object,
+        updateScan: PropTypes.func,
         resetForm: PropTypes.func
     }
 
@@ -50,11 +54,7 @@ class AddScanForm extends Component {
     ]
 
     componentWillUnmount() {
-        this.props.resetForm(AddScanFormName);
-    }
-
-    getFile() {
-        return this._file.getFile();
+        this.props.resetForm(EditScanForm);
     }
 
     render() {
@@ -157,10 +157,9 @@ class AddScanForm extends Component {
                         />
                     )) }
                 </Field>
-                <FileUpload ref={ ref => this._file = ref } />
             </div>
         );
     }
 }
 
-export default connect(null, mapDispatchToProps, null, { withRef: true })(AddScanForm);
+export default connect(mapStateToProps, mapDispatchToProps)(EditScanForm);

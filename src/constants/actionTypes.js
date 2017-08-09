@@ -21,7 +21,8 @@ const ACTION_TYPES = keyMirror({
     SELECT_SCAN: null,
     LOGIN: null,
     UPDATE_EXPERIMENT: null,
-    UPDATE_VOLTAMOGRAMM: null
+    UPDATE_VOLTAMOGRAMM: null,
+    UPDATE_SCAN: null
 });
 
 export default ACTION_TYPES;
