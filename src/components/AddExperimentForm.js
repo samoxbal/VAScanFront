@@ -13,10 +13,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     resetForm
 }, dispatch);
 
+@connect(null, mapDispatchToProps)
 @reduxForm({
     form: AddExperimentFormName
 })
-class AddExperimentForm extends Component {
+export default class AddExperimentForm extends Component {
     static propTypes = {
         resetForm: PropTypes.func,
         createExperiment: PropTypes.func
@@ -80,5 +81,3 @@ class AddExperimentForm extends Component {
         )
     }
 }
-
-export default connect(null, mapDispatchToProps)(AddExperimentForm);

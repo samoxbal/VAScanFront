@@ -21,10 +21,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     resetForm
 }, dispatch);
 
+@connect(null, mapDispatchToProps, null, { withRef: true })
 @reduxForm({
     form: AddScanFormName
 })
-class AddScanForm extends Component {
+export default class AddScanForm extends Component {
 
     static propTypes = {
         isEditMode: PropTypes.bool,
@@ -162,5 +163,3 @@ class AddScanForm extends Component {
         );
     }
 }
-
-export default connect(null, mapDispatchToProps, null, { withRef: true })(AddScanForm);
