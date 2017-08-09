@@ -21,6 +21,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     resetForm,
 }, dispatch);
 
+@reduxForm({
+    form: AddVoltamogrammFormName
+})
 class AddVoltamogrammForm extends Component {
 
     static propTypes = {
@@ -124,6 +127,4 @@ class AddVoltamogrammForm extends Component {
     }
 }
 
-const Form = reduxForm({ form: AddVoltamogrammFormName })(AddVoltamogrammForm);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(AddVoltamogrammForm);

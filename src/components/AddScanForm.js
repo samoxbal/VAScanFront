@@ -28,7 +28,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     resetForm
 }, dispatch);
 
-
+@reduxForm({
+    form: AddScanFormName
+})
 class AddScanForm extends Component {
 
     static propTypes = {
@@ -177,6 +179,4 @@ class AddScanForm extends Component {
     }
 }
 
-const Form = reduxForm({ form: AddScanFormName })(AddScanForm);
-
-export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(Form);
+export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(AddScanForm);
