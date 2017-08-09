@@ -7,15 +7,25 @@ import { Field, reduxForm, reset as resetForm } from 'redux-form';
 import { DatePicker, TextField } from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
 import { EditExperimentFormName } from '../constants/formNames';
+import { getSelectedExperiment } from '../selectors/experiment';
+
+const mapStateToProps = state => ({
+    initialValues: getSelectedExperiment(state)
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     updateExperiment,
     resetForm
 }, dispatch);
 
+@reduxForm({
+    form: EditExperimentFormName,
+    enableReinitialize: true
+})
 class EditExperimentForm extends Component {
 
     static propTypes = {
+        initialValues: PropTypes.object,
         updateExperiment: PropTypes.func,
         resetForm: PropTypes.func
     }
@@ -78,3 +88,5 @@ class EditExperimentForm extends Component {
         )
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditExperimentForm);

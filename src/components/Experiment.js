@@ -8,7 +8,7 @@ import AddIcon from 'material-ui/svg-icons/content/add';
 import { openAddVoltamogramm, updateExperiment } from '../actions/index';
 import RaisedButton from 'material-ui/RaisedButton';
 import ListLinks from './ListLinks';
-import AddExperimentForm from './AddExperimentForm';
+import EditExperimentForm from './EditExperimentForm';
 
 const mapStateToProps = state => ({
     experiment: getSelectedExperiment(state),
@@ -63,7 +63,7 @@ class Experiment extends Component {
     renderExperiment() {
         return (
             <div style={{ clear: 'both' }}>
-                <AddExperimentForm/>
+                <EditExperimentForm/>
             </div>
         )
     }

@@ -94,3 +94,9 @@ export function createVoltamogramm(variables) {
         payload: variables
     }
 }
+
+export function updateVoltamogramm() {
+    return {
+        type: ACTION_TYPES.UPDATE_VOLTAMOGRAMM
+    }
+}

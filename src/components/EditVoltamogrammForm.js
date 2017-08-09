@@ -2,7 +2,9 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { updateVoltamogramm } from '../actions';
 import { Field, reduxForm, reset as resetForm } from 'redux-form';
+import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
 import {
     DatePicker,
@@ -10,23 +12,26 @@ import {
     TextField,
     Toggle,
 } from 'redux-form-material-ui';
-import { AddVoltamogrammFormName } from '../constants/formNames';
+import { EditVoltamogrammFormName } from '../constants/formNames';
 
 const mapStateToProps = state => ({
-    voltamogramm: state.voltamogramm
+    initialValues: state.voltamogramm
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    resetForm,
+    updateVoltamogramm,
+    resetForm
 }, dispatch);
 
 @reduxForm({
-    form: AddVoltamogrammFormName
+    form: EditVoltamogrammFormName,
+    enableReinitialize: true
 })
-class AddVoltamogrammForm extends Component {
+class EditVoltamogrammForm extends Component {
 
     static propTypes = {
-        voltamogramm: PropTypes.object,
+        initialValues: PropTypes.object,
+        updateVoltamogramm: PropTypes.func,
         resetForm: PropTypes.func
     }
 
@@ -51,8 +56,10 @@ class AddVoltamogrammForm extends Component {
     ]
 
     componentWillUnmount() {
-        this.props.resetForm(AddVoltamogrammFormName);
+        this.props.resetForm(EditVoltamogrammFormName);
     }
+
+    submitVoltamogramm = () => this.props.updateVoltamogramm()
 
     render() {
         return (
@@ -107,9 +114,14 @@ class AddVoltamogrammForm extends Component {
                         floatingLabelText="Серийный номер электрода"
                     />
                 </div>
+                <RaisedButton
+                    primary={ true }
+                    label="Редактировать"
+                    onTouchTap={ this.submitVoltamogramm }
+                />
             </div>
         )
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddVoltamogrammForm);
+export default connect(mapStateToProps, mapDispatchToProps)(EditVoltamogrammForm);

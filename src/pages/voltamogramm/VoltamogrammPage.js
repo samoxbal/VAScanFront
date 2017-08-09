@@ -9,7 +9,7 @@ import AddIcon from 'material-ui/svg-icons/content/add';
 import PageLayout from '../../components/PageLayout';
 import TreeFolder from '../../components/TreeFolder';
 import Scan from '../../components/Scan';
-import AddVoltamogrammForm from '../../components/AddVoltamogrammForm';
+import EditVoltamogrammForm from '../../components/EditVoltamogrammForm';
 import AddScan from '../../components/AddScan';
 import {
     fetchSingleVoltamogramm,
@@ -97,7 +97,7 @@ class VoltamogrammPage extends Component {
                     secondary={ true }
                 />
                 <Card style={{ padding: 40 }}>
-                    <AddVoltamogrammForm/>
+                    <EditVoltamogrammForm/>
                 </Card>
             </div>
         )
