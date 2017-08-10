@@ -7,7 +7,6 @@ import createSagaMiddleware from 'redux-saga';
 const initialState = {
     experiments: [],
     selectedExperimentId: "",
-    errors: {},
     openAddVoltamogramm: false,
     voltamogramms: [],
     voltamogramm: {}

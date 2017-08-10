@@ -12,8 +12,7 @@ import EditExperimentForm from './EditExperimentForm';
 
 const mapStateToProps = state => ({
     experiment: getSelectedExperiment(state),
-    voltamogramms: state.voltamogramms,
-    errors: state.errors
+    voltamogramms: state.voltamogramms
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -26,39 +25,10 @@ class Experiment extends Component {
     static propTypes = {
         experiment: PropTypes.object,
         voltamogramms: PropTypes.array,
-        errors: PropTypes.object,
-        form: PropTypes.object,
         updateExperiment: PropTypes.func
     }
 
     openAddVoltamogramm = () => this.props.openAddVoltamogramm(true)
-
-    editExperiment = () => {
-        const {
-            experiment: {
-                id,
-                name,
-                description,
-                startDate,
-                endDate
-            },
-            form: {
-                name: formName,
-                description: formDescription,
-                startDate: formStartDate,
-                endDate: formEndDate
-            },
-            updateExperiment
-        } = this.props;
-
-        updateExperiment({
-            id,
-            name: formName || name,
-            description: formDescription || description,
-            startDate: formStartDate || startDate,
-            endDate: formEndDate || endDate
-        });
-    }
 
     renderExperiment() {
         return (
