@@ -8,8 +8,7 @@ import AddScanForm from './AddScanForm';
 import { openAddScan, createScan } from '../actions';
 
 const mapStateToProps = state => ({
-    openScanModal: state.openAddScan,
-    form: state.addScanForm
+    openScanModal: state.openAddScan
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -38,28 +37,12 @@ class AddScan extends Component {
     static propTypes = {
         openAddScan: PropTypes.func,
         openScanModal: PropTypes.bool,
-        form: PropTypes.object,
         createScan: PropTypes.func,
         voltamogramm: PropTypes.string
     }
 
     handleSubmit = () => {
         const {
-            form: {
-                scan_datetime,
-                start_potential,
-                end_potential,
-                reverse_direction,
-                stirring,
-                stirring_speed,
-                rotation,
-                rotation_speed,
-                channel_id,
-                channel_label,
-                temperature,
-                pressure,
-                regime
-            },
             voltamogramm,
             createScan
         } = this.props;
@@ -69,19 +52,8 @@ class AddScan extends Component {
 
         createScan({
             file,
-            voltamogramm,
-            date: scan_datetime,
-            startPotential: start_potential,
-            endPotential: end_potential,
-            reverseDirection: reverse_direction,
-            stirring,
-            rotation,
-            channelId: channel_id,
-            channelLabel: channel_label,
-            temperature,
-            pressure,
-            measureMode: regime
-        })
+            voltamogramm
+        });
     }
 
     render() {

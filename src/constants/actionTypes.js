@@ -8,7 +8,6 @@ const ACTION_TYPES = keyMirror({
     ADD_EXPERIMENT: null,
     ADD_VOLTAMOGRAMM: null,
     SELECT_EXPERIMENT: null,
-    SET_ERROR: null,
     ADD_SCAN: null,
     OPEN_ADD_VOLTAMOGRAMM: null,
     OPEN_ADD_SCAN: null,

@@ -5,7 +5,6 @@ import { createSimpleReducer } from '../utils/createReducers';
 
 const experiments = createSimpleReducer([], ACTION_TYPES.FETCH_EXPERIMENTS_SUCCESS);
 const selectedExperimentId = createSimpleReducer("", ACTION_TYPES.SELECT_EXPERIMENT);
-const errors = createSimpleReducer({}, ACTION_TYPES.SET_ERROR);
 const openAddVoltamogramm = createSimpleReducer(false, ACTION_TYPES.OPEN_ADD_VOLTAMOGRAMM);
 const openAddScan = createSimpleReducer(false, ACTION_TYPES.OPEN_ADD_SCAN);
 const voltamogramms = createSimpleReducer([], ACTION_TYPES.FETCH_VOLTAMOGRAMMS_SUCCESS);
@@ -19,7 +18,6 @@ const rootReducer = {
     form: formReducer,
     experiments,
     selectedExperimentId,
-    errors,
     openAddVoltamogramm,
     voltamogramms,
     voltamogramm,

@@ -12,7 +12,9 @@ import {
     AddExperimentFormName,
     AddVoltamogrammFormName,
     AddScanFormName,
-    LoginFormName, EditExperimentFormName
+    LoginFormName,
+    EditExperimentFormName,
+    EditScanFormName
 } from '../constants/formNames';
 import {
     experiments,
@@ -193,17 +195,27 @@ function* createVoltamogramm() {
 
 function* createScan() {
     while(true) {
-        const { payload: { file, ...variables } } = yield take(ACTION_TYPES.ADD_SCAN);
-        const createScanData = yield client.mutate({
-            mutation: createScanMutation,
-            variables
-        });
-        file.append('scan', createScanData.data.createScan.id);
-        yield call(api.add_measure, file);
-        yield put({
-            type: ACTION_TYPES.OPEN_ADD_SCAN,
-            payload: false
-        })
+        const { payload: { file, voltamogramm } } = yield take(ACTION_TYPES.ADD_SCAN);
+        const stateForm = yield select(state => getFormValues(AddScanFormName)(state));
+        const form = {
+            voltamogramm,
+            ...stateForm
+        };
+        const invalidFields = validator(form, scanRequiredFields);
+        if (is.empty(invalidFields)) {
+            const createScanData = yield client.mutate({
+                mutation: createScanMutation,
+                variables: form
+            });
+            file.append('scan', createScanData.data.createScan.id);
+            yield call(api.add_measure, file);
+            yield put({
+                type: ACTION_TYPES.OPEN_ADD_SCAN,
+                payload: false
+            })
+        } else {
+            yield put(stopSubmit(AddScanFormName, invalidFields));
+        }
     }
 }
 
