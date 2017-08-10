@@ -5,13 +5,14 @@ import is from 'is';
 import jwtDecode from 'jwt-decode';
 import validator from '../utils/validator';
 import { api } from '../utils/api';
+import { mapExperiments } from '../utils/utils';
 import { client } from '../index';
 import ACTION_TYPES from '../constants/actionTypes';
 import {
     AddExperimentFormName,
     AddVoltamogrammFormName,
     AddScanFormName,
-    LoginFormName
+    LoginFormName, EditExperimentFormName
 } from '../constants/formNames';
 import {
     experiments,
@@ -60,7 +61,7 @@ function* fetchExperiments() {
         });
         yield put({
             type: ACTION_TYPES.FETCH_EXPERIMENTS_SUCCESS,
-            payload: data.data.experiments
+            payload: mapExperiments(data.data.experiments)
         })
     }
 }
@@ -104,21 +105,19 @@ function* createExperiment() {
 
 function* updateExperiment() {
     while(true) {
-        const { payload } = yield take(ACTION_TYPES.UPDATE_EXPERIMENT);
-        const invalidFields = validator(payload, experimentRequiredFields);
+        yield take(ACTION_TYPES.UPDATE_EXPERIMENT);
+        const stateForm = yield select(state => getFormValues(EditExperimentFormName)(state));
+        const invalidFields = validator(stateForm, experimentRequiredFields);
         if (is.empty(invalidFields)) {
             yield client.mutate({
                 mutation: updateExperimentMutation,
-                variables: payload
+                variables: stateForm
             });
             yield put({
                 type: ACTION_TYPES.FETCH_EXPERIMENTS
             });
         } else {
-            yield put({
-                type: ACTION_TYPES.SET_ERROR,
-                payload: invalidFields
-            })
+            yield put(stopSubmit(EditExperimentFormName, invalidFields));
         }
     }
 }
