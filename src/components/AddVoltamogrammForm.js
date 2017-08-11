@@ -66,7 +66,7 @@ class AddVoltamogrammForm extends Component {
                 /><br/>
                 <div style={ this.style.formBlock }>
                     <Field
-                        name="vaDate"
+                        name="date"
                         component={ DatePicker }
                         hintText="Дата проведения"
                         autoOk={ true }

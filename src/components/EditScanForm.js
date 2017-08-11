@@ -62,7 +62,7 @@ class EditScanForm extends Component {
             <div>
                 <div style={ this.style.formBlock }>
                     <Field
-                        name="scanDate"
+                        name="date"
                         component={ DatePicker }
                         hintText="Дата проведения"
                         autoOk={ true }
