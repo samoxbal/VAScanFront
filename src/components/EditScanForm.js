@@ -11,11 +11,10 @@ import {
     TextField,
     Toggle
 } from 'redux-form-material-ui';
-import { getSelectedScan } from '../selectors';
 import { EditScanFormName } from '../constants/formNames';
 
 const mapStateToProps = state => ({
-    initialValues: getSelectedScan(state)
+    initialValues: state.scan
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
