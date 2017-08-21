@@ -11,7 +11,9 @@ import root from './sagas';
 window.React = React;
 injectTapEventPlugin();
 
-const isProd = process.env.NODE_ENV === 'production';
+if (process.env.NODE_ENV === 'development') {
+    require('../server/mock');
+}
 
 const networkInterface = createNetworkInterface({
     uri: '/graphql',
