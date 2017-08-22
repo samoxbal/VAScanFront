@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+if (process.env.NODE_ENV === 'development') {
+    require('../../server/mock/axiosMock')(axios);
+}
+
 export const api = {
     add_measure: data => {
         return axios.post('/upload', data, {
