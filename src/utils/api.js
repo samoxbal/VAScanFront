@@ -1,7 +1,8 @@
 import axios from 'axios';
+import axiosMock from '../../server/mock/axiosMock';
 
 if (process.env.NODE_ENV === 'development') {
-    require('../../server/mock/axiosMock')(axios);
+    axiosMock(axios);
 }
 
 export const api = {
