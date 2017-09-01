@@ -7,12 +7,9 @@ import App from './components/App';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import root from './sagas';
-import { mockNetworkInterface } from '../server/mock';
 
 window.React = React;
 injectTapEventPlugin();
-
-const isProduction = process.env.NODE_ENV === 'production';
 
 const networkInterface = createNetworkInterface({
     uri: '/graphql',
@@ -31,7 +28,7 @@ networkInterface.use([{
 }]);
 
 export const client = new ApolloClient({
-    networkInterface: isProduction ? networkInterface : mockNetworkInterface
+    networkInterface
 });
 
 const store = configureStore(client);
