@@ -34,6 +34,9 @@ class MeasurePage extends Component {
         chartCard: {
             width: '70%',
             minHeight: 600
+        },
+        squareLegend: {
+            display: 'block'
         }
     }
 
@@ -128,11 +131,13 @@ class MeasurePage extends Component {
                     const [Xcurr, Ycurr] = point;
                     const Pprev = diapason[i-1];
                     const Xprev = Math.abs(Pprev ? Pprev[0] : 0);
-                    const Yprev = Math.abs(Pprev ? Pprev[1] : 0);
-                    const T = Xcurr - Xprev;
+                    const Yprev = Pprev ? Pprev[1] : 0;
+                    const T = Math.abs(Xcurr) - Xprev;
                     square += (T/2)*(Ycurr + Yprev);
                     return square;
                 }, 0);
+            d3.select('#square')
+                .text(integralSquare);
             d3.selectAll(".peakline").remove();
             main.append("path")
                 .attr("class", "peakline")
@@ -145,6 +150,10 @@ class MeasurePage extends Component {
     render() {
         return (
             <PageLayout>
+                <span
+                    id="square"
+                    style={ this.style.squareLegend }
+                />
                 <div style={ this.style.wrapper }>
                     <Card style={ this.style.chartCard }>
                         <div className="MeasurePage__Chart"/>
