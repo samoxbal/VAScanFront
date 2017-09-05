@@ -122,6 +122,17 @@ class MeasurePage extends Component {
             const leftEdge = points.find(point => point[0] > leftX);
             const rightDiapason = points.filter(point => point[0] < rightX);
             const rightEdge = rightDiapason[rightDiapason.length - 1];
+            const integralSquare = points
+                .filter(point => point[0] > leftX && point[0] < rightX)
+                .reduce((square, point, i, diapason) => {
+                    const [Xcurr, Ycurr] = point;
+                    const Pprev = diapason[i-1];
+                    const Xprev = Math.abs(Pprev ? Pprev[0] : 0);
+                    const Yprev = Math.abs(Pprev ? Pprev[1] : 0);
+                    const T = Xcurr - Xprev;
+                    square += (T/2)*(Ycurr + Yprev);
+                    return square;
+                }, 0);
             d3.selectAll(".peakline").remove();
             main.append("path")
                 .attr("class", "peakline")
