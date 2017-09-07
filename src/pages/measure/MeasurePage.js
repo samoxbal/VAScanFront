@@ -119,6 +119,8 @@ class MeasurePage extends Component {
             .attr("class", "brush")
             .call(brush);
 
+        const self = this;
+
         function onBrushEnd() {
             const selection = d3.event.selection;
             const [leftX, rightX] = selection.map(x.invert);
@@ -136,24 +138,19 @@ class MeasurePage extends Component {
                     square += (T/2)*(Ycurr + Yprev);
                     return square;
                 }, 0);
-            d3.select('#square')
-                .text(integralSquare);
             d3.selectAll(".peakline").remove();
             main.append("path")
                 .attr("class", "peakline")
                 .attr("stroke", "red")
                 .attr("stroke-width", 2)
                 .attr("d", peakLine([leftEdge, rightEdge]));
+            self.setState({ integralSquare });
         }
     }
 
     render() {
         return (
             <PageLayout>
-                <span
-                    id="square"
-                    style={ this.style.squareLegend }
-                />
                 <div style={ this.style.wrapper }>
                     <Card style={ this.style.chartCard }>
                         <div className="MeasurePage__Chart"/>
