@@ -55,9 +55,9 @@ export const scan = gql`
     }
 `;
 
-export const measure = gql`
-    query measure($measureId: String) {
-        measure(measureId: $measureId) {
+export const measures = gql`
+    query measures($scanId: String) {
+        measures(scanId: $scanId) {
             points
         }
     }

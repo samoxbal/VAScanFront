@@ -21,7 +21,7 @@ import {
     voltamogramms,
     voltamogramm,
     scan,
-    measure
+    measures
 } from '../graphql/queries';
 import {
     updateExperiment as updateExperimentMutation,
@@ -156,13 +156,13 @@ function* fetchSingleScan() {
     }
 }
 
-function* fetchSingleMeasure() {
+function* fetchMeasures() {
     while(true) {
         const { payload } = yield take(ACTION_TYPES.FETCH_SINGLE_MEASURE);
         const { data } = yield client.query({
-            query: measure,
+            query: measures,
             variables: {
-                measureId: payload
+                scanId: payload
             }
         });
         yield put({
@@ -225,7 +225,7 @@ export default function* root() {
     yield fork(fetchVoltamogramms);
     yield fork(fetchSingleVoltamogramm);
     yield fork(fetchSingleScan);
-    yield fork(fetchSingleMeasure);
+    yield fork(fetchMeasures);
     yield fork(createScan);
     yield fork(createToken);
     yield fork(createVoltamogramm);

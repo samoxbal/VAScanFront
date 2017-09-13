@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import RaisedButton from 'material-ui/RaisedButton';
 import { isSelectedScan } from '../selectors';
 import EditScanForm from './EditScanForm';
 
@@ -25,6 +26,11 @@ class Scan extends Component {
     renderScan() {
         return (
             <div style={ this.style.scanWrapper }>
+                <RaisedButton
+                    label="Анализ измерений"
+                    primary={ true }
+                    href={ `/measure/${this.props.scan.id}` }
+                />
                 <EditScanForm/>
             </div>
         )
