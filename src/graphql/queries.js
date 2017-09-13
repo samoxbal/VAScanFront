@@ -50,10 +50,7 @@ export const scan = gql`
             channelLabel,
             temperature,
             pressure,
-            measureMode,
-            measures {
-                id
-            }
+            measureMode
         }
     }
 `;
