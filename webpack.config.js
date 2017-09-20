@@ -5,17 +5,29 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
     devtool: isProduction ? 'source-map' : 'eval',
-    entry: !isProduction ? [
-        'react-hot-loader/patch',
-        'webpack-dev-server/client?http://localhost:3002',
-        'webpack/hot/only-dev-server',
-        './src/index'
-    ] : [
-        './src/index'
-    ],
+    entry: {
+        app: !isProduction ? [
+            'react-hot-loader/patch',
+            'webpack-dev-server/client?http://localhost:3002',
+            'webpack/hot/only-dev-server',
+            './src/index'
+        ] : [
+            './src/index'
+        ],
+        vendor: [
+            'history',
+            'material-ui',
+            'react',
+            'react-dom',
+            'react-redux',
+            'react-router',
+            'react-tap-event-plugin',
+            'redux'
+        ]
+    },
     output: {
         path: path.join(__dirname, '.build'),
-        filename: 'bundle.js',
+        filename: '[name].js',
         publicPath: '/static/'
     },
     plugins: [
@@ -27,7 +39,11 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
-        new ExtractTextPlugin('bundle.css')
+        new ExtractTextPlugin('bundle.css'),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            minChunks: Infinity
+        })
     ],
     resolve: {
         extensions: ['.js', '.jsx', '.css']
@@ -53,16 +69,5 @@ module.exports = {
                 include: path.join(__dirname, 'src')
             }
         ]
-    },
-    devServer: {
-        host: 'localhost',
-        port: 3002,
-        publicPath: '/static/',
-        hot: true,
-        historyApiFallback: true,
-        inline: true,
-        proxy: {
-          "*": "http://localhost:3000"
-        }
     }
 };
