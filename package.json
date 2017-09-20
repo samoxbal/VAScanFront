@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "watch": "NODE_ENV=development node ./.build/server.js",
-    "build": "NODE_ENV=development ./node_modules/.bin/webpack --config webpack.backend.config.js --progress --profile && NODE_ENV=development ./node_modules/.bin/webpack-dev-server --config webpack.config.js --progress --profile"
+    "watch": "NODE_ENV=development node ./.build/server.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +31,7 @@
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "^2.0.5",
     "postcss-nested": "^2.0.2",
+    "progress-bar-webpack-plugin": "^1.10.0",
     "react-hot-loader": "3.0.0-beta.6",
     "style-loader": "^0.16.1",
     "webpack": "^2.3.2",

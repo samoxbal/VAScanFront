@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 module.exports = {
     entry: './server.js',
@@ -18,14 +19,17 @@ module.exports = {
                 'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
             }
         }),
-
+        new ProgressBarPlugin()
     ],
     module: {
         rules: [
             {
                 test: /\.js$/,
                 use: ['babel-loader'],
-                exclude: /node_modules/
+                include: [
+                    path.join(__dirname, 'server'),
+                    path.join(__dirname, 'config')
+                ]
             }
         ]
     },
