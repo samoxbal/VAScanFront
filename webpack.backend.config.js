@@ -30,6 +30,11 @@ module.exports = {
                     path.join(__dirname, 'server'),
                     path.join(__dirname, 'config')
                 ]
+            },
+            {
+                test: /\.hbs$/,
+                use: ['handlebars-template-loader'],
+                include: [path.join(__dirname, 'server/views')]
             }
         ]
     },

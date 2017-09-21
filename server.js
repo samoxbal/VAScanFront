@@ -1,12 +1,15 @@
-const koa = require('koa'),
-    router = require('koa-router')();
+const Koa = require('koa'),
+    Router = require('koa-router');
 
 const env = process.env.NODE_ENV || 'development';
 const config = require('./config/config')[env];
 
-const app = koa();
+const app = new Koa();
+const router = new Router();
 
-require('./config/koa')(app, router, config);
+app.use(router.routes());
+app.use(router.allowedMethods());
+
 require('./config/routes')(router);
 
 const port = config.app.port;
