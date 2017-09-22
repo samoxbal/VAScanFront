@@ -12,4 +12,6 @@ const frontendServer = new WebpackDevServer(webpack(config), {
     }
 });
 
-module.exports = frontendServer;
+frontendServer.listen(3002, '127.0.0.1', () => {
+    console.log('Frontend compiled');
+});
