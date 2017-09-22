@@ -5,10 +5,18 @@ const config = require('../webpack.backend.config');
 const compiler = webpack(config);
 
 let monitor;
+
+compiler.run((err) => {
+    if (err) {
+        console.log(err);
+    }
+});
+
 compiler.plugin('done', () => {
+    console.log('Backend compiled');
     try {
         if (!monitor) {
-            monitor = respawn(['node', '--harmony', '../.build/server.js'], {
+            monitor = respawn(['node', '--harmony', '.build/server.js'], {
                 cwd: '.',
                 maxRestarts: 1,
                 sleep: 100,

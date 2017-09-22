@@ -21,6 +21,7 @@ export default async (ctx) => {
     );
 
     ctx.body = template({
-        path: env === 'development' ? 'static' : '.build'
+        path: env === 'development' ? 'static' : '.build',
+        app: renderToString(renderApp)
     });
 };
