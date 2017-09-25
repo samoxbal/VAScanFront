@@ -19,7 +19,8 @@ module.exports = {
                 'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
             }
         }),
-        new ProgressBarPlugin()
+        new ProgressBarPlugin(),
+        new webpack.NormalModuleReplacementPlugin(/\.css$/, 'node-noop')
     ],
     module: {
         rules: [
@@ -28,7 +29,8 @@ module.exports = {
                 use: ['babel-loader'],
                 include: [
                     path.join(__dirname, 'server'),
-                    path.join(__dirname, 'config')
+                    path.join(__dirname, 'config'),
+                    path.join(__dirname, 'src')
                 ]
             },
             {
