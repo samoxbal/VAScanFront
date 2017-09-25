@@ -1,3 +1,4 @@
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { Switch } from 'react-router-dom';
 import AddExperiment from '../pages/add-experiment/AddExperiment';

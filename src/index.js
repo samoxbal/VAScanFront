@@ -39,6 +39,7 @@ sagaMiddleware.run(root);
 
 if (isBrowser()) {
     window.React = React;
+
     ReactDOM.render(
         <ApolloProvider store={ store } client={ client }>
             <MuiThemeProvider>
