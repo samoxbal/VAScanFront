@@ -19,24 +19,36 @@ module.exports = {
                 'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
             }
         }),
-        new ProgressBarPlugin(),
-        new webpack.NormalModuleReplacementPlugin(/\.css$/, 'node-noop')
+        new ProgressBarPlugin()
     ],
     module: {
         rules: [
             {
                 test: /\.js$/,
                 use: ['babel-loader'],
-                include: [
-                    path.join(__dirname, 'server'),
-                    path.join(__dirname, 'config'),
-                    path.join(__dirname, 'src')
-                ]
+                exclude: /node_modules/
             },
             {
                 test: /\.hbs$/,
                 use: ['handlebars-template-loader'],
                 include: [path.join(__dirname, 'server/views')]
+            },
+            {   test: /\.css$/,
+                use: [
+                    {
+                        loader: 'isomorphic-style-loader'
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader'
+                    }
+                ],
+                include: path.join(__dirname, 'src')
             }
         ]
     },

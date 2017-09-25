@@ -65,7 +65,9 @@ module.exports = {
                             loader: 'css-loader',
                             options: { importLoaders: 1 }
                         },
-                        { loader: 'postcss-loader' }
+                        {
+                            loader: 'postcss-loader'
+                        }
                     ]
                 }),
                 include: path.join(__dirname, 'src')

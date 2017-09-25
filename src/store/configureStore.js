@@ -3,6 +3,7 @@ import createHistory from 'history/createBrowserHistory';
 import { routerMiddleware } from 'react-router-redux';
 import rootReducer from '../reducers';
 import createSagaMiddleware from 'redux-saga';
+import { isBrowser } from '../utils/utils';
 
 const initialState = {
     experiments: [],
@@ -12,12 +13,12 @@ const initialState = {
     voltamogramm: {}
 };
 
-export const history = createHistory();
+export const history = isBrowser() ? createHistory() : null;
 export const sagaMiddleware = createSagaMiddleware();
 
-const composeEnhancers = !window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+const composeEnhancers = isBrowser() ? (!window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
     compose :
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) : compose;
 
 const configureStore = client => createStore(
     combineReducers({

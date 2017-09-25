@@ -9,8 +9,8 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import root from './sagas';
 import { history } from './store/configureStore';
+import { isBrowser } from './utils/utils';
 
-window.React = React;
 injectTapEventPlugin();
 
 const networkInterface = createNetworkInterface({
@@ -37,12 +37,15 @@ export const store = configureStore(client);
 
 sagaMiddleware.run(root);
 
-ReactDOM.render(
-    <ApolloProvider store={ store } client={ client }>
-        <MuiThemeProvider>
-            <ConnectedRouter history={ history }>
-                <App/>
-            </ConnectedRouter>
-        </MuiThemeProvider>
-    </ApolloProvider>,
-    document.getElementById('root'));
+if (isBrowser()) {
+    window.React = React;
+    ReactDOM.render(
+        <ApolloProvider store={ store } client={ client }>
+            <MuiThemeProvider>
+                <ConnectedRouter history={ history }>
+                    <App/>
+                </ConnectedRouter>
+            </MuiThemeProvider>
+        </ApolloProvider>,
+        document.getElementById('root'));
+}

@@ -5,3 +5,7 @@ export function mapExperiments(experiments) {
         endDate: experiment.endDate ? new Date(experiment.endDate) : null
     }));
 }
+
+export function isBrowser() {
+    return typeof window !== 'undefined';
+}
