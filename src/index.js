@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -38,8 +37,6 @@ export const store = configureStore(client);
 sagaMiddleware.run(root);
 
 if (isBrowser()) {
-    window.React = React;
-
     ReactDOM.render(
         <ApolloProvider store={ store } client={ client }>
             <MuiThemeProvider>

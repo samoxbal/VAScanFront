@@ -14,6 +14,9 @@ module.exports = {
         extensions: ['.js']
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            React: 'react',
+        }),
         new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
@@ -47,8 +50,7 @@ module.exports = {
                     {
                         loader: 'postcss-loader'
                     }
-                ],
-                include: path.join(__dirname, 'src')
+                ]
             }
         ]
     },
