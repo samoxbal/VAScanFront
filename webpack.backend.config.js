@@ -4,7 +4,7 @@ const nodeExternals = require('webpack-node-externals');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 module.exports = {
-    entry: './server.js',
+    entry: ['./server.js'],
     output: {
         path: path.resolve(__dirname, '.build'),
         filename: 'server.js'
@@ -56,8 +56,5 @@ module.exports = {
         ]
     },
     externals: nodeExternals(),
-    watch: true,
-    watchOptions: {
-        poll: 1000
-    }
+    watch: true
 };
