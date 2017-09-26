@@ -48,6 +48,7 @@ module.exports = {
             name: 'vendor',
             minChunks: Infinity
         }),
+        new webpack.optimize.ModuleConcatenationPlugin(),
         new ProgressBarPlugin()
     ],
     resolve: {

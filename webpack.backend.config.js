@@ -22,6 +22,7 @@ module.exports = {
                 'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
             }
         }),
+        new webpack.optimize.ModuleConcatenationPlugin(),
         new ProgressBarPlugin()
     ],
     module: {
@@ -54,5 +55,9 @@ module.exports = {
             }
         ]
     },
-    externals: nodeExternals()
+    externals: nodeExternals(),
+    watch: true,
+    watchOptions: {
+        poll: 1000
+    }
 };
