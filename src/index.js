@@ -37,13 +37,15 @@ export const store = configureStore(client);
 sagaMiddleware.run(root);
 
 if (isBrowser()) {
-    ReactDOM.render(
-        <ApolloProvider store={ store } client={ client }>
-            <MuiThemeProvider>
-                <ConnectedRouter history={ history }>
-                    <App/>
-                </ConnectedRouter>
-            </MuiThemeProvider>
-        </ApolloProvider>,
-        document.getElementById('root'));
+    window.__main = state => {
+        ReactDOM.render(
+            <ApolloProvider store={ store } client={ client }>
+                <MuiThemeProvider>
+                    <ConnectedRouter history={ history }>
+                        <App/>
+                    </ConnectedRouter>
+                </MuiThemeProvider>
+            </ApolloProvider>,
+            document.getElementById('root'));
+    }
 }

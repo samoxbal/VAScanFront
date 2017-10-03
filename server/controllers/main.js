@@ -8,6 +8,13 @@ import { client, store } from '../../src/index';
 import template from '../views/index.hbs';
 
 const env = process.env.NODE_ENV || 'development';
+const state = {
+    experiments: [],
+    selectedExperimentId: "",
+    openAddVoltamogramm: false,
+    voltamogramms: [],
+    voltamogramm: {}
+};
 
 export default async (ctx) => {
     const muiTheme = getMuiTheme({
@@ -26,6 +33,7 @@ export default async (ctx) => {
 
     ctx.body = template({
         path: env === 'development' ? 'static' : '.build',
-        app: renderToString(renderApp)
+        app: renderToString(renderApp),
+        state
     });
 };
