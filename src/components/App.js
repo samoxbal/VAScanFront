@@ -2,17 +2,13 @@ import Loadable from 'react-loadable';
 import CircularProgress from 'material-ui/CircularProgress';
 import { Route, Redirect } from 'react-router-dom';
 import { Switch } from 'react-router-dom';
-import AddExperiment from '../pages/add-experiment/AddExperiment';
-import ExperimentsPage from '../pages/experiments/ExperimentsPage';
-import VoltamogrammPage from '../pages/voltamogramm/VoltamogrammPage';
-import MeasurePage from '../pages/measure/MeasurePage';
 
-const AsyncRoute = ({ ...rest }) => (
+const AsyncRoute = ({ url, ...rest }) => (
     <Route
         { ...rest }
         component={
             Loadable({
-                loader: () => import('../pages/add-experiment/AddExperiment'),
+                loader: () => import(`../pages/${url}`),
                 loading: CircularProgress
             })
         }
@@ -22,10 +18,10 @@ const AsyncRoute = ({ ...rest }) => (
 const App = () => (
     <Switch>
         <Redirect to="/all" from="/" exact />
-        <AsyncRoute path="/add" />
-        <Route path="/all" component={ ExperimentsPage } />
-        <Route path="/voltamogramm/:id" component={ VoltamogrammPage } />
-        <Route path="/measure/:id" component={ MeasurePage } />
+        <AsyncRoute path="/add" url="add-experiment/AddExperiment" />
+        <AsyncRoute path="/all" url="experiments/ExperimentsPage" />
+        <AsyncRoute path="/voltamogramm/:id" url="voltamogramm/VoltamogrammPage" />
+        <AsyncRoute path="/measure/:id" url="measure/MeasurePage" />
     </Switch>
 );
 
