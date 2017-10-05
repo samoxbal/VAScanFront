@@ -32,12 +32,11 @@ export const client = new ApolloClient({
     networkInterface
 });
 
-export const store = configureStore(client);
-
-sagaMiddleware.run(root);
-
 if (isBrowser()) {
     window.__main = state => {
+        const store = configureStore(client, state);
+        sagaMiddleware.run(root);
+
         ReactDOM.render(
             <ApolloProvider store={ store } client={ client }>
                 <MuiThemeProvider>

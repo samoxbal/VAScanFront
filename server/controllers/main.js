@@ -4,7 +4,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { ApolloProvider } from 'react-apollo';
 import App from '../../src/components/App';
-import { client, store } from '../../src/index';
+import configureStore from '../../src/store/configureStore';
+import { client } from '../../src/index';
 import template from '../views/index.hbs';
 
 const env = process.env.NODE_ENV || 'development';
@@ -21,6 +22,7 @@ export default async (ctx) => {
         userAgent: ctx.request.headers['user-agent']
     });
     const context = {};
+    const store = configureStore(client, state);
     const renderApp = (
         <ApolloProvider client={ client } store={ store }>
             <MuiThemeProvider muiTheme={ muiTheme }>
