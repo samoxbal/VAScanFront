@@ -36,6 +36,6 @@ export default async (ctx) => {
     ctx.body = template({
         path: env === 'development' ? 'static' : '.build',
         app: renderToString(renderApp),
-        state
+        state: JSON.stringify(store.getState())
     });
 };
