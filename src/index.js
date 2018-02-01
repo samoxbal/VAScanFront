@@ -9,8 +9,10 @@ import { ApolloProvider } from 'react-apollo';
 import root from './sagas';
 import { history } from './store/configureStore';
 import { isBrowser } from './utils/utils';
+import { mockNetworkInterface } from '../server/mock';
 
 injectTapEventPlugin();
+const isProduction = process.env.NODE_ENV === 'production';
 
 const networkInterface = createNetworkInterface({
     uri: '/graphql',
@@ -29,7 +31,7 @@ networkInterface.use([{
 }]);
 
 export const client = new ApolloClient({
-    networkInterface
+    networkInterface: isProduction ? networkInterface : mockNetworkInterface
 });
 
 if (isBrowser()) {
